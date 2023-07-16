@@ -1,10 +1,12 @@
 import mysql, { Connection } from "mysql";
 
+const DataBase = process.env.DBNAME;
+
 const db: Connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   port: 3306,
-  database: "librarydb",
+  database: DataBase,
 });
 
 db.connect((err: mysql.MysqlError) => {
