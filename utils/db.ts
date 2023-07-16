@@ -3,10 +3,11 @@ import mysql, { Connection } from "mysql";
 const db: Connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "password",
+  port: 3306,
+  database: "librarydb",
 });
 
-db.connect((err: any) => {
+db.connect((err: mysql.MysqlError) => {
   if (err) {
     throw err;
   }
@@ -14,7 +15,7 @@ db.connect((err: any) => {
   console.log("Connected to the Database");
 });
 
-db.end((err: any) => {
+db.end((err: mysql.MysqlError) => {
   if (err) {
     throw err;
   }
