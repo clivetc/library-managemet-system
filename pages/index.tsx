@@ -1,5 +1,10 @@
 import Image from "next/image";
+import BooksPage from "./users/dashboard";
 
 export default function Home() {
-  return <main>Home Page</main>;
+  return (
+    <main>
+      <BooksPage />
+    </main>
+  );
 }

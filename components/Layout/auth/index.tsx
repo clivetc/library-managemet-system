@@ -7,8 +7,20 @@ interface IProps {
 
 const AuthLayout: FC<IProps> = ({ children }) => {
   return (
-    <Flex minHeight="100vh" alignItems="center" justifyContent="center">
-      <Box p={4} width="100%" maxWidth="400px" boxShadow="md" borderRadius="md">
+    <Flex
+      minHeight="100vh"
+      alignItems="center"
+      justifyContent="center"
+      bg="purple"
+    >
+      <Box
+        p={4}
+        width="100%"
+        maxWidth="400px"
+        boxShadow="md"
+        borderRadius="lg"
+        bg="white"
+      >
         {children}
       </Box>
     </Flex>

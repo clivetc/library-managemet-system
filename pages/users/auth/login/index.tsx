@@ -1,19 +1,20 @@
 import {
   Box,
-  Button,
-  Flex,
-  Icon,
-  Image,
-  Input,
+  Stack,
   InputGroup,
+  Icon,
+  Input,
   InputLeftElement,
   InputRightElement,
-  Stack,
+  Button,
+  Flex,
+  Image,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import Link from "next/link";
+import React, { useState } from "react";
 import { MdAlternateEmail, MdPassword } from "react-icons/md";
 
-const AdminLogin = () => {
+const UserLogin = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -49,6 +50,9 @@ const AdminLogin = () => {
             <Button type="submit" colorScheme="purple">
               LOGIN
             </Button>
+            <Box textAlign={"center"}>
+              <Link href="/users/auth/register">Do not have an Account</Link>
+            </Box>
           </Stack>
         </form>
       </Flex>
@@ -56,4 +60,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default UserLogin;

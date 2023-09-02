@@ -9,7 +9,11 @@ interface IProps {
 
 const Layout: FC<IProps> = ({ children }) => {
   const router = useRouter();
-  const authRoutes = ["/users/auth/login", "/users/auth/register"];
+  const authRoutes = [
+    "/users/auth/login",
+    "/admin/auth/login",
+    "/users/auth/register",
+  ];
 
   const useAuthLayout = authRoutes.includes(router.pathname);
 

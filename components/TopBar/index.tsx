@@ -37,7 +37,7 @@ const Topbar = () => {
   }, []);
 
   return (
-    <Box bg="blue.500" p={4}>
+    <Box bg="purple" p={4}>
       <Flex align="center">
         <Box>
           <Button
@@ -45,6 +45,7 @@ const Topbar = () => {
             href="#"
             color="white"
             fontWeight="bold"
+            bg="transparent"
             fontSize="lg"
             _hover={{ textDecoration: "none" }}
           >
@@ -67,6 +68,7 @@ const Topbar = () => {
                 href="#"
                 color="white"
                 _hover={{ textDecoration: "none" }}
+                bg="transparent"
               >
                 Home
               </Button>
@@ -77,6 +79,7 @@ const Topbar = () => {
                 href="#"
                 color="white"
                 _hover={{ textDecoration: "none" }}
+                bg="transparent"
               >
                 About
               </Button>
@@ -87,6 +90,7 @@ const Topbar = () => {
                 href="#"
                 color="white"
                 _hover={{ textDecoration: "none" }}
+                bg="transparent"
               >
                 Services
               </Button>
@@ -97,6 +101,7 @@ const Topbar = () => {
                 href="#"
                 color="white"
                 _hover={{ textDecoration: "none" }}
+                bg="transparent"
               >
                 Contact
               </Button>
@@ -112,17 +117,35 @@ const Topbar = () => {
           <DrawerBody>
             <List>
               <ListItem>
-                <Button as="a" href="#" onClick={onClose} w="100%">
+                <Button
+                  as="a"
+                  href="#"
+                  onClick={onClose}
+                  w="100%"
+                  bg="transparent"
+                >
                   Home
                 </Button>
               </ListItem>
               <ListItem>
-                <Button as="a" href="#" onClick={onClose} w="100%">
+                <Button
+                  as="a"
+                  href="#"
+                  onClick={onClose}
+                  w="100%"
+                  bg="transparent"
+                >
                   About
                 </Button>
               </ListItem>
               <ListItem>
-                <Button as="a" href="#" onClick={onClose} w="100%">
+                <Button
+                  as="a"
+                  href="#"
+                  onClick={onClose}
+                  w="100%"
+                  bg="transparent"
+                >
                   Services
                 </Button>
               </ListItem>

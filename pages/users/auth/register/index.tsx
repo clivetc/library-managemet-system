@@ -1,19 +1,20 @@
 import {
   Box,
-  Button,
-  Flex,
-  Icon,
-  Image,
-  Input,
+  Stack,
   InputGroup,
+  Icon,
+  Input,
   InputLeftElement,
   InputRightElement,
-  Stack,
+  Button,
+  Flex,
+  Image,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { MdAlternateEmail, MdPassword } from "react-icons/md";
+import Link from "next/link";
 
-const AdminLogin = () => {
+const UserRegister = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -46,9 +47,27 @@ const AdminLogin = () => {
                 </Button>
               </InputRightElement>
             </InputGroup>
+            <InputGroup size="md">
+              <InputLeftElement pointerEvents="none">
+                <Icon as={MdPassword} color="gray.300" />
+              </InputLeftElement>
+              <Input
+                pr="4.5rem"
+                type={show ? "text" : "password"}
+                placeholder="Confirm password"
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  {show ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
             <Button type="submit" colorScheme="purple">
-              LOGIN
+              Register
             </Button>
+            <Box textAlign={"center"}>
+              <Link href="/users/auth/login">Already have an Account</Link>
+            </Box>
           </Stack>
         </form>
       </Flex>
@@ -56,4 +75,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default UserRegister;

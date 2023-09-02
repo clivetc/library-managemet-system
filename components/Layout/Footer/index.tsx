@@ -3,9 +3,9 @@ import { Box, Flex, Text, Link } from "@chakra-ui/react";
 
 const Footer = () => {
   return (
-    <Box bg="gray.800" color="white" py={6}>
+    <Box bg="gray.800" color="white" py={3}>
       <Flex justify="center" align="center">
-        <Text>&copy; 2023 Your Company. All rights reserved.</Text>
+        <Text>&copy; 2023 Fif. All rights reserved.</Text>
       </Flex>
       <Flex justify="center" align="center" mt={2}>
         <Link href="#">Privacy Policy</Link>
