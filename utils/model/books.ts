@@ -6,6 +6,7 @@ class Book extends Model {
   public title!: string;
   public author!: string;
   public available!: boolean;
+  public availableDate!: Date; // Add the availableDate property
   public imageUrl!: string;
 }
 
@@ -27,6 +28,11 @@ Book.init(
     available: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
+    },
+    availableDate: {
+      // Define the availableDate property
+      type: DataTypes.DATE, // Use DataTypes.DATE for date values
+      allowNull: true, // Set allowNull based on your requirements
     },
     imageUrl: {
       type: new DataTypes.STRING(256), // Define the maximum length for the image URL
