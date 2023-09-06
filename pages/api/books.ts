@@ -1,7 +1,5 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import Book from "@/utils/model/books";
 import type { NextApiRequest, NextApiResponse } from "next";
-import User from "@/utils/model/user";
-import Books from "@/utils/model/books";
 
 type Data = {
   name: string;
@@ -12,7 +10,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === "POST") {
-    const { title, author } = req.body;
+    const { title, author, imageUrl } = req.body;
 
     try {
       // Validate if the required fields are provided
@@ -24,6 +22,7 @@ export default async function handler(
       const book = await Book.create({
         title,
         author,
+        imageUrl, // Add the image URL to the database
       });
 
       return res.status(201).json({ book });

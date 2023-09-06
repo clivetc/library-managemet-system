@@ -6,19 +6,22 @@ const db: Connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   port: 3306,
-  database: DataBase,
+  database: "mailbox",
+  password: "Samaita89.",
 });
 
 db.connect((err: mysql.MysqlError) => {
   if (err) {
+    console.log({ ERROR: err });
     throw err;
   }
 
   console.log("Connected to the Database");
 });
 
-db.end((err: mysql.MysqlError) => {
+db.end((err: any) => {
   if (err) {
+    console.log({ err });
     throw err;
   }
 

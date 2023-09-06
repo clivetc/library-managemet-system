@@ -6,6 +6,7 @@ class Book extends Model {
   public title!: string;
   public author!: string;
   public available!: boolean;
+  public imageUrl!: string;
 }
 
 Book.init(
@@ -26,6 +27,9 @@ Book.init(
     available: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
+    },
+    imageUrl: {
+      type: new DataTypes.STRING(256), // Define the maximum length for the image URL
     },
   },
   {
