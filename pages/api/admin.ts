@@ -11,13 +11,13 @@ export default async function handler(
 
     try {
       // Check if the user is authorized to add admins
-      const { isAdmin } = req.user; // Assuming you have implemented authentication and have access to the authenticated user
+      // const { isAdmin } = req.user; // Assuming you have implemented authentication and have access to the authenticated user
 
-      if (!isAdmin) {
-        return res
-          .status(401)
-          .json({ error: "You are not authorized to add admins" });
-      }
+      // if (!isAdmin) {
+      //   return res
+      //     .status(401)
+      //     .json({ error: "You are not authorized to add admins" });
+      // }
 
       // Validate if the required fields are provided
       if (!username || !password) {
