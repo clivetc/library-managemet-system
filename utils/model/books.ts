@@ -13,10 +13,11 @@ class Book extends Model {
 Book.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
+
     title: {
       type: new DataTypes.STRING(128),
       allowNull: false,
