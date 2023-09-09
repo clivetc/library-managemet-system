@@ -3,7 +3,6 @@ import {
   Button,
   Flex,
   Icon,
-  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -12,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { MdAlternateEmail, MdPassword } from "react-icons/md";
+import Image from "next/image";
 
 const AdminLogin = () => {
   const [show, setShow] = useState(false);
@@ -21,7 +21,12 @@ const AdminLogin = () => {
     <Box borderRadius={"10px"} p={3}>
       <Flex flexDirection={"column"} alignItems={"center"} columnGap={5}>
         <Box mb={3}>
-          <Image src="" alt="logo" w="100" />
+          <Image
+            src="/static/mainlogo.png"
+            alt="logo"
+            height={100}
+            width={100}
+          />
         </Box>
         <form>
           <Stack spacing={4}>

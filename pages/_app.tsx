@@ -3,6 +3,8 @@ import type { AppProps } from "next/app";
 import { extendTheme } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
 import { AuthProvider } from "@/Context/AuthContext";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const colors = {
   brand: {
@@ -13,6 +15,7 @@ const colors = {
 };
 
 export const theme = extendTheme({ colors });
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -20,7 +23,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <CSSReset />
       <AuthProvider>
         <Layout>
-          <Component {...pageProps} />
+          <QueryClientProvider client={queryClient}>
+            <Component {...pageProps} />
+            <ReactQueryDevtools />
+          </QueryClientProvider>
         </Layout>
       </AuthProvider>
     </ChakraProvider>

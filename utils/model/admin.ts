@@ -2,7 +2,7 @@ import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/sequelize";
 
 class Admin extends Model {
-  public id!: number;
+  public id!: string;
   public username!: string;
   public password!: string;
 }
@@ -10,8 +10,8 @@ class Admin extends Model {
 Admin.init(
   {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUID, // Use UUID data type
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
 

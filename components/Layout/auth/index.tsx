@@ -16,7 +16,7 @@ const AuthLayout: FC<IProps> = ({ children }) => {
       <Box
         p={4}
         width="100%"
-        maxWidth="400px"
+        maxWidth={{ md: "400px", base: "300px" }}
         boxShadow="md"
         borderRadius="lg"
         bg="white"

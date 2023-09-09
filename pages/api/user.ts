@@ -2,6 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import User from "@/utils/model/user";
+import jwt, { SignOptions } from "jsonwebtoken";
+import { jwtSecret } from "@/utils/secretKey";
 
 export default async function handler(
   req: NextApiRequest,
@@ -30,8 +32,20 @@ export default async function handler(
         return res.status(401).json({ error: "Invalid email or password" });
       }
 
+      const accessTokenOptions: SignOptions = {
+        expiresIn: "14d", // 2 weeks
+      };
+
+      const accessToken = jwt.sign(
+        { userId: user.id, email: user.email },
+        jwtSecret as string, // Cast to string
+        accessTokenOptions,
+      );
+
       // Return a success message or user data
-      return res.status(200).json({ message: "Login successful", user });
+      return res
+        .status(200)
+        .json({ message: "Login successful", currentUser: user, accessToken });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal Server Error" });

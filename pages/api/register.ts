@@ -9,18 +9,18 @@ export default async function handler(
 ) {
   const client = await connectToDatabase();
   if (req.method === "POST") {
-    const { username, password } = req.body;
+    const { name, email, password } = req.body;
 
     try {
       // Validate if the required fields are provided
-      if (!username || !password) {
+      if (!name || !email || !password) {
         return res
           .status(400)
-          .json({ error: "Username and password are required" });
+          .json({ error: "Username ,email and password are required" });
       }
 
       // Check if the user already exists
-      const existingUser = await User.findOne({ where: { username } });
+      const existingUser = await User.findOne({ where: { email } });
       if (existingUser) {
         return res.status(400).json({ error: "User already exists" });
       }
@@ -30,7 +30,8 @@ export default async function handler(
 
       // Create the user
       const user = await User.create({
-        username,
+        email,
+        name,
         password: hashedPassword,
       });
 
