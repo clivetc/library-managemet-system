@@ -9,6 +9,12 @@ const sequelize = new Sequelize({
   define: {
     timestamps: false,
   },
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // This option allows self-signed certificates, you can adjust it based on your certificate setup
+    },
+  },
 });
 
 export default sequelize;

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "initialize-sequelize": "ts-node initialize-sequelize.ts"
+    "initialize-sequelize": "ts-node initialize-sequelize.ts",
+    "sequelize": "sequelize"
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.1.4",
@@ -17,8 +18,10 @@
     "@types/axios": "^0.14.0",
     "@types/mysql": "^2.15.21",
     "@types/node": "20.4.1",
+    "@types/pg": "^8.10.2",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
+    "@vercel/postgres": "^0.4.1",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",

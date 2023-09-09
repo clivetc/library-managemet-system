@@ -1,3 +1,4 @@
+import { connectToDatabase } from "@/utils/db";
 import Book from "@/utils/model/books";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -9,6 +10,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  const client = await connectToDatabase();
   if (req.method === "POST") {
     const { title, author, imageUrl } = req.body;
 

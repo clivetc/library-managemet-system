@@ -1,11 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import User from "@/utils/model/user";
 import bcrypt from "bcrypt";
+import { connectToDatabase } from "@/utils/db";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  const client = await connectToDatabase();
   if (req.method === "POST") {
     const { username, password } = req.body;
 
