@@ -1,7 +1,7 @@
-import { UserAuth } from "@/types/interfaces";
+
 import axios from "axios";
 
-const registerUser = async ({ username, password }: UserAuth) => {
+const registerUser = async ({ username, password }: any) => {
   try {
     const response = await axios.post("/api/register", {
       username,
