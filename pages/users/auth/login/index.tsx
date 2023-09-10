@@ -25,7 +25,7 @@ const UserLogin = () => {
       <Flex flexDirection={"column"} alignItems={"center"} columnGap={5}>
         <Box mb={3}>
           <Image
-            src="/static/mainlogo.png"
+            src="/static/church_logo.png"
             alt="logo"
             height={100}
             width={100}
@@ -69,7 +69,7 @@ const UserLogin = () => {
               <Link href="/users/auth/register">Do not have an Account</Link>
             </Box>
             <Box textAlign={"center"}>
-              <Link href="/admin/auth/login">I am an Admin</Link>
+              <Link href="/admin/auth/login">I am Admin</Link>
             </Box>
           </Stack>
         </form>

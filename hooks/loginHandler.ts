@@ -1,11 +1,40 @@
-import { loginUser } from "@/services/api/requests/auth";
+import { useAuth } from "@/Context/AuthContext";
+import { loginUser } from "@/services/api/service/auth";
 import { ILogin } from "@/types/interfaces";
+import { useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
+import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import * as yup from "yup";
 
 export const useLoginHandler = () => {
-  const { mutate, isLoading: userLoading } = useMutation(loginUser);
+  const router = useRouter();
+  const toast = useToast();
+  const { login } = useAuth();
+
+  const { mutate, isLoading: userLoading } = useMutation(loginUser, {
+    onSuccess: (res) => {
+      toast({
+        description: res.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      }),
+        login(res.currentUser);
+      router.push("/");
+    },
+
+    onError: (err: any) => {
+      toast({
+        description: err.response.data.error,
+        status: "error",
+        duration: 5000, // Toast will be displayed for 5 seconds
+        isClosable: true,
+        position: "top-right",
+      });
+    },
+  });
 
   const formikHook = useFormik<ILogin>({
     initialValues: {
@@ -13,7 +42,6 @@ export const useLoginHandler = () => {
       password: "",
     },
     onSubmit: (values) => {
-      console.log({ values });
       mutate(values);
     },
     validationSchema: yup.object().shape({

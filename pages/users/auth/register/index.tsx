@@ -14,8 +14,10 @@ import { MdAlternateEmail, MdPassword } from "react-icons/md";
 import { BsFillPersonCheckFill } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
+import { useRegisterHandler } from "@/hooks/registerHandler";
 
 const UserRegister = () => {
+  const { formikHook, userLoading } = useRegisterHandler();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -24,25 +26,42 @@ const UserRegister = () => {
       <Flex flexDirection={"column"} alignItems={"center"} columnGap={5}>
         <Box mb={3}>
           <Image
-            src="/static/mainlogo.png"
+            src="/static/church_logo.png"
             alt="logo"
             height={100}
             width={100}
           />
         </Box>
-        <form>
+        <form onSubmit={formikHook.handleSubmit}>
           <Stack spacing={4}>
-            <InputGroup size="md">
-              <InputLeftElement pointerEvents="none">
-                <Icon as={BsFillPersonCheckFill} color="gray.300" />
-              </InputLeftElement>
-              <Input type="email" placeholder="Please Enter Full Name" />
-            </InputGroup>
+            <Input
+              type="text"
+              placeholder="UserName"
+              onChange={formikHook.handleChange}
+              name="name"
+            />
+            <Input
+              type="text"
+              placeholder="Please Enter First Name"
+              onChange={formikHook.handleChange}
+              name="firstName"
+            />
+            <Input
+              type="text"
+              placeholder="Please Enter Last Name"
+              onChange={formikHook.handleChange}
+              name="lastName"
+            />
             <InputGroup size="md">
               <InputLeftElement pointerEvents="none">
                 <Icon as={MdAlternateEmail} color="gray.300" />
               </InputLeftElement>
-              <Input type="email" placeholder="Please Enter Email" />
+              <Input
+                type="email"
+                placeholder="Please Enter Email"
+                onChange={formikHook.handleChange}
+                name="email"
+              />
             </InputGroup>
             <InputGroup size="md">
               <InputLeftElement pointerEvents="none">
@@ -52,6 +71,8 @@ const UserRegister = () => {
                 pr="4.5rem"
                 type={show ? "text" : "password"}
                 placeholder="Enter password"
+                onChange={formikHook.handleChange}
+                name="password"
               />
               <InputRightElement width="4.5rem">
                 <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -60,7 +81,7 @@ const UserRegister = () => {
               </InputRightElement>
             </InputGroup>
 
-            <Button type="submit" colorScheme="purple">
+            <Button type="submit" colorScheme="purple" isLoading={userLoading}>
               Register
             </Button>
             <Box textAlign={"center"}>

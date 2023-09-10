@@ -1,5 +1,12 @@
-// AuthContext.tsx
-import { createContext, useContext, useState, ReactNode } from "react";
+import { getUserById } from "@/services/api/service/getUser";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
+import { useQuery } from "react-query";
 
 interface User {
   id: string;
@@ -19,6 +26,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+
+  const { data, isLoading, isFetching } = useQuery(
+    ["user-data", userId],
+    () => getUserById(userId), // Pass userId directly as the argument
+    {
+      enabled: !!userId,
+    },
+  );
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken && userId) {
+      setUser(data); // Set user data from the query result
+    }
+  }, [data]); // Include data in the dependency array
 
   const login = (userData: User) => {
     setUser(userData);

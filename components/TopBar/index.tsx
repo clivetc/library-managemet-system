@@ -15,9 +15,15 @@ import {
   List,
   ListItem,
 } from "@chakra-ui/react";
-import { HiMenuAlt1 } from "react-icons/hi";
+import { HiMenuAlt1, HiOutlineLogout } from "react-icons/hi";
+import Image from "next/image";
 
-const Topbar = () => {
+interface IProps {
+  userName: string;
+  logOut: () => void;
+}
+
+const Topbar = ({ userName, logOut }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isMobile, setIsMobile] = useState(false);
 
@@ -49,7 +55,12 @@ const Topbar = () => {
             fontSize="lg"
             _hover={{ textDecoration: "none" }}
           >
-            Your Logo
+            <Image
+              src="/static/church_logo.png"
+              alt="logo"
+              height={50}
+              width={50}
+            />
           </Button>
         </Box>
         <Spacer />
@@ -70,7 +81,7 @@ const Topbar = () => {
                 _hover={{ textDecoration: "none" }}
                 bg="transparent"
               >
-                Home
+                Hi, {userName}
               </Button>
             </ListItem>
             <ListItem>
@@ -80,30 +91,9 @@ const Topbar = () => {
                 color="white"
                 _hover={{ textDecoration: "none" }}
                 bg="transparent"
+                leftIcon={<HiOutlineLogout />}
               >
-                About
-              </Button>
-            </ListItem>
-            <ListItem>
-              <Button
-                as="a"
-                href="#"
-                color="white"
-                _hover={{ textDecoration: "none" }}
-                bg="transparent"
-              >
-                Services
-              </Button>
-            </ListItem>
-            <ListItem>
-              <Button
-                as="a"
-                href="#"
-                color="white"
-                _hover={{ textDecoration: "none" }}
-                bg="transparent"
-              >
-                Contact
+                Log Out
               </Button>
             </ListItem>
           </List>
@@ -117,41 +107,17 @@ const Topbar = () => {
           <DrawerBody>
             <List>
               <ListItem>
-                <Button
-                  as="a"
-                  href="#"
-                  onClick={onClose}
-                  w="100%"
-                  bg="transparent"
-                >
-                  Home
+                <Button onClick={onClose} w="100%" bg="transparent">
+                  Hi, {userName}
                 </Button>
               </ListItem>
               <ListItem>
                 <Button
-                  as="a"
-                  href="#"
-                  onClick={onClose}
+                  onClick={logOut}
                   w="100%"
-                  bg="transparent"
+                  leftIcon={<HiOutlineLogout />}
                 >
-                  About
-                </Button>
-              </ListItem>
-              <ListItem>
-                <Button
-                  as="a"
-                  href="#"
-                  onClick={onClose}
-                  w="100%"
-                  bg="transparent"
-                >
-                  Services
-                </Button>
-              </ListItem>
-              <ListItem>
-                <Button as="a" href="#" onClick={onClose} w="100%">
-                  Contact
+                  Log Out
                 </Button>
               </ListItem>
             </List>

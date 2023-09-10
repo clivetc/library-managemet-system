@@ -9,14 +9,14 @@ export default async function handler(
 ) {
   const client = await connectToDatabase();
   if (req.method === "POST") {
-    const { name, email, password } = req.body;
+    const { firstName, lastName, email, name, password } = req.body;
 
     try {
       // Validate if the required fields are provided
-      if (!name || !email || !password) {
-        return res
-          .status(400)
-          .json({ error: "Username ,email and password are required" });
+      if (!firstName || !lastName || !email || !name || !password) {
+        return res.status(400).json({
+          error: "First Name,Last Name ,Email, Name and Password are required",
+        });
       }
 
       // Check if the user already exists
@@ -31,6 +31,8 @@ export default async function handler(
       // Create the user
       const user = await User.create({
         email,
+        firstName,
+        lastName,
         name,
         password: hashedPassword,
       });

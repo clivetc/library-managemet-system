@@ -22,7 +22,7 @@ const AdminLogin = () => {
       <Flex flexDirection={"column"} alignItems={"center"} columnGap={5}>
         <Box mb={3}>
           <Image
-            src="/static/mainlogo.png"
+            src="/static/church_logo.png"
             alt="logo"
             height={100}
             width={100}

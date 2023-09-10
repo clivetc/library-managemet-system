@@ -10,7 +10,7 @@ interface IProps {
 
 const Layout: FC<IProps> = ({ children }) => {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const authRoutes = [
     "/users/auth/login",
@@ -19,20 +19,21 @@ const Layout: FC<IProps> = ({ children }) => {
   ];
 
   const useAuthLayout = authRoutes.includes(router.pathname);
-
   useEffect(() => {
     // Redirect to login page if user is not logged in or has no accessToken
-    if (!useAuthLayout && !user?.accessToken) {
+    if (!useAuthLayout && !user?.id) {
       router.push("/users/auth/login"); // Replace with the actual login page route
     }
   }, [useAuthLayout, user, router]);
-
+  console.log({ user });
   return (
     <>
       {useAuthLayout ? (
         <AuthLayout>{children} </AuthLayout>
       ) : (
-        <MainLayout>{children}</MainLayout>
+        <MainLayout userName={user?.username || "N/A"} logOut={logout}>
+          {children}
+        </MainLayout>
       )}
     </>
   );
