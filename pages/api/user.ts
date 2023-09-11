@@ -10,8 +10,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  await cors(req, res);
   if (req.method === "POST") {
-    await cors(req, res);
     const { email, password } = req.body;
 
     try {

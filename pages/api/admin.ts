@@ -10,9 +10,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  await cors(req, res);
   const client = await connectToDatabase();
   if (req.method === "POST") {
-    await cors(req, res);
     const { username, password, action } = req.body;
 
     try {
