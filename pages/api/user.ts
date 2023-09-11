@@ -15,6 +15,7 @@ export default async function handler(
     const { email, password } = req.body;
 
     try {
+      console.log("Request body:", req.body);
       // Validate if the required fields are provided
       if (!email || !password) {
         return res
