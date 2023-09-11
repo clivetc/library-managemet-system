@@ -1,4 +1,4 @@
-import { ILogin, IRegister } from "@/types/interfaces";
+import { ILogin, ILoginAdmin, IRegister } from "@/types/interfaces";
 import { api } from "../apiClient";
 import { AxiosError } from "axios";
 
@@ -23,6 +23,25 @@ export const loginUser = async (values: ILogin) => {
       if (response.accessToken) {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("userId", userId);
+      }
+
+      return response;
+    })
+    .catch((err: AxiosError) => {
+      throw err;
+    });
+};
+
+export const adminLogin = async (values: ILoginAdmin) => {
+  return api
+    .post("/admin", values)
+    .then((resp) => {
+      const response = resp.data;
+
+      const accessToken = response.accessToken;
+
+      if (response.accessToken) {
+        localStorage.setItem("accessToken", accessToken);
       }
 
       return response;

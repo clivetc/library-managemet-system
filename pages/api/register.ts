@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import User from "@/utils/model/user";
 import bcrypt from "bcrypt";
 import { connectToDatabase } from "@/utils/db";
+import { cors } from "@/utils/middleware";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,6 +10,7 @@ export default async function handler(
 ) {
   const client = await connectToDatabase();
   if (req.method === "POST") {
+    await cors(req, res);
     const { firstName, lastName, email, name, password } = req.body;
 
     try {

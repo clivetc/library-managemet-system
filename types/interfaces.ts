@@ -10,3 +10,8 @@ export interface IRegister {
   email: string;
   password: string;
 }
+
+export interface ILoginAdmin {
+  username: string;
+  password: string;
+}

@@ -1,12 +1,14 @@
 // pages/api/user/[id].ts
 import type { NextApiRequest, NextApiResponse } from "next";
 import User from "@/utils/model/user";
+import { cors } from "@/utils/middleware";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   if (req.method === "GET") {
+    await cors(req, res);
     try {
       const { id } = req.query;
       // Fetch the user by ID

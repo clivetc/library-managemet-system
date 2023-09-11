@@ -4,12 +4,14 @@ import bcrypt from "bcrypt";
 import User from "@/utils/model/user";
 import jwt, { SignOptions } from "jsonwebtoken";
 import { jwtSecret } from "@/utils/secretKey";
+import { cors } from "@/utils/middleware";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   if (req.method === "POST") {
+    await cors(req, res);
     const { email, password } = req.body;
 
     try {

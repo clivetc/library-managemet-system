@@ -1,18 +1,18 @@
 import { useAuth } from "@/Context/AuthContext";
-import { loginUser } from "@/services/api/service/auth";
-import { ILogin } from "@/types/interfaces";
+import { adminLogin } from "@/services/api/service/auth";
+import { ILoginAdmin } from "@/types/interfaces";
 import { useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import * as yup from "yup";
 
-export const useLoginHandler = () => {
+export const useAdminLoginHandler = () => {
   const router = useRouter();
   const toast = useToast();
   const { login } = useAuth();
 
-  const { mutate, isLoading: userLoading } = useMutation(loginUser, {
+  const { mutate, isLoading: userLoading } = useMutation(adminLogin, {
     onSuccess: (res) => {
       console.log({ res });
       toast({
@@ -38,16 +38,16 @@ export const useLoginHandler = () => {
     },
   });
 
-  const formikHook = useFormik<ILogin>({
+  const formikHook = useFormik<ILoginAdmin>({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
     },
     onSubmit: (values) => {
       mutate(values);
     },
     validationSchema: yup.object().shape({
-      email: yup
+      username: yup
         .string()
         .email("Invalid email address")
         .required("Email is required"),

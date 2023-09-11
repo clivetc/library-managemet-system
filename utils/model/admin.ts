@@ -14,7 +14,6 @@ Admin.init(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-
     username: {
       type: new DataTypes.STRING(128),
       allowNull: false,
@@ -22,6 +21,10 @@ Admin.init(
     password: {
       type: new DataTypes.STRING(128),
       allowNull: false,
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false, // Set the isAdmin flag to false by default
     },
   },
   {

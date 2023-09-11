@@ -12,8 +12,10 @@ import {
 import { useState } from "react";
 import { MdAlternateEmail, MdPassword } from "react-icons/md";
 import Image from "next/image";
+import { useAdminLoginHandler } from "@/hooks/adminLoginHandler";
 
 const AdminLogin = () => {
+  const { formikHook, userLoading } = useAdminLoginHandler();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -28,13 +30,18 @@ const AdminLogin = () => {
             width={100}
           />
         </Box>
-        <form>
+        <form onSubmit={formikHook.handleSubmit}>
           <Stack spacing={4}>
             <InputGroup size="md">
               <InputLeftElement pointerEvents="none">
                 <Icon as={MdAlternateEmail} color="gray.300" />
               </InputLeftElement>
-              <Input type="email" placeholder="Please Enter Email" />
+              <Input
+                type="email"
+                placeholder="Please Enter Email"
+                name="username"
+                onChange={formikHook.handleChange}
+              />
             </InputGroup>
             <InputGroup size="md">
               <InputLeftElement pointerEvents="none">
@@ -44,6 +51,8 @@ const AdminLogin = () => {
                 pr="4.5rem"
                 type={show ? "text" : "password"}
                 placeholder="Enter password"
+                onChange={formikHook.handleChange}
+                name="password"
               />
               <InputRightElement width="4.5rem">
                 <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -51,7 +60,7 @@ const AdminLogin = () => {
                 </Button>
               </InputRightElement>
             </InputGroup>
-            <Button type="submit" colorScheme="purple">
+            <Button type="submit" colorScheme="purple" isLoading={userLoading}>
               LOGIN
             </Button>
           </Stack>
