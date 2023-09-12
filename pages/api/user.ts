@@ -59,6 +59,6 @@ export default async function handler(
   }
 
   // Handle other HTTP methods if needed
-
+  console.log("Received unsupported method:", req.method);
   return res.status(405).json({ error: "Method Not Allowed" });
 }
