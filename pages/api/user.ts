@@ -5,12 +5,15 @@ import User from "@/utils/model/user";
 import jwt, { SignOptions } from "jsonwebtoken";
 import { jwtSecret } from "@/utils/secretKey";
 import { cors } from "@/utils/middleware";
+import { connectToDatabase } from "@/utils/db";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   await cors(req, res);
+  const client = await connectToDatabase();
+
   if (req.method === "POST") {
     const { email, password } = req.body;
 

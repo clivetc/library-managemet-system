@@ -7,8 +7,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  await cors(req, res);
   if (req.method === "GET") {
-    await cors(req, res);
     try {
       const { id } = req.query;
       // Fetch the user by ID
