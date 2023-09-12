@@ -14,7 +14,6 @@ export const useLoginHandler = () => {
 
   const { mutate, isLoading: userLoading } = useMutation(loginUser, {
     onSuccess: (res) => {
-      console.log({ res });
       toast({
         description: res.message,
         status: "success",
@@ -27,7 +26,6 @@ export const useLoginHandler = () => {
     },
 
     onError: (err: any) => {
-      console.log({ err });
       toast({
         description: err.response.data.error,
         status: "error",

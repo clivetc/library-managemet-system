@@ -87,10 +87,10 @@ const Topbar = ({ userName, logOut }: IProps) => {
             <ListItem>
               <Button
                 as="a"
-                href="#"
                 color="white"
                 _hover={{ textDecoration: "none" }}
                 bg="transparent"
+                onClick={logOut}
                 leftIcon={<HiOutlineLogout />}
               >
                 Log Out

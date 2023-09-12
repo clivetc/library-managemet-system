@@ -1,16 +1,26 @@
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import AuthLayout from "./auth";
 import MainLayout from "./main";
 import { useRouter } from "next/router";
 import { useAuth } from "@/Context/AuthContext";
+import { Flex, Spinner } from "@chakra-ui/react";
 
 interface IProps {
   children: ReactNode;
 }
 
 const Layout: FC<IProps> = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { user, logout } = useAuth();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, [user, router]);
 
   const authRoutes = [
     "/users/auth/login",
@@ -19,21 +29,30 @@ const Layout: FC<IProps> = ({ children }) => {
   ];
 
   const useAuthLayout = authRoutes.includes(router.pathname);
+
   useEffect(() => {
-    // Redirect to login page if user is not logged in or has no accessToken
-    if (!useAuthLayout && !user?.id) {
-      router.push("/users/auth/login"); // Replace with the actual login page route
+    if (!user?.id) {
+      if (!useAuthLayout) {
+        router.push("/users/auth/login"); // Replace with the actual login page route
+      }
     }
+    // Redirect to login page if user is not logged in or has no accessToken
   }, [useAuthLayout, user, router]);
-  console.log({ user });
+
+  if (isLoading)
+    return (
+      <Flex alignItems={"center"} justifyContent={"center"}>
+        <Spinner />
+      </Flex>
+    );
   return (
     <>
-      {useAuthLayout ? (
-        <AuthLayout>{children} </AuthLayout>
-      ) : (
-        <MainLayout userName={user?.username || "N/A"} logOut={logout}>
+      {user?.id ? (
+        <MainLayout userName={user?.name || "N/A"} logOut={logout}>
           {children}
         </MainLayout>
+      ) : (
+        <AuthLayout>{children} </AuthLayout>
       )}
     </>
   );

@@ -12,7 +12,12 @@ export default async function handler(
     try {
       const { id } = req.query;
       // Fetch the user by ID
-      const user = await User.findOne({ where: { id } });
+      const user = await User.findOne({
+        where: { id },
+        attributes: {
+          exclude: ["password"],
+        },
+      });
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }

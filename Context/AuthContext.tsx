@@ -10,7 +10,9 @@ import { useQuery } from "react-query";
 
 interface User {
   id: string;
-  username: string;
+  name: string;
+  firstName: string;
+  lastName: string;
   accessToken: string;
 }
 
@@ -50,6 +52,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
   };
 
   return (

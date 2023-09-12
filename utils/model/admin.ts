@@ -4,6 +4,8 @@ import sequelize from "../config/sequelize";
 class Admin extends Model {
   public id!: string;
   public username!: string;
+  public firstName!: string;
+  public lastName!: string;
   public password!: string;
 }
 
@@ -15,6 +17,14 @@ Admin.init(
       primaryKey: true,
     },
     username: {
+      type: new DataTypes.STRING(128),
+      allowNull: false,
+    },
+    firstName: {
+      type: new DataTypes.STRING(128),
+      allowNull: false,
+    },
+    lastName: {
       type: new DataTypes.STRING(128),
       allowNull: false,
     },
