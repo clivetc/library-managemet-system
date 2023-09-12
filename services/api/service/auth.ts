@@ -34,7 +34,7 @@ export const loginUser = async (values: ILogin) => {
 
 export const adminLogin = async (values: ILoginAdmin) => {
   return api
-    .post("/admin", values)
+    .post("/admin", { ...values, action: "login" })
     .then((resp) => {
       const response = resp.data;
 

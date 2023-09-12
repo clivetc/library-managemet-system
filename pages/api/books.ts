@@ -12,7 +12,7 @@ export default async function handler(
 ) {
   const client = await connectToDatabase();
   if (req.method === "POST") {
-    const { title, author, imageUrl } = req.body;
+    const { title, author, imageUrl, description } = req.body;
 
     try {
       // Validate if the required fields are provided
