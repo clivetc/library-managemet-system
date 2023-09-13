@@ -14,18 +14,23 @@ const Layout: FC<IProps> = ({ children }) => {
   const router = useRouter();
   const { user, logout, loading, isAuthorized } = useAuth();
 
+  const authRoutes = [
+    "/users/auth/login",
+    "/admin/auth/login",
+    "/users/auth/register",
+  ];
+
+  const isAuthScreen = authRoutes.includes(router.pathname);
+
   useEffect(() => {
-    // Check if we are on the client side before using next/router
-    if (typeof window !== "undefined") {
-      if (loading) {
-        setIsLoading(true);
-      } else if (!isAuthorized) {
-        if (!router.pathname.startsWith("/auth")) {
-          router.push("/users/auth/login");
-        }
-      } else {
-        setIsLoading(false);
+    if (loading) {
+      setIsLoading(true);
+    } else if (!isAuthorized) {
+      if (isAuthScreen) {
+        router.push("/users/auth/login");
       }
+    } else {
+      setIsLoading(false);
     }
   }, [loading, isAuthorized, router]);
 
