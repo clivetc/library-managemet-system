@@ -12,49 +12,38 @@ interface IProps {
 const Layout: FC<IProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout, loading, isAuthorized } = useAuth();
 
   useEffect(() => {
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, [user, router]);
-
-  const authRoutes = [
-    "/users/auth/login",
-    "/admin/auth/login",
-    "/users/auth/register",
-  ];
-
-  const useAuthLayout = authRoutes.includes(router.pathname);
-
-  useEffect(() => {
-    if (!user?.id) {
-      if (!useAuthLayout) {
-        router.push("/users/auth/login"); // Replace with the actual login page route
+    // Check if we are on the client side before using next/router
+    if (typeof window !== "undefined") {
+      if (loading) {
+        setIsLoading(true);
+      } else if (!isAuthorized) {
+        if (!router.pathname.startsWith("/auth")) {
+          router.push("/users/auth/login");
+        }
+      } else {
+        setIsLoading(false);
       }
     }
-    // Redirect to login page if user is not logged in or has no accessToken
-  }, [useAuthLayout, user, router]);
+  }, [loading, isAuthorized, router]);
 
-  if (isLoading)
+  if (loading)
     return (
-      <Flex alignItems={"center"} justifyContent={"center"}>
+      <Flex alignItems={"center"} justifyContent={"center"} minHeight="100vh">
         <Spinner />
       </Flex>
     );
+
+  if (!isAuthorized) {
+    return <AuthLayout>{children} </AuthLayout>;
+  }
+
   return (
-    <>
-      {user?.id ? (
-        <MainLayout userName={user?.name || "N/A"} logOut={logout}>
-          {children}
-        </MainLayout>
-      ) : (
-        <AuthLayout>{children} </AuthLayout>
-      )}
-    </>
+    <MainLayout userName={user?.name || "N/A"} logOut={logout}>
+      {children}
+    </MainLayout>
   );
 };
 

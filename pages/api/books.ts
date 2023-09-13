@@ -12,7 +12,8 @@ export default async function handler(
 ) {
   const client = await connectToDatabase();
   if (req.method === "POST") {
-    const { title, author, imageUrl, description } = req.body;
+    const { title, author, imageUrl, description, available, availableDate } =
+      req.body;
 
     try {
       // Validate if the required fields are provided
@@ -24,7 +25,9 @@ export default async function handler(
       const book = await Book.create({
         title,
         author,
-        imageUrl, // Add the image URL to the database
+        imageUrl,
+        description,
+        available,
       });
 
       return res.status(201).json({ book });

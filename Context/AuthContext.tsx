@@ -7,6 +7,7 @@ import {
   useEffect,
 } from "react";
 import { useQuery } from "react-query";
+import { boolean } from "yup";
 
 interface User {
   id: string;
@@ -20,6 +21,8 @@ interface AuthContextType {
   user: User | null;
   login: (userData: User) => void;
   logout: () => void;
+  loading: boolean;
+  isAuthorized: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,6 +31,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
   const userId =
     typeof window !== "undefined" ? localStorage.getItem("userId") : null;
 
@@ -42,9 +47,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken && userId) {
-      setUser(data); // Set user data from the query result
+      setUser(data);
+      setIsAuthorized(true); // Set user data from the query result
     }
-  }, [data]); // Include data in the dependency array
+  }, [data, isAuthorized]); // Include data in the dependency array
 
   const login = (userData: User) => {
     setUser(userData);
@@ -55,9 +61,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userId");
   };
-
+  const loading = isLoading || isFetching;
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, loading, isAuthorized }}
+    >
       {children}
     </AuthContext.Provider>
   );

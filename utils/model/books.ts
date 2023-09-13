@@ -8,6 +8,7 @@ class Book extends Model {
   public available!: boolean;
   public availableDate!: Date; // Add the availableDate property
   public imageUrl!: string;
+  public description!: string;
 }
 
 Book.init(
@@ -36,6 +37,9 @@ Book.init(
       allowNull: true, // Set allowNull based on your requirements
     },
     imageUrl: {
+      type: new DataTypes.STRING(256), // Define the maximum length for the image URL
+    },
+    description: {
       type: new DataTypes.STRING(256), // Define the maximum length for the image URL
     },
   },

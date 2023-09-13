@@ -13,7 +13,8 @@ export default async function handler(
   await cors(req, res);
   const client = await connectToDatabase();
   if (req.method === "POST") {
-    const { username, password, action } = req.body;
+    const { username, password, action, isAdmin, firstName, lastName } =
+      req.body;
 
     try {
       if (action === "login") {
@@ -45,9 +46,8 @@ export default async function handler(
       } else if (action === "addAdmin") {
         // Assuming you have implemented authentication and have access to the authenticated user
         // In this example, I'm assuming isAdmin is provided in the request or as part of your authentication logic
-        const isAdmin = req.body.isAdmin;
-        const firstName = req.body.firstName;
-        const lastName = req.body.lastName;
+
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         if (!isAdmin) {
           return res
@@ -55,7 +55,7 @@ export default async function handler(
             .json({ error: "You are not authorized to add admins" });
         }
 
-        // Validate if the required fields are provided
+        // Validating if the required fields are provided
         if (!username || !password) {
           return res
             .status(400)
@@ -65,7 +65,7 @@ export default async function handler(
         // Create the admin
         const admin = await Admin.create({
           username,
-          password,
+          password: hashedPassword,
           firstName,
           lastName,
           isAdmin: true, // Set the isAdmin flag to true for new admins

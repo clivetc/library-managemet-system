@@ -1688,6 +1688,11 @@ caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001464, caniuse-lite@^1.0.300015
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001514.tgz#e2a7e184a23affc9367b7c8d734e7ec4628c1309"
   integrity sha512-ENcIpYBmwAAOm/V2cXgM7rZUrKKaqisZl4ZAI520FIkqGXUxJjmaIssbRW5HVVR5tyV6ygTLIm15aU8LUmQSaQ==
 
+chakra-paginated-table@^1.5.8:
+  version "1.5.8"
+  resolved "https://registry.yarnpkg.com/chakra-paginated-table/-/chakra-paginated-table-1.5.8.tgz#39110ca0a63428efae83168a1307ec953672b1ec"
+  integrity sha512-RNOIMzouBYGeuQTm09wnBLQ4ONhx7q2Z3B0i8GWLfg9Ho4uEu//1LJ+rDXlCHWCQfVjqiWZaWzOKKZMHGkU5xQ==
+
 chalk@^2.0.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
