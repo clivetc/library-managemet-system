@@ -41,15 +41,14 @@ const Layout: FC<IProps> = ({ children }) => {
       </Flex>
     );
 
+  if (!isAuthorized) {
+    return <AuthLayout>{children} </AuthLayout>;
+  }
   return (
     <>
-      {!isAuthorized ? (
-        <AuthLayout>{children} </AuthLayout>
-      ) : (
-        <MainLayout userName={user?.name || "N/A"} logOut={logout}>
-          {children}
-        </MainLayout>
-      )}
+      <MainLayout userName={user?.name || "N/A"} logOut={logout}>
+        {children}
+      </MainLayout>
     </>
   );
 };
