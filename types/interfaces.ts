@@ -22,5 +22,5 @@ export interface IBooks {
   imageUrl: string;
   description: string;
   available: boolean;
-  availableDate: "";
+  availableDate: string;
 }

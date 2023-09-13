@@ -1,17 +1,23 @@
 import React from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Center, Spinner } from "@chakra-ui/react";
 import BookList from "@/components/BookList";
-
-const books = [
-  { id: 1, title: "Book 1", description: "Description of Book 1" },
-  { id: 2, title: "Book 2", description: "Description of Book 2" },
-  { id: 3, title: "Book 3", description: "Description of Book 3" },
-];
+import { useBooksHandler } from "@/hooks/booksHandler";
+import { IBooks } from "@/types/interfaces";
 
 const BooksPage = () => {
+  const { data, isFetching, isLoading } = useBooksHandler();
+
+  const books = data ?? [];
+
   return (
     <Box>
-      <BookList books={books} />
+      {isLoading || isFetching ? (
+        <Center height="100vh">
+          <Spinner size="xl" />
+        </Center>
+      ) : (
+        <BookList books={books as IBooks[]} />
+      )}
     </Box>
   );
 };
