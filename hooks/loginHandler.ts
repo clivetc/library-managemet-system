@@ -22,7 +22,8 @@ export const useLoginHandler = () => {
         isClosable: true,
         position: "top-right",
       }),
-      dispatch(login(res.data));
+        dispatch(login(res.data));
+      
         router.push("/");
     },
 

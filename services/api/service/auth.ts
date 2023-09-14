@@ -18,11 +18,11 @@ export const loginUser = async (values: ILogin) => {
       const response = resp.data;
 
       const accessToken = response.accessToken;
-      const userId = response.currentUser.id;
+      const id = response.currentUser.id;
 
       if (response.accessToken) {
         localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("userId", userId);
+        localStorage.setItem("id", id);
       }
 
       return response;

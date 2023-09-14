@@ -1,16 +1,17 @@
-import { useAuth } from "@/Context/AuthContext";
+import { loginAdmin } from "@/redux/adminAuthReducer";
 import { adminLogin } from "@/services/api/service/auth";
 import { ILoginAdmin } from "@/types/interfaces";
 import { useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
 
 export const useAdminLoginHandler = () => {
   const router = useRouter();
   const toast = useToast();
-  const { login } = useAuth();
+const dispatch = useDispatch()
 
   const { mutate, isLoading: userLoading } = useMutation(adminLogin, {
     onSuccess: (res) => {
@@ -21,8 +22,8 @@ export const useAdminLoginHandler = () => {
         isClosable: true,
         position: "top-right",
       }),
-        login(res.currentUser);
-      router.push("/");
+      dispatch(loginAdmin(res.data));
+      router.push("/admin/dashboard");
     },
 
     onError: (err: any) => {

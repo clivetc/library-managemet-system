@@ -31,3 +31,10 @@ export interface IUser {
   firstName: string;
   lastName: string;
 }
+
+export interface IAdmin {
+  id: string;
+  name: string;
+  firstName: string;
+  lastName: string;
+}

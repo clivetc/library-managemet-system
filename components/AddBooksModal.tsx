@@ -75,7 +75,11 @@ const AddBooksModal = ({ formikHook, onClose, isOpen }: IProps) => {
                 <FormLabel htmlFor="email-alerts" mb="0">
                   Is Book Available
                 </FormLabel>
-                <Switch id="email-alerts" onChange={formikHook.handleChange} />
+                <Switch
+                  id="email-alerts"
+                  name="available" // Make sure to use the correct field name
+                  onChange={formikHook.handleChange}
+                />
               </FormControl>
               <Field name="imageUrl">
                 {({ field, form }: any) => (
@@ -88,7 +92,7 @@ const AddBooksModal = ({ formikHook, onClose, isOpen }: IProps) => {
                         const selectedFile =
                           e.target.files && e.target.files[0];
                         if (selectedFile) {
-                          form.setFieldValue("image", selectedFile);
+                          form.setFieldValue("imageUrl", selectedFile); // Make sure to set the correct field value
                           handleImageUpload(e);
                         }
                       }}
@@ -110,7 +114,9 @@ const AddBooksModal = ({ formikHook, onClose, isOpen }: IProps) => {
             </Stack>
           </ModalBody>
           <ModalFooter>
-            <Button type="reset">Reset</Button>
+            <Button type="reset" onClick={formikHook.handleReset}>
+              Reset
+            </Button>
             <Button type="submit">Submit</Button>
           </ModalFooter>
         </form>

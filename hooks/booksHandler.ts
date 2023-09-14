@@ -1,11 +1,16 @@
 import { addBooks, getBooks } from "@/services/api/service/books";
 import { IBooks } from "@/types/interfaces";
-import { useToast } from "@chakra-ui/react";
+import { useToast,useDisclosure } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 
 export const useBooksHandler = () => {
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const { data, isLoading, isFetching,refetch } = useQuery("available-books", () =>
+  getBooks(),
+);
 
   const { mutate, isLoading: booksLoading } = useMutation(addBooks, {
     onSuccess: (res) => {
@@ -16,6 +21,8 @@ export const useBooksHandler = () => {
         isClosable: true,
         position: "top-right",
       });
+      onClose()
+      refetch()
     },
 
     onError: (err: any) => {
@@ -29,9 +36,7 @@ export const useBooksHandler = () => {
     },
   });
 
-  const { data, isLoading, isFetching } = useQuery("available-books", () =>
-    getBooks(),
-  );
+ 
 
   const formik = useFormik<IBooks>({
     initialValues: {
@@ -46,5 +51,5 @@ export const useBooksHandler = () => {
       mutate(values);
     },
   });
-  return { formik, data, isFetching, isLoading, booksLoading };
+  return { formik, data, isFetching, isLoading, booksLoading,isOpen, onOpen, onClose };
 };

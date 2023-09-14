@@ -63,7 +63,7 @@ const BookList = ({ data }: IProps) => {
         </Box>
       ))}
       {selectedBook && (
-        <Modal isOpen={true} onClose={closeModal} size="lg">
+        <Modal isOpen={true} onClose={closeModal} size="md">
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>{selectedBook.title}</ModalHeader>
@@ -73,6 +73,7 @@ const BookList = ({ data }: IProps) => {
                 src={selectedBook.imageUrl}
                 alt={selectedBook.title}
                 w="100%"
+                h="150"
                 objectFit="cover"
                 mb={4}
               />

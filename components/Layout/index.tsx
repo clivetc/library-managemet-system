@@ -7,6 +7,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { logout } from "@/redux/authReducer";
 import { Flex, Spinner } from "@chakra-ui/react";
+import { useQuery } from "react-query";
+import { getUserById } from "@/services/api/service/getUser";
+import { logoutAdmin } from "@/redux/adminAuthReducer";
 
 interface IProps {
   children: ReactNode;
@@ -18,12 +21,25 @@ const Layout: FC<IProps> = ({ children }) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
   const loading = useSelector((state: RootState) => state.auth.loading);
+  const isAdminAuthorized = useSelector((state: RootState) => state.admin.isAdminAuthorized);
+
+
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+
+  const { data } = useQuery(
+    ["user-data", userId],
+    () => getUserById(userId),
+    {
+      enabled: !!userId,
+    },
+  );
 
   const dispatch = useDispatch();
 
   const authRoutes = [
     "/users/auth/login",
-    "/users/auth/admin",
+    "/admin/auth/login",
     "/users/auth/register",
   ];
 
@@ -32,6 +48,11 @@ const Layout: FC<IProps> = ({ children }) => {
   useEffect(() => {
     if (loading === "pending") {
       setIsLoading(true);
+    } else if (isAdminAuthorized) {
+      if (authRoutes.includes('/admin/auth')) {
+        router.push('/admin/auth/login')
+      }
+      setIsLoading(false);
     } else if (!isAuthorized) {
       if (!isAuthScreen) {
         router.push("/users/auth/login");
@@ -39,25 +60,27 @@ const Layout: FC<IProps> = ({ children }) => {
     } else {
       setIsLoading(false);
     }
-  }, [loading, isAuthorized, router, isAuthScreen]);
+  }, [loading, isAuthorized, isAdminAuthorized, router, isAuthScreen]);
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(logoutAdmin());
     localStorage.clear();
   };
 
   return (
     <div>
       {isLoading ? (
-        <Flex justify="center" align="center" height="100vh">
-          Loading...
+        <Flex justify="center" align="center" height="100vh" w={'100vw'}>
+          <Spinner size="xl" />
         </Flex>
-      ) : isAuthorized ? (
-        <MainLayout userName={user?.name || "N/A"} logOut={handleLogout}>
+      ) : !isAuthorized && !isAdminAuthorized ? (
+        <AuthLayout>{children}</AuthLayout>
+
+      ) : (
+        <MainLayout userName={data?.name || "N/A"} logOut={handleLogout}>
           {children}
         </MainLayout>
-      ) : (
-        <AuthLayout>{children}</AuthLayout>
       )}
     </div>
   );

@@ -11,13 +11,15 @@ const BooksPage = () => {
 
   return (
     <Box>
-      {/* { isLoading ? (
+      {isLoading ? (
+        <Box w='100vw'>
         <Center height="100vh">
           <Spinner size="xl" />
         </Center>
-      ) : ( */}
+        </Box>
+      ) : (
         <BookList data={books} />
-      {/* )} */}
+      )}
     </Box>
   );
 };

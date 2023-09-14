@@ -38,7 +38,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const { data, isLoading, isFetching } = useQuery(
     ["user-data", userId],
-    () => getUserById(userId), // Pass userId directly as the argument
+    () => getUserById(userId),
     {
       enabled: !!userId,
     },
