@@ -24,3 +24,10 @@ export interface IBooks {
   available: boolean;
   availableDate: string;
 }
+
+export interface IUser {
+  id: string;
+  name: string;
+  firstName: string;
+  lastName: string;
+}

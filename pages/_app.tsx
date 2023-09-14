@@ -4,6 +4,8 @@ import { extendTheme } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
 import { AuthProvider } from "@/Context/AuthContext";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Provider } from "react-redux";
+import store from "@/redux/store";
 
 const colors = {
   brand: {
@@ -21,11 +23,11 @@ export default function App({ Component, pageProps }: AppProps) {
     <ChakraProvider theme={theme}>
       <CSSReset />
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
+        <Provider store={store}>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </AuthProvider>
+        </Provider>
       </QueryClientProvider>
     </ChakraProvider>
   );

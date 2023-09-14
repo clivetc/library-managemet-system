@@ -17,12 +17,12 @@ import Link from "next/link";
 import { IBooks } from "@/types/interfaces";
 
 interface IProps {
-  books: IBooks[];
+  data: any;
 }
 
-const BookList = ({ books }: IProps) => {
+const BookList = ({ data }: IProps) => {
   const [selectedBook, setSelectedBook] = useState<IBooks | null>(null);
-  console.log({ books });
+  console.log({ data });
   const openModal = (book: IBooks) => {
     setSelectedBook(book);
   };
@@ -33,7 +33,7 @@ const BookList = ({ books }: IProps) => {
 
   return (
     <Flex flexWrap="wrap">
-      {books.map((book) => (
+      {data?.books?.map((book:IBooks) => (
         <Box
           key={book.title}
           p={4}

@@ -1,8 +1,11 @@
+// Layout.tsx
 import { FC, ReactNode, useEffect, useState } from "react";
 import AuthLayout from "./auth";
 import MainLayout from "./main";
 import { useRouter } from "next/router";
-import { useAuth } from "@/Context/AuthContext";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/redux/store";
+import { logout } from "@/redux/authReducer";
 import { Flex, Spinner } from "@chakra-ui/react";
 
 interface IProps {
@@ -12,11 +15,15 @@ interface IProps {
 const Layout: FC<IProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { user, logout, loading, isAuthorized } = useAuth();
+  const user = useSelector((state: RootState) => state.auth.userData);
+  const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
+  const loading = useSelector((state: RootState) => state.auth.loading);
+
+  const dispatch = useDispatch();
 
   const authRoutes = [
     "/users/auth/login",
-    "/admin/auth/login",
+    "/users/auth/admin",
     "/users/auth/register",
   ];
 
@@ -26,7 +33,7 @@ const Layout: FC<IProps> = ({ children }) => {
     if (loading) {
       setIsLoading(true);
     } else if (!isAuthorized) {
-      if (isAuthScreen) {
+      if (!isAuthScreen) {
         router.push("/users/auth/login");
       }
     } else {
@@ -34,22 +41,25 @@ const Layout: FC<IProps> = ({ children }) => {
     }
   }, [loading, isAuthorized, router]);
 
-  if (loading)
-    return (
-      <Flex alignItems={"center"} justifyContent={"center"} minHeight="100vh">
-        <Spinner />
-      </Flex>
-    );
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.clear();
+  };
 
-  if (!isAuthorized) {
-    return <AuthLayout>{children} </AuthLayout>;
-  }
   return (
-    <>
-      <MainLayout userName={user?.name || "N/A"} logOut={logout}>
-        {children}
-      </MainLayout>
-    </>
+    <div>
+      {isLoading ? (
+        <Flex justify="center" align="center" height="100vh">
+          <Spinner size="xl" />
+        </Flex>
+      ) : isAuthorized ? (
+        <MainLayout userName={user?.name || "N/A"} logOut={handleLogout}>
+          {children}
+        </MainLayout>
+      ) : (
+        <AuthLayout>{children}</AuthLayout>
+      )}
+    </div>
   );
 };
 

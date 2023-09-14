@@ -1,4 +1,3 @@
-import { useAuth } from "@/Context/AuthContext";
 import { loginUser } from "@/services/api/service/auth";
 import { ILogin } from "@/types/interfaces";
 import { useToast } from "@chakra-ui/react";
@@ -10,7 +9,6 @@ import * as yup from "yup";
 export const useLoginHandler = () => {
   const router = useRouter();
   const toast = useToast();
-  const { login } = useAuth();
 
   const { mutate, isLoading: userLoading } = useMutation(loginUser, {
     onSuccess: (res) => {
@@ -21,8 +19,7 @@ export const useLoginHandler = () => {
         isClosable: true,
         position: "top-right",
       }),
-        login(res.currentUser);
-      router.push("/");
+        router.push("/");
     },
 
     onError: (err: any) => {

@@ -11,13 +11,13 @@ const BooksPage = () => {
 
   return (
     <Box>
-      {isLoading || isFetching ? (
+      {/* { isLoading ? (
         <Center height="100vh">
           <Spinner size="xl" />
         </Center>
-      ) : (
-        <BookList books={books as IBooks[]} />
-      )}
+      ) : ( */}
+        <BookList data={books} />
+      {/* )} */}
     </Box>
   );
 };
