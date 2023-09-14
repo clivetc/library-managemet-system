@@ -15,7 +15,7 @@ interface IProps {
 const Layout: FC<IProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const user = useSelector((state: RootState) => state.auth.userData);
+  const user = useSelector((state: RootState) => state.auth.user);
   const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
   const loading = useSelector((state: RootState) => state.auth.loading);
 
@@ -30,7 +30,7 @@ const Layout: FC<IProps> = ({ children }) => {
   const isAuthScreen = authRoutes.includes(router.pathname);
 
   useEffect(() => {
-    if (loading) {
+    if (loading === "pending") {
       setIsLoading(true);
     } else if (!isAuthorized) {
       if (!isAuthScreen) {
@@ -39,7 +39,7 @@ const Layout: FC<IProps> = ({ children }) => {
     } else {
       setIsLoading(false);
     }
-  }, [loading, isAuthorized, router]);
+  }, [loading, isAuthorized, router, isAuthScreen]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -50,7 +50,7 @@ const Layout: FC<IProps> = ({ children }) => {
     <div>
       {isLoading ? (
         <Flex justify="center" align="center" height="100vh">
-          <Spinner size="xl" />
+          Loading...
         </Flex>
       ) : isAuthorized ? (
         <MainLayout userName={user?.name || "N/A"} logOut={handleLogout}>

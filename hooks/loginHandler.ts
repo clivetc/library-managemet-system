@@ -1,14 +1,17 @@
+import { login } from "@/redux/authReducer";
 import { loginUser } from "@/services/api/service/auth";
 import { ILogin } from "@/types/interfaces";
 import { useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
 
 export const useLoginHandler = () => {
   const router = useRouter();
   const toast = useToast();
+  const dispatch =useDispatch()
 
   const { mutate, isLoading: userLoading } = useMutation(loginUser, {
     onSuccess: (res) => {
@@ -19,6 +22,7 @@ export const useLoginHandler = () => {
         isClosable: true,
         position: "top-right",
       }),
+      dispatch(login(res.data));
         router.push("/");
     },
 

@@ -6,7 +6,6 @@ interface AuthState {
   user: IUser | null;
   isAuthorized: boolean;
   loading: "pending" | "fulfilled" | "rejected" | "idle"; 
-  userData: any; 
   error: string | any; 
 }
 
@@ -21,7 +20,6 @@ const initialState: AuthState = {
   user: null,
   isAuthorized: false,
   loading: "idle", 
-  userData:null, 
   error: null,
 };
 
@@ -46,7 +44,8 @@ const authSlice = createSlice({
       })
       .addCase(userData.fulfilled, (state, action) => {
         state.loading = 'fulfilled';
-        state.userData = action.payload; 
+        state.user = action.payload;
+        state.isAuthorized = true;
       })
       .addCase(userData.rejected, (state, action) => {
         state.loading = 'rejected';
