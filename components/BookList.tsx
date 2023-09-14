@@ -22,7 +22,7 @@ interface IProps {
 
 const BookList = ({ data }: IProps) => {
   const [selectedBook, setSelectedBook] = useState<IBooks | null>(null);
-  console.log({ data });
+
   const openModal = (book: IBooks) => {
     setSelectedBook(book);
   };
