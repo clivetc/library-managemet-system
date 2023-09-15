@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { logout } from "@/redux/authReducer";
-import { Flex, Spinner } from "@chakra-ui/react";
+import { Box, Spinner, Center } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { getUserById } from "@/services/api/service/getUser";
 import { logoutAdmin } from "@/redux/adminAuthReducer";
@@ -71,9 +71,11 @@ const Layout: FC<IProps> = ({ children }) => {
   return (
     <div>
       {isLoading ? (
-        <Flex justify="center" align="center" height="100vh" w={'100vw'}>
-          <Spinner size="xl" />
-        </Flex>
+        <Box w={'100vw'}>
+          <Center height="100vh">
+            <Spinner size="xl" />
+          </Center>
+        </Box>
       ) : !isAuthorized && !isAdminAuthorized ? (
         <AuthLayout>{children}</AuthLayout>
 

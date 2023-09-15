@@ -13,9 +13,10 @@ import {
   FormControl,
   Switch,
   FormLabel,
-  VStack,
+  Text,
+  Box,
 } from "@chakra-ui/react";
-import { FormikProps, Field } from "formik";
+import { FormikProps } from "formik";
 
 interface IProps {
   formikHook: FormikProps<any>;
@@ -47,6 +48,7 @@ const AddBooksModal = ({ formikHook, onClose, isOpen }: IProps) => {
         <form onSubmit={formikHook.handleSubmit}>
           <ModalBody>
             <Stack spacing={4}>
+              <Text>Please add a book</Text>
               <Input
                 placeholder="Enter Title"
                 name="title"
@@ -77,47 +79,41 @@ const AddBooksModal = ({ formikHook, onClose, isOpen }: IProps) => {
                 </FormLabel>
                 <Switch
                   id="email-alerts"
-                  name="available" // Make sure to use the correct field name
+                  name="available"
                   onChange={formikHook.handleChange}
                 />
               </FormControl>
-              <Field name="imageUrl">
-                {({ field, form }: any) => (
-                  <>
-                    <Input
-                      {...field}
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const selectedFile =
-                          e.target.files && e.target.files[0];
-                        if (selectedFile) {
-                          form.setFieldValue("imageUrl", selectedFile); // Make sure to set the correct field value
-                          handleImageUpload(e);
-                        }
-                      }}
-                    />
-                    <VStack spacing={4}>
-                      {selectedImage && (
-                        <Image
-                          mt={3}
-                          src={selectedImage}
-                          alt="Selected Image"
-                          maxW="200px"
-                          maxH="200px"
-                        />
-                      )}
-                    </VStack>
-                  </>
-                )}
-              </Field>
+              <Input
+                name="imageUrl"
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const selectedFile =
+                    e.target.files && e.target.files[0];
+                  if (selectedFile) {
+                    formikHook.setFieldValue("imageUrl", selectedFile);
+                    handleImageUpload(e);
+                  }
+                }}
+              />
+              {selectedImage && (
+                <Box>
+                  <Image
+                    mt={3}
+                    src={selectedImage}
+                    alt="Selected Image"
+                    maxW="200px"
+                    maxH="200px"
+                  />
+                </Box>
+              )}
             </Stack>
           </ModalBody>
-          <ModalFooter>
-            <Button type="reset" onClick={formikHook.handleReset}>
+          <ModalFooter gap={3}>
+            <Button type="reset" onClick={formikHook.handleReset} variant='outline'>
               Reset
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" colorScheme="blue">Submit</Button>
           </ModalFooter>
         </form>
       </ModalContent>

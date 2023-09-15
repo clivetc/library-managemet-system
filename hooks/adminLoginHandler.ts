@@ -11,7 +11,7 @@ import * as yup from "yup";
 export const useAdminLoginHandler = () => {
   const router = useRouter();
   const toast = useToast();
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { mutate, isLoading: userLoading } = useMutation(adminLogin, {
     onSuccess: (res) => {
@@ -22,8 +22,8 @@ const dispatch = useDispatch()
         isClosable: true,
         position: "top-right",
       }),
+        router.push("/admin/dashboard");
       dispatch(loginAdmin(res.data));
-      router.push("/admin/dashboard");
     },
 
     onError: (err: any) => {

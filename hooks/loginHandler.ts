@@ -11,7 +11,7 @@ import * as yup from "yup";
 export const useLoginHandler = () => {
   const router = useRouter();
   const toast = useToast();
-  const dispatch =useDispatch()
+  const dispatch = useDispatch();
 
   const { mutate, isLoading: userLoading } = useMutation(loginUser, {
     onSuccess: (res) => {
@@ -22,9 +22,8 @@ export const useLoginHandler = () => {
         isClosable: true,
         position: "top-right",
       }),
-        dispatch(login(res.data));
-      
         router.push("/");
+      dispatch(login(res.data));
     },
 
     onError: (err: any) => {
