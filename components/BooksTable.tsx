@@ -10,7 +10,7 @@ type handleColumns = (rowData: IUserBooks, action: TRowSelection) => void;
 
 interface IProps {
     data: IUserBooks[];
-    handleOpen: () => void;
+    handleOpen: handleColumns;
 }
 
 const columns: (handleOpen: handleColumns) => ColType<IUserBooks>[] = (
@@ -65,14 +65,14 @@ const BooksTable = (props: IProps) => {
             dataSource={props?.data}
             columns={columns(handleOpen)}
             rowKey={(record) => record?.id}
-        // pagination={{
-        //     page: pageNum,
-        //     pageSize: 10,
-        //     total: props?.data?.length,
-        //     onchange(newPage) {
-        //         setPageNum(newPage);
-        //     },
-        // }}
+            pagination={{
+                page: pageNum,
+                pageSize: 10,
+                total: props?.data?.length,
+                onchange(newPage) {
+                    setPageNum(newPage);
+                },
+            }}
         />
     );
 };

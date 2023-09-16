@@ -17,7 +17,6 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { FormikProps } from "formik";
-import imageCompression from "browser-image-compression";
 
 interface IProps {
   formikHook: FormikProps<any>;
@@ -28,30 +27,21 @@ interface IProps {
 const AddBooksModal = ({ formikHook, onClose, isOpen }: IProps) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      try {
-        const options = {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 200,
-          useWebWorker: true,
-        };
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target && typeof e.target.result === "string") {
+          setSelectedImage(e.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        const base64Image = reader.result as string;
+        formikHook.setFieldValue("imageUrl", base64Image);
+      };
 
-        const compressedFile = await imageCompression(file, options);
-
-        // Convert the compressed image to base64
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.result && typeof reader.result === "string") {
-            setSelectedImage(reader.result);
-            formikHook.setFieldValue("imageUrl", reader.result);
-          }
-        };
-        reader.readAsDataURL(compressedFile);
-      } catch (error) {
-        console.error("Error compressing image:", error);
-      }
     }
   };
 
