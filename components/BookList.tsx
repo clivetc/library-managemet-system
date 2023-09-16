@@ -32,14 +32,14 @@ const BookList = ({ data }: IProps) => {
   };
 
   return (
-    <Flex flexWrap="wrap">
+    <Flex flexWrap="wrap" justifyContent="center">
       {data?.books?.map((book: IBooks) => (
         <Box
           key={book.title}
           p={4}
           borderWidth="1px"
           borderRadius="md"
-          flexBasis="30%"
+          flexBasis={{ base: "100%", sm: "45%", md: "30%" }}
           m={2}
         >
           <Image
