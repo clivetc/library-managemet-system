@@ -33,7 +33,7 @@ const BookList = ({ data }: IProps) => {
 
   return (
     <Flex flexWrap="wrap">
-      {data?.books?.map((book:IBooks) => (
+      {data?.books?.map((book: IBooks) => (
         <Box
           key={book.title}
           p={4}
@@ -43,10 +43,10 @@ const BookList = ({ data }: IProps) => {
           m={2}
         >
           <Image
-            src={book.imageUrl}
+            src={book.imageurl.data}
             alt={book.title}
             h="200px"
-            w="100%"
+            w="full"
             objectFit="cover"
           />
           <Text fontSize="xl" mt={2}>
@@ -70,7 +70,7 @@ const BookList = ({ data }: IProps) => {
             <ModalCloseButton />
             <ModalBody>
               <Image
-                src={selectedBook.imageUrl}
+                src={selectedBook.imageurl.data}
                 alt={selectedBook.title}
                 w="100%"
                 h="150"

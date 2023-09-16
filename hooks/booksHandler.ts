@@ -1,28 +1,29 @@
 import { addBooks, getBooks } from "@/services/api/service/books";
 import { IBooks } from "@/types/interfaces";
-import { useToast,useDisclosure } from "@chakra-ui/react";
+import { useToast, useDisclosure } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 
 export const useBooksHandler = () => {
   const toast = useToast();
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { data, isLoading, isFetching,refetch } = useQuery("available-books", () =>
-  getBooks(),
-);
+  const { data, isLoading, isFetching, refetch } = useQuery(
+    "available-books",
+    () => getBooks(),
+  );
 
   const { mutate, isLoading: booksLoading } = useMutation(addBooks, {
     onSuccess: (res) => {
       toast({
-        description: res.message,
+        description: "Book Sucessfully Added",
         status: "success",
         duration: 5000,
         isClosable: true,
         position: "top-right",
       });
-      onClose()
-      refetch()
+      onClose();
+      refetch();
     },
 
     onError: (err: any) => {
@@ -36,20 +37,27 @@ export const useBooksHandler = () => {
     },
   });
 
- 
-
   const formik = useFormik<IBooks>({
     initialValues: {
       title: "",
-      imageUrl: "",
+      imageurl: "",
       description: "",
       author: "",
       available: true,
-      availableDate: "",
+      availabledate: "",
     },
     onSubmit: (values) => {
       mutate(values);
     },
   });
-  return { formik, data, isFetching, isLoading, booksLoading,isOpen, onOpen, onClose };
+  return {
+    formik,
+    data,
+    isFetching,
+    isLoading,
+    booksLoading,
+    isOpen,
+    onOpen,
+    onClose,
+  };
 };

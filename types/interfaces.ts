@@ -19,12 +19,21 @@ export interface ILoginAdmin {
 export interface IBooks {
   title: string;
   author: string;
-  imageUrl: string;
+  imageurl: any;
   description: string;
   available: boolean;
-  availableDate: string;
+  availabledate: string;
 }
 
+export interface IUserBooks {
+  id: string;
+  title: string;
+  author: string;
+  imageurl: string;
+  description: string;
+  available: boolean;
+  availabledate: string;
+}
 export interface IUser {
   id: string;
   name: string;

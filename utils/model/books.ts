@@ -6,8 +6,8 @@ class Book extends Model {
   public title!: string;
   public author!: string;
   public available!: boolean;
-  public availableDate!: Date; // Add the availableDate property
-  public imageUrl!: string;
+  public availabledate!: Date;
+  public imageurl!: Buffer;
   public description!: string;
 }
 
@@ -31,13 +31,13 @@ Book.init(
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
-    availableDate: {
-      // Define the availableDate property
+    availabledate: {
+      // Define the availabledate property
       type: DataTypes.DATE, // Use DataTypes.DATE for date values
       allowNull: true, // Set allowNull based on your requirements
     },
-    imageUrl: {
-      type: new DataTypes.STRING(256), // Define the maximum length for the image URL
+    imageurl: {
+      type: new DataTypes.BLOB(), // Define the maximum length for the image URL
     },
     description: {
       type: new DataTypes.STRING(256), // Define the maximum length for the image URL

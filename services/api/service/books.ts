@@ -12,5 +12,5 @@ export const addBooks = async (values: IBooks) => {
 };
 
 export const getBooks = async () => {
-  return api.get<IBooks>("/books").then((res) => res.data);
+  return api.get("/books").then((res) => res.data);
 };
