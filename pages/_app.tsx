@@ -2,7 +2,6 @@ import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import { extendTheme } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
-import { AuthProvider } from "@/Context/AuthContext";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import store from "@/redux/store";
