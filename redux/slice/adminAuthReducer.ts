@@ -10,7 +10,7 @@ const adminData = createAsyncThunk("admin-data", async () => {
       return;
     }
     const response = await getAdminById(id);
-    return response;
+    return response.admin;
   } catch (error) {
     throw error;
   }
