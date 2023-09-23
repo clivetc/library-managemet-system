@@ -2,31 +2,39 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUserById } from "@/services/api/service/getUser";
 import { IUser } from "@/types/interfaces";
 
+const userData = createAsyncThunk("user-data", async () => {
+  try {
+    const userId = localStorage.getItem("userId");
+    if (userId === null) {
+      return;
+    }
+
+    const response = await getUserById(userId);
+    return response.user;
+  } catch (error) {
+    throw error; // Rethrow the error to be caught by .rejected
+  }
+});
+
 interface AuthState {
   user: IUser | null;
   isAuthorized: boolean;
   loading: "pending" | "fulfilled" | "rejected" | "idle";
   error: string | any;
 }
-const userData = createAsyncThunk("user-data", async (userId:string) => {
-  // const userId = localStorage.getItem('userId')
-  const response = await getUserById(userId);
-  return response;
-});
 
-const initialState: AuthState = {
-  user: null,
+const initialState = {
+  user: null as IUser | null,
   isAuthorized: false,
   loading: "idle",
-  error: null,
+  error: null as string | null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<IUser>) => {
-      state.user = action.payload;
+    login: (state) => {
       state.isAuthorized = true;
     },
     logout: (state) => {
@@ -47,10 +55,12 @@ const authSlice = createSlice({
       })
       .addCase(userData.rejected, (state, action) => {
         state.loading = "rejected";
-        state.error = action.error.message;
+        state.error = action.error.message || null;
       });
   },
 });
 
 export const { login, logout } = authSlice.actions;
+
+export const userAsyncActions = { userData };
 export default authSlice.reducer;

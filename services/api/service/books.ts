@@ -14,3 +14,7 @@ export const addBooks = async (values: IBooks) => {
 export const getBooks = async () => {
   return api.get("/books").then((res) => res.data);
 };
+
+export const deleteBook = async (id: string) => {
+  return api.delete(`/books/${id}`).then((res) => res.data);
+};

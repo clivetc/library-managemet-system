@@ -22,7 +22,7 @@ export const loginUser = async (values: ILogin) => {
 
       if (response.accessToken) {
         localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("id", id);
+        localStorage.setItem("userId", id);
       }
 
       return response;
@@ -39,9 +39,11 @@ export const adminLogin = async (values: ILoginAdmin) => {
       const response = resp.data;
 
       const accessToken = response.accessToken;
+      const id = response.admin.id;
 
       if (response.accessToken) {
         localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("adminId", id);
       }
 
       return response;

@@ -43,6 +43,9 @@ const AdminLogin = () => {
                 onChange={formikHook.handleChange}
               />
             </InputGroup>
+            {formikHook.touched.username && formikHook.errors.username ?
+              <Box color={'red'}>{formikHook.errors.username}</Box>
+              : null}
             <InputGroup size="md">
               <InputLeftElement pointerEvents="none">
                 <Icon as={MdPassword} color="gray.300" />
@@ -60,6 +63,9 @@ const AdminLogin = () => {
                 </Button>
               </InputRightElement>
             </InputGroup>
+            {formikHook.touched.password && formikHook.errors.password ?
+              <Box color={'red'}>{formikHook.errors.username}</Box>
+              : null}
             <Button type="submit" colorScheme="purple" isLoading={userLoading}>
               LOGIN
             </Button>

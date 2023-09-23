@@ -5,11 +5,13 @@ import MainLayout from "./main";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { logout } from "@/redux/authReducer";
+import { logout, userAsyncActions } from "@/redux/slice/authReducer";
 import { Box, Spinner, Center } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { getUserById } from "@/services/api/service/getUser";
-import { logoutAdmin } from "@/redux/adminAuthReducer";
+import { adminAsyncActions, logoutAdmin } from "@/redux/slice/adminAuthReducer";
+import { AnyAction } from "redux";
+import { IUser } from "@/types/interfaces";
 
 interface IProps {
   children: ReactNode;
@@ -22,18 +24,7 @@ const Layout: FC<IProps> = ({ children }) => {
   const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
   const loading = useSelector((state: RootState) => state.auth.loading);
   const isAdminAuthorized = useSelector((state: RootState) => state.admin.isAdminAuthorized);
-
-
-  const userId =
-    typeof window !== "undefined" ? localStorage.getItem("userId") : null;
-
-  const { data } = useQuery(
-    ["user-data", userId],
-    () => getUserById(userId),
-    {
-      enabled: !!userId,
-    },
-  );
+  const admin = useSelector((state: RootState) => state.admin.user);
 
   const dispatch = useDispatch();
 
@@ -46,21 +37,30 @@ const Layout: FC<IProps> = ({ children }) => {
   const isAuthScreen = authRoutes.includes(router.pathname);
 
   useEffect(() => {
-    if (loading === "pending") {
+    if (isAuthorized) {
+
+      dispatch(userAsyncActions.userData() as unknown as AnyAction)
+    } if (isAdminAuthorized) {
+      dispatch(adminAsyncActions.adminData() as unknown as AnyAction)
+    }
+  }, [dispatch, isAuthorized])
+
+
+  useEffect(() => {
+    if (loading === 'pending') {
       setIsLoading(true);
-    } else if (isAdminAuthorized) {
-      if (authRoutes.includes('/admin/auth')) {
-        router.push('/admin/auth/login')
-      }
-      setIsLoading(false);
-    } else if (!isAuthorized) {
-      if (!isAuthScreen) {
-        router.push("/users/auth/login");
+    } else if (!isAuthorized && !isAdminAuthorized) {
+      if (authRoutes.includes(router.pathname)) {
+        setIsLoading(false);
+      } else {
+        router.replace('/users/auth/login');
+        setIsLoading(false);
       }
     } else {
       setIsLoading(false);
     }
-  }, [loading, isAuthorized, isAdminAuthorized, router, isAuthScreen]);
+  }, [loading, isAdminAuthorized, isAuthorized]);
+
 
   const handleLogout = () => {
     dispatch(logout());
@@ -68,22 +68,25 @@ const Layout: FC<IProps> = ({ children }) => {
     localStorage.clear();
   };
 
+  if (isLoading) {
+    return <Box w={'100vw'}>
+      <Center height="100vh">
+        <Spinner size="xl" />
+      </Center>
+    </Box>
+  }
+
+  if (!isAuthorized && !isAdminAuthorized) {
+    return <div><AuthLayout>{children}</AuthLayout></div>
+  }
+
+  console.log({ admin });
+
   return (
     <div>
-      {isLoading ? (
-        <Box w={'100vw'}>
-          <Center height="100vh">
-            <Spinner size="xl" />
-          </Center>
-        </Box>
-      ) : !isAuthorized && !isAdminAuthorized ? (
-        <AuthLayout>{children}</AuthLayout>
-
-      ) : (
-        <MainLayout userName={data?.name || "N/A"} logOut={handleLogout}>
-          {children}
-        </MainLayout>
-      )}
+      <MainLayout userName={user ? user?.name || "N/A" : "N/A"} logOut={handleLogout}>
+        {children}
+      </MainLayout>
     </div>
   );
 };

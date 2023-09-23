@@ -1,4 +1,4 @@
-import { loginAdmin } from "@/redux/adminAuthReducer";
+import { loginAdmin } from "@/redux/slice/adminAuthReducer";
 import { adminLogin } from "@/services/api/service/auth";
 import { ILoginAdmin } from "@/types/interfaces";
 import { useToast } from "@chakra-ui/react";
@@ -22,7 +22,7 @@ export const useAdminLoginHandler = () => {
         isClosable: true,
         position: "top-right",
       }),
-        router.push("/admin/dashboard");
+        router.replace("/");
       dispatch(loginAdmin(res.data));
     },
 

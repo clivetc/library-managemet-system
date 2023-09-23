@@ -1,4 +1,4 @@
-import { login } from "@/redux/authReducer";
+import { login } from "@/redux/slice/authReducer";
 import { loginUser } from "@/services/api/service/auth";
 import { ILogin } from "@/types/interfaces";
 import { useToast } from "@chakra-ui/react";
@@ -22,7 +22,7 @@ export const useLoginHandler = () => {
         isClosable: true,
         position: "top-right",
       }),
-        router.push("/");
+        router.replace("/");
       dispatch(login(res.data));
     },
 

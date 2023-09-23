@@ -40,18 +40,27 @@ const UserRegister = () => {
               onChange={formikHook.handleChange}
               name="name"
             />
+            {formikHook.touched.name && formikHook.errors.name ?
+              <Box color={'red'}>{formikHook.errors.name}</Box>
+              : null}
             <Input
               type="text"
               placeholder="Please Enter First Name"
               onChange={formikHook.handleChange}
               name="firstName"
             />
+            {formikHook.touched.firstName && formikHook.errors.firstName ?
+              <Box color={'red'}>{formikHook.errors.firstName}</Box>
+              : null}
             <Input
               type="text"
               placeholder="Please Enter Last Name"
               onChange={formikHook.handleChange}
               name="lastName"
             />
+            {formikHook.touched.lastName && formikHook.errors.lastName ?
+              <Box color={'red'}>{formikHook.errors.lastName}</Box>
+              : null}
             <InputGroup size="md">
               <InputLeftElement pointerEvents="none">
                 <Icon as={MdAlternateEmail} color="gray.300" />
@@ -63,6 +72,9 @@ const UserRegister = () => {
                 name="email"
               />
             </InputGroup>
+            {formikHook.touched.email && formikHook.errors.email ?
+              <Box color={'red'}>{formikHook.errors.email}</Box>
+              : null}
             <InputGroup size="md">
               <InputLeftElement pointerEvents="none">
                 <Icon as={MdPassword} color="gray.300" />
@@ -80,7 +92,9 @@ const UserRegister = () => {
                 </Button>
               </InputRightElement>
             </InputGroup>
-
+            {formikHook.touched.password && formikHook.errors.password ?
+              <Box color={'red'}>{formikHook.errors.password}</Box>
+              : null}
             <Button type="submit" colorScheme="purple" isLoading={userLoading}>
               Register
             </Button>

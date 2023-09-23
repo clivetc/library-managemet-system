@@ -43,7 +43,7 @@ const BookList = ({ data }: IProps) => {
           m={2}
         >
           <Image
-            src={book.imageurl.data}
+            src={'https://via.placeholder.com/350x150'}
             alt={book.title}
             h="200px"
             w="full"

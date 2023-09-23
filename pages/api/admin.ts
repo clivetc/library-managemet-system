@@ -42,7 +42,7 @@ export default async function handler(
         // You can generate a token here if needed and return it as a response
         return res
           .status(200)
-          .json({ message: "Admin login successful", accessToken });
+          .json({ message: "Admin login successful", admin, accessToken });
       } else if (action === "addAdmin") {
         // Assuming you have implemented authentication and have access to the authenticated user
         // In this example, I'm assuming isAdmin is provided in the request or as part of your authentication logic
@@ -75,6 +75,16 @@ export default async function handler(
       } else {
         return res.status(400).json({ error: "Invalid action" });
       }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+  if (req.method === "GET") {
+    try {
+      // Fetch all books from the database
+      const data = await Admin.findAll();
+      return res.status(200).json({ data });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal Server Error" });
