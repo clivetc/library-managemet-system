@@ -43,7 +43,7 @@ const Layout: FC<IProps> = ({ children }) => {
     } if (isAdminAuthorized) {
       dispatch(adminAsyncActions.adminData() as unknown as AnyAction)
     }
-  }, [dispatch, isAuthorized])
+  }, [dispatch, isAuthorized, isAdminAuthorized])
 
 
   useEffect(() => {
@@ -80,11 +80,10 @@ const Layout: FC<IProps> = ({ children }) => {
     return <div><AuthLayout>{children}</AuthLayout></div>
   }
 
-  console.log({ admin });
 
   return (
     <div>
-      <MainLayout userName={user ? user?.name || "N/A" : "N/A"} logOut={handleLogout}>
+      <MainLayout userName={user ? user?.name : admin ? admin.firstName || "N/A" : "N/A"} logOut={handleLogout}>
         {children}
       </MainLayout>
     </div>

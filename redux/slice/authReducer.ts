@@ -16,13 +16,6 @@ const userData = createAsyncThunk("user-data", async () => {
   }
 });
 
-interface AuthState {
-  user: IUser | null;
-  isAuthorized: boolean;
-  loading: "pending" | "fulfilled" | "rejected" | "idle";
-  error: string | any;
-}
-
 const initialState = {
   user: null as IUser | null,
   isAuthorized: false,

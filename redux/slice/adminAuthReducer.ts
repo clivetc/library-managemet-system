@@ -1,30 +1,30 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getUserById } from "@/services/api/service/getUser";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IAdmin } from "@/types/interfaces";
 import { getAdminById } from "@/services/api/service/getAdmin";
 
-const adminData = createAsyncThunk("admin-data", async () => {
+const adminData = createAsyncThunk("user-data", async () => {
   try {
-    const id = localStorage.getItem("adminId");
-    if (id === null) {
+    const adminId = localStorage.getItem("adminId");
+    if (adminId === null) {
       return;
     }
-    const response = await getAdminById(id);
+
+    const response = await getAdminById(adminId);
     return response.admin;
   } catch (error) {
-    throw error;
+    throw error; // Rethrow the error to be caught by .rejected
   }
 });
 
 const initialState = {
   user: null as IAdmin | null,
   isAdminAuthorized: false,
-  adminLoading: "idle",
+  loading: "idle",
   error: null as string | null,
 };
 
-const adminSlice = createSlice({
-  name: "authAdmin",
+const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
     loginAdmin: (state) => {
@@ -39,21 +39,21 @@ const adminSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(adminData.pending, (state) => {
-        state.adminLoading = "pending";
+        state.loading = "pending";
       })
       .addCase(adminData.fulfilled, (state, action) => {
-        state.adminLoading = "fulfilled";
+        state.loading = "fulfilled";
         state.user = action.payload;
         state.isAdminAuthorized = true;
       })
       .addCase(adminData.rejected, (state, action) => {
-        state.adminLoading = "rejected";
+        state.loading = "rejected";
         state.error = action.error.message || null;
       });
   },
 });
 
-export const { loginAdmin, logoutAdmin } = adminSlice.actions;
-export const adminAsyncActions = { adminData };
+export const { loginAdmin, logoutAdmin } = authSlice.actions;
 
-export default adminSlice.reducer;
+export const adminAsyncActions = { adminData };
+export default authSlice.reducer;

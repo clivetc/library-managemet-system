@@ -49,11 +49,11 @@ export default async function handler(
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        if (!isAdmin) {
-          return res
-            .status(401)
-            .json({ error: "You are not authorized to add admins" });
-        }
+        // if (!isAdmin) {
+        //   return res
+        //     .status(401)
+        //     .json({ error: "You are not authorized to add admins" });
+        // }
 
         // Validating if the required fields are provided
         if (!username || !password) {
