@@ -17,7 +17,7 @@ const adminData = createAsyncThunk("user-data", async () => {
 });
 
 const initialState = {
-  user: null as IAdmin | null,
+  adminUser: null as IAdmin | null,
   isAdminAuthorized: false,
   loading: "idle",
   error: null as string | null,
@@ -32,7 +32,7 @@ const authSlice = createSlice({
     },
     logoutAdmin: (state) => {
       localStorage.clear();
-      state.user = null;
+      state.adminUser = null;
       state.isAdminAuthorized = false;
     },
   },
@@ -43,7 +43,7 @@ const authSlice = createSlice({
       })
       .addCase(adminData.fulfilled, (state, action) => {
         state.loading = "fulfilled";
-        state.user = action.payload;
+        state.adminUser = action.payload;
         state.isAdminAuthorized = true;
       })
       .addCase(adminData.rejected, (state, action) => {

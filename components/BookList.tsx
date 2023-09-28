@@ -32,21 +32,25 @@ const BookList = ({ data }: IProps) => {
   };
 
   return (
-    <Flex flexWrap="wrap" justifyContent="center">
+    <Flex flexWrap="wrap" justifyContent="center" alignContent='center'>
       {data?.books?.map((book: IBooks) => (
         <Box
           key={book.title}
           p={4}
           borderWidth="1px"
           borderRadius="md"
-          flexBasis={{ base: "100%", sm: "45%", md: "30%" }}
+          // flexBasis={{ base: "100%", sm: "45%", md: "30%" }}
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+          flexDirection='column'
           m={2}
         >
           <Image
-            src={'https://via.placeholder.com/350x150'}
+            src={book.imageurl}
             alt={book.title}
             h="200px"
-            w="full"
+            w="200px"
             objectFit="cover"
           />
           <Text fontSize="xl" mt={2}>
@@ -57,6 +61,7 @@ const BookList = ({ data }: IProps) => {
             colorScheme="teal"
             onClick={() => openModal(book)}
             isDisabled={!book.available}
+            w='full'
           >
             View Details
           </Button>

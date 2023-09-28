@@ -46,4 +46,5 @@ export interface IAdmin {
   name: string;
   firstName: string;
   lastName: string;
+  isAdmin: boolean;
 }

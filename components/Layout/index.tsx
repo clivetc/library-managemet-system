@@ -21,10 +21,15 @@ const Layout: FC<IProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const user = useSelector((state: RootState) => state.auth.user);
-  const isAuthorized = useSelector((state: RootState) => state.auth.isAuthorized);
+  const isAuthorized = useSelector(
+    (state: RootState) => state.auth.isAuthorized,
+  );
   const loading = useSelector((state: RootState) => state.auth.loading);
-  const isAdminAuthorized = useSelector((state: RootState) => state.admin.isAdminAuthorized);
-  const admin = useSelector((state: RootState) => state.admin.user);
+  const isAdminAuthorized = useSelector(
+    (state: RootState) => state.admin.isAdminAuthorized,
+  );
+  const admin = useSelector((state: RootState) => state.admin.adminUser);
+  const storedToken = localStorage.getItem("accessToken");
 
   const dispatch = useDispatch();
 
@@ -34,33 +39,35 @@ const Layout: FC<IProps> = ({ children }) => {
     "/users/auth/register",
   ];
 
-  const isAuthScreen = authRoutes.includes(router.pathname);
-
   useEffect(() => {
     if (isAuthorized) {
-
-      dispatch(userAsyncActions.userData() as unknown as AnyAction)
-    } if (isAdminAuthorized) {
-      dispatch(adminAsyncActions.adminData() as unknown as AnyAction)
+      dispatch(userAsyncActions.userData() as unknown as AnyAction);
     }
-  }, [dispatch, isAuthorized, isAdminAuthorized])
-
+    if (isAdminAuthorized) {
+      dispatch(adminAsyncActions.adminData() as unknown as AnyAction);
+    }
+  }, [dispatch, isAuthorized, isAdminAuthorized]);
 
   useEffect(() => {
-    if (loading === 'pending') {
+    if (loading === "pending") {
       setIsLoading(true);
-    } else if (!isAuthorized && !isAdminAuthorized) {
-      if (authRoutes.includes(router.pathname)) {
-        setIsLoading(false);
+    } else {
+      // This code will run on the client-side
+      if (storedToken) {
+        // Redirect to the desired page (e.g., dashboard)
+        router.push("/");
+      } else if (!isAuthorized && !isAdminAuthorized) {
+        if (authRoutes.includes(router.pathname)) {
+          setIsLoading(false);
+        } else {
+          router.replace("/users/auth/login");
+          setIsLoading(false);
+        }
       } else {
-        router.replace('/users/auth/login');
         setIsLoading(false);
       }
-    } else {
-      setIsLoading(false);
     }
   }, [loading, isAdminAuthorized, isAuthorized]);
-
 
   const handleLogout = () => {
     dispatch(logout());
@@ -69,23 +76,35 @@ const Layout: FC<IProps> = ({ children }) => {
   };
 
   if (isLoading) {
-    return <Box w={'100vw'}>
-      <Center height="100vh">
-        <Spinner size="xl" />
-      </Center>
-    </Box>
+    return (
+      <Box w={"100vw"}>
+        <Center height="100vh">
+          <Spinner size="xl" />
+        </Center>
+      </Box>
+    );
   }
 
   if (!isAuthorized && !isAdminAuthorized) {
-    return <div><AuthLayout>{children}</AuthLayout></div>
+    return (
+      <div>
+        <AuthLayout>{children}</AuthLayout>
+      </div>
+    );
   }
-
 
   return (
     <div>
-      <MainLayout userName={user ? user?.name : admin ? admin.firstName || "N/A" : "N/A"} logOut={handleLogout}>
-        {children}
-      </MainLayout>
+      {storedToken && (
+        <MainLayout
+          userName={
+            user ? user?.name : admin ? admin.firstName || "N/A" : "N/A"
+          }
+          logOut={handleLogout}
+        >
+          {children}
+        </MainLayout>
+      )}
     </div>
   );
 };

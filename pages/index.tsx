@@ -6,12 +6,13 @@ import AdminDashboard from "./admin/dashboard";
 
 export default function Home() {
 
-  const isAdminAuthorized = useSelector(
-    (state: RootState) => state.admin.isAdminAuthorized,
+  const isAdmin = useSelector(
+    (state: RootState) => state.admin.adminUser?.isAdmin,
   );
+
   return (
     <main>
-      {isAdminAuthorized ? <AdminDashboard /> : <BooksPage />}
+      {isAdmin ? <AdminDashboard /> : <BooksPage />}
     </main>
   );
 }
