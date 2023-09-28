@@ -30,8 +30,6 @@ const Layout: FC<IProps> = ({ children }) => {
   );
   const admin = useSelector((state: RootState) => state.admin.adminUser);
 
-  const isHomePage = router.pathname === '/';
-
   const dispatch = useDispatch();
 
   const authRoutes = [
@@ -96,18 +94,21 @@ const Layout: FC<IProps> = ({ children }) => {
     );
   }
 
-  return (
-    <div>
-      {isHomePage && (
-        <MainLayout
-          userName={
-            user ? user?.name : admin ? admin.firstName || "N/A" : "N/A"
-          }
-          logOut={handleLogout}
-        >
+  const isHomePage = router.pathname === '/';
+  if (isAuthorized && isHomePage) {
+    return (
+      <div>
+        <MainLayout userName={user ? user?.name ?? admin?.firstName ?? "N/A" : "N/A"} logOut={handleLogout}>
           {children}
         </MainLayout>
-      )}
+
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <AuthLayout>{children}</AuthLayout>
     </div>
   );
 };
