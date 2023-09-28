@@ -50,24 +50,18 @@ const Layout: FC<IProps> = ({ children }) => {
   useEffect(() => {
     if (loading === "pending") {
       setIsLoading(true);
-    } else {
-      // This code will run on the client-side
-      const storedToken = localStorage.getItem("accessToken");
-
-      if (storedToken) {
-        // Redirect to the desired page (e.g., dashboard)
-        router.push("/");
-      } else if (!isAuthorized && !isAdminAuthorized) {
-        if (authRoutes.includes(router.pathname)) {
-          setIsLoading(false);
-        } else {
-          router.replace("/users/auth/login");
-          setIsLoading(false);
-        }
+    }
+    else if (!isAuthorized && !isAdminAuthorized) {
+      if (authRoutes.includes(router.pathname)) {
+        setIsLoading(false);
       } else {
+        router.replace("/users/auth/login");
         setIsLoading(false);
       }
+    } else {
+      setIsLoading(false);
     }
+
   }, [loading, isAdminAuthorized, isAuthorized]);
 
   const handleLogout = () => {
@@ -94,21 +88,18 @@ const Layout: FC<IProps> = ({ children }) => {
     );
   }
 
-  const isHomePage = router.pathname === '/';
-  if (isAuthorized && isHomePage) {
-    return (
-      <div>
-        <MainLayout userName={user ? user?.name ?? admin?.firstName ?? "N/A" : "N/A"} logOut={handleLogout}>
-          {children}
-        </MainLayout>
-
-      </div>
-    );
-  }
-
   return (
     <div>
-      <AuthLayout>{children}</AuthLayout>
+
+      <MainLayout
+        userName={
+          user ? user?.name : admin ? admin.firstName || "N/A" : "N/A"
+        }
+        logOut={handleLogout}
+      >
+        {children}
+      </MainLayout>
+
     </div>
   );
 };
