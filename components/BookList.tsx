@@ -68,7 +68,7 @@ const BookList = ({ data }: IProps) => {
         </Box>
       ))}
       {selectedBook && (
-        <Modal isOpen={true} onClose={closeModal} size="md">
+        <Modal isOpen={true} onClose={closeModal} size="md" isCentered>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>{selectedBook.title}</ModalHeader>
