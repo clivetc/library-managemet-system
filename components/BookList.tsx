@@ -75,9 +75,9 @@ const BookList = ({ data }: IProps) => {
             <ModalCloseButton />
             <ModalBody>
               <Image
-                src={selectedBook.imageurl.data}
+                src={selectedBook.imageurl}
                 alt={selectedBook.title}
-                w="100%"
+                w="150"
                 h="150"
                 objectFit="cover"
                 mb={4}
