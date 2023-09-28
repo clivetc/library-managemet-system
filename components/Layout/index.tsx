@@ -29,7 +29,8 @@ const Layout: FC<IProps> = ({ children }) => {
     (state: RootState) => state.admin.isAdminAuthorized,
   );
   const admin = useSelector((state: RootState) => state.admin.adminUser);
-  const storedToken = localStorage.getItem("accessToken");
+
+  const isHomePage = router.pathname === '/';
 
   const dispatch = useDispatch();
 
@@ -53,6 +54,8 @@ const Layout: FC<IProps> = ({ children }) => {
       setIsLoading(true);
     } else {
       // This code will run on the client-side
+      const storedToken = localStorage.getItem("accessToken");
+
       if (storedToken) {
         // Redirect to the desired page (e.g., dashboard)
         router.push("/");
@@ -95,7 +98,7 @@ const Layout: FC<IProps> = ({ children }) => {
 
   return (
     <div>
-      {storedToken && (
+      {isHomePage && (
         <MainLayout
           userName={
             user ? user?.name : admin ? admin.firstName || "N/A" : "N/A"
