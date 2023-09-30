@@ -56,7 +56,7 @@ export default async function handler(
 
     try {
       const { id } = req.query;
-      const book = await Book.findByPk(id);
+      const book = await Book.findByPk(id as string);
 
       if (!book) {
         return res.status(404).json({ error: "Book not found" });
