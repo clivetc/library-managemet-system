@@ -1,6 +1,7 @@
 import { ILogin, ILoginAdmin, IRegister } from "@/types/interfaces";
 import { api } from "../apiClient";
 import { AxiosError } from "axios";
+import { setLocalStorage } from "@/utils/storage";
 
 export const registerUser = async (values: IRegister) => {
   return api
@@ -23,6 +24,8 @@ export const loginUser = async (values: ILogin) => {
       if (response.accessToken) {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("userId", id);
+        setLocalStorage("accessToken", accessToken);
+        setLocalStorage("userId", id);
       }
 
       return response;
@@ -44,6 +47,8 @@ export const adminLogin = async (values: ILoginAdmin) => {
       if (response.accessToken) {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("adminId", id);
+        setLocalStorage("accessToken", accessToken);
+        setLocalStorage("adminId", id);
       }
 
       return response;

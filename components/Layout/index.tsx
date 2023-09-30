@@ -12,6 +12,7 @@ import { getUserById } from "@/services/api/service/getUser";
 import { adminAsyncActions, logoutAdmin } from "@/redux/slice/adminAuthReducer";
 import { AnyAction } from "redux";
 import { IUser } from "@/types/interfaces";
+import { clearLocalStorage } from "@/utils/storage";
 
 interface IProps {
   children: ReactNode;
@@ -68,6 +69,10 @@ const Layout: FC<IProps> = ({ children }) => {
     dispatch(logout());
     dispatch(logoutAdmin());
     localStorage.clear();
+    clearLocalStorage("userId");
+    clearLocalStorage("adminId");
+    clearLocalStorage("accessToken");
+    window.location.reload()
   };
 
   if (isLoading) {

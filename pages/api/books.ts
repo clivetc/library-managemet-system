@@ -4,12 +4,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { config } from "dotenv";
 import fs from "fs/promises";
 import path from "path";
-import bodyParser from "body-parser";
 
 config();
 
 const UPLOADS_DIRECTORY = path.join(process.cwd(), "uploads"); // Path to the uploads directory
-const jsonParser = bodyParser.json({ limit: "10mb" });
 
 type Data = {
   name: string;

@@ -53,13 +53,17 @@ export default async function handler(
 
   if (req.method === "DELETE") {
     // Handle the delete operation
-    const { id } = req.body;
 
     try {
-      // Delete the book by ID
-      await Book.destroy({
-        where: { id },
-      });
+      const { id } = req.query;
+      const book = await Book.findByPk(id);
+
+      if (!book) {
+        return res.status(404).json({ error: "Book not found" });
+      }
+
+      // Delete the book from the database
+      await book.destroy();
 
       return res.status(204).send({});
     } catch (error) {

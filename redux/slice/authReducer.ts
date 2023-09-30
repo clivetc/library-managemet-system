@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUserById } from "@/services/api/service/getUser";
 import { IUser } from "@/types/interfaces";
+import { getLocalStorage } from "@/utils/storage";
 
 const userData = createAsyncThunk("user-data", async () => {
   try {
@@ -16,9 +17,12 @@ const userData = createAsyncThunk("user-data", async () => {
   }
 });
 
+const userId = getLocalStorage("userId");
+const accessToken = getLocalStorage("accessToken");
+
 const initialState = {
   user: null as IUser | null,
-  isAuthorized: false,
+  isAuthorized: !!userId && !!accessToken,
   loading: "idle",
   error: null as string | null,
 };

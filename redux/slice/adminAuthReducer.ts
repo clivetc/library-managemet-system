@@ -1,6 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IAdmin } from "@/types/interfaces";
 import { getAdminById } from "@/services/api/service/getAdmin";
+import { getLocalStorage } from "@/utils/storage";
+
+const isAdminAuthorized = () => {
+  const adminId = getLocalStorage("adminId");
+  const accessToken = getLocalStorage("accessToken");
+  return !!accessToken && !!adminId;
+};
 
 const adminData = createAsyncThunk("user-data", async () => {
   try {
@@ -18,7 +25,7 @@ const adminData = createAsyncThunk("user-data", async () => {
 
 const initialState = {
   adminUser: null as IAdmin | null,
-  isAdminAuthorized: false,
+  isAdminAuthorized: isAdminAuthorized(),
   loading: "idle",
   error: null as string | null,
 };

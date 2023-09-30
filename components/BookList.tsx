@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  Box,
+  Divider,
   Text,
   Button,
   Flex,
@@ -12,18 +12,20 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  Card,
+  CardHeader, CardBody, CardFooter, Stack, Heading, Box
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { IBooks } from "@/types/interfaces";
+import { IUserBooks } from "@/types/interfaces";
 
 interface IProps {
   data: any;
 }
 
 const BookList = ({ data }: IProps) => {
-  const [selectedBook, setSelectedBook] = useState<IBooks | null>(null);
+  const [selectedBook, setSelectedBook] = useState<IUserBooks | null>(null);
 
-  const openModal = (book: IBooks) => {
+  const openModal = (book: IUserBooks) => {
     setSelectedBook(book);
   };
 
@@ -33,38 +35,38 @@ const BookList = ({ data }: IProps) => {
 
   return (
     <Flex flexWrap="wrap" justifyContent="center" alignContent='center'>
-      {data?.books?.map((book: IBooks) => (
-        <Box
-          key={book.title}
-          p={4}
-          borderWidth="1px"
-          borderRadius="md"
-          // flexBasis={{ base: "100%", sm: "45%", md: "30%" }}
-          display='flex'
-          justifyContent='center'
-          alignItems='center'
-          flexDirection='column'
-          m={2}
-        >
-          <Image
-            src={book.imageurl}
-            alt={book.title}
-            h="200px"
-            w="200px"
-            objectFit="cover"
-          />
-          <Text fontSize="xl" mt={2}>
-            {book.title}
-          </Text>
-          <Button
-            mt={2}
-            colorScheme="teal"
-            onClick={() => openModal(book)}
-            isDisabled={!book.available}
-            w='full'
-          >
-            View Details
-          </Button>
+      {data?.books?.map((book: IUserBooks) => (
+        <Box display="flex" gap={3}>
+
+          <Card maxW='sm' key={book.title} mr='2'>
+            <CardBody>
+              <Image
+                src={book.imageurl}
+                alt={book.title}
+                borderRadius='lg'
+                h="200px"
+                w="200px"
+              />
+              <Stack mt='6' spacing='3'>
+                <Heading size='md'>{book.author}</Heading>
+                <Text>
+                  {book.description}
+                </Text>
+              </Stack>
+            </CardBody>
+            <Divider />
+            <CardFooter>
+              <Button
+                mt={2}
+                colorScheme="teal"
+                onClick={() => openModal(book)}
+                isDisabled={!book.available}
+                w='full'
+              >
+                View Details
+              </Button>
+            </CardFooter>
+          </Card>
         </Box>
       ))}
       {selectedBook && (
@@ -74,15 +76,29 @@ const BookList = ({ data }: IProps) => {
             <ModalHeader>{selectedBook.title}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Image
-                src={selectedBook.imageurl}
-                alt={selectedBook.title}
-                w="150"
-                h="150"
-                objectFit="cover"
-                mb={4}
-              />
-              <Text>{selectedBook.description}</Text>
+              <Card
+                direction={{ base: 'column', sm: 'row' }}
+                overflow='hidden'
+                variant='outline'
+              >
+                <Image
+                  objectFit='cover'
+                  maxW={{ base: '100%', sm: '200px' }}
+                  src={selectedBook.imageurl}
+
+                  alt={selectedBook.title}
+                />
+
+                <Stack>
+                  <CardBody>
+                    <Heading size='md'>{selectedBook.author}</Heading>
+
+                    <Text py='2'>
+                      {selectedBook.description}
+                    </Text>
+                  </CardBody>
+                </Stack>
+              </Card>
             </ModalBody>
             <ModalFooter>
               <Button colorScheme="teal" onClick={closeModal}>
