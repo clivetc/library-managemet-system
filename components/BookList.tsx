@@ -36,7 +36,7 @@ const BookList = ({ data }: IProps) => {
   return (
     <Flex flexWrap="wrap" justifyContent="center" alignContent='center'>
       {data?.books?.map((book: IUserBooks) => (
-        <Box display="flex" gap={3}>
+        <Box display="flex" gap={3} mt={2}p={2}>
 
           <Card maxW='sm' key={book.title} mr='2'>
             <CardBody>
