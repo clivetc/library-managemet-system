@@ -16,9 +16,20 @@ const userData = createAsyncThunk("user-data", async () => {
   }
 });
 
+const isAuthenticated = () => {
+  if (typeof document === "undefined") {
+    return false;
+  }
+
+  const userId = localStorage.getItem("userId");
+  const accessToken = localStorage.getItem("accessToken");
+
+  return !!userId && !!accessToken;
+};
+
 const initialState = {
   user: null as IUser | null,
-  isAuthorized: false,
+  isAuthorized: isAuthenticated(),
   loading: "idle",
   error: null as string | null,
 };

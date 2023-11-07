@@ -16,9 +16,20 @@ const adminData = createAsyncThunk("user-data", async () => {
   }
 });
 
+const isAuthenticated = () => {
+  if (typeof document === "undefined") {
+    return false;
+  }
+
+  const userId = localStorage.getItem("userId");
+  const accessToken = localStorage.getItem("accessToken");
+
+  return !!userId && !!accessToken;
+};
+
 const initialState = {
   adminUser: null as IAdmin | null,
-  isAdminAuthorized: false,
+  isAdminAuthorized: isAuthenticated(),
   loading: "idle",
   error: null as string | null,
 };
