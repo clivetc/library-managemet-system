@@ -14,11 +14,12 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["@types/node", "@types/pg"], 
+    "types": ["@types/node", "@types/pg","next/types/global"], 
     "paths": {
       "@/*": ["./*"]
     }
   },
+  "types": ["next/types/global", "./next.d.ts"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/initialize-sequelize.mjs"],
   "exclude": ["node_modules"]
 }

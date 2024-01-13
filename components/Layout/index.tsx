@@ -14,96 +14,78 @@ import { AnyAction } from "redux";
 import { IUser } from "@/types/interfaces";
 
 interface IProps {
-  children: ReactNode;
+	children: ReactNode;
 }
 
 const Layout: FC<IProps> = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const user = useSelector((state: RootState) => state.auth.user);
-  const isAuthorized = useSelector(
-    (state: RootState) => state.auth.isAuthorized,
-  );
-  const loading = useSelector((state: RootState) => state.auth.loading);
-  const isAdminAuthorized = useSelector(
-    (state: RootState) => state.admin.isAdminAuthorized,
-  );
-  const admin = useSelector((state: RootState) => state.admin.adminUser);
+	const [isLoading, setIsLoading] = useState(false);
+	const router = useRouter();
+	const user = useSelector((state: RootState) => state.auth.user);
+	const isAuthorized = useSelector(
+		(state: RootState) => state.auth.isAuthorized,
+	);
+	const loading = useSelector((state: RootState) => state.auth.loading);
+	const isAdminAuthorized = useSelector(
+		(state: RootState) => state.admin.isAdminAuthorized,
+	);
+	const admin = useSelector((state: RootState) => state.admin.adminUser);
 
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  const authRoutes = [
-    "/users/auth/login",
-    "/admin/auth/login",
-    "/users/auth/register",
-  ];
+	const authRoutes = [
+		"/users/auth/login",
+		"/admin/auth/login",
+		"/users/auth/register",
+	];
+	useEffect(() => {
+		if (isAuthorized) {
+			dispatch(userAsyncActions.userData() as unknown as AnyAction);
+		}
+		if (isAdminAuthorized) {
+			dispatch(adminAsyncActions.adminData() as unknown as AnyAction);
+		}
+	}, [dispatch, isAuthorized, isAdminAuthorized]);
 
-  useEffect(() => {
-    if (isAuthorized) {
-      dispatch(userAsyncActions.userData() as unknown as AnyAction);
-    }
-    if (isAdminAuthorized) {
-      dispatch(adminAsyncActions.adminData() as unknown as AnyAction);
-    }
-  }, [dispatch, isAuthorized, isAdminAuthorized]);
+	useEffect(() => {
+		if (loading === "pending") {
+			setIsLoading(true);
+		} else if (!isAuthorized && !isAdminAuthorized) {
+			if (authRoutes.includes(router.pathname)) {
+				setIsLoading(false);
+			} else {
+				router.replace("/users/auth/login");
+				setIsLoading(false);
+			}
+		} else {
+			setIsLoading(false);
+		}
+	}, [loading, isAdminAuthorized, isAuthorized]);
 
-  useEffect(() => {
-    if (loading === "pending") {
-      setIsLoading(true);
-    }
-    else if (!isAuthorized && !isAdminAuthorized) {
-      if (authRoutes.includes(router.pathname)) {
-        setIsLoading(false);
-      } else {
-        router.replace("/users/auth/login");
-        setIsLoading(false);
-      }
-    } else {
-      setIsLoading(false);
-    }
+	const handleLogout = () => {
+		dispatch(logout());
+		dispatch(logoutAdmin());
+		localStorage.clear();
+		window.location.reload();
+	};
 
-  }, [loading, isAdminAuthorized, isAuthorized]);
+	if (!isAuthorized && !isAdminAuthorized && !isLoading) {
+		return (
+			<div>
+				<AuthLayout>{children}</AuthLayout>
+			</div>
+		);
+	}
 
-
-  const handleLogout = () => {
-    dispatch(logout());
-    dispatch(logoutAdmin());
-    localStorage.clear();
-    window.location.reload()
-  };
-
-  if (isLoading) {
-    return (
-      <Box w={"100vw"}>
-        <Center height="100vh">
-          <Spinner size="xl" />
-        </Center>
-      </Box>
-    );
-  }
-
-  if (!isAuthorized && !isAdminAuthorized) {
-    return (
-      <div>
-        <AuthLayout>{children}</AuthLayout>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-
-      <MainLayout
-        userName={
-          user ? user?.name : admin ? admin.firstName || "N/A" : "N/A"
-        }
-        logOut={handleLogout}
-      >
-        {children}
-      </MainLayout>
-
-    </div>
-  );
+	return (
+		<div>
+			<MainLayout
+				userName={user ? user?.name : admin ? admin.firstName || "N/A" : "N/A"}
+				logOut={handleLogout}
+			>
+				{children}
+			</MainLayout>
+		</div>
+	);
 };
 
 export default Layout;
