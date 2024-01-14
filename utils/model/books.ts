@@ -46,7 +46,7 @@ Book.init(
 	{
 		sequelize,
 		tableName: "books",
-		schema: "library",
+		// schema: "library",
 	},
 );
 

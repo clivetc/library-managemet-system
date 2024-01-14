@@ -46,7 +46,7 @@ User.init(
 	{
 		sequelize,
 		tableName: "users",
-		schema: "library",
+		// schema: "library",
 	},
 );
 

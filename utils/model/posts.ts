@@ -26,7 +26,7 @@ Posts.init(
 	{
 		sequelize,
 		tableName: "posts",
-		schema: "library",
+		// schema: "library",
 	},
 );
 
