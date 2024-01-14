@@ -1,13 +1,10 @@
-import React, { Suspense, useEffect, useState } from "react";
-import { ChakraProvider, CSSReset } from "@chakra-ui/react";
-import type { AppProps } from "next/app";
-import { extendTheme } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
+import store from "@/redux/store";
+import { CSSReset, ChakraProvider, extendTheme } from "@chakra-ui/react";
+import type { AppProps } from "next/app";
+import { Suspense, useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
-import store from "@/redux/store";
-import { Hydrate } from "react-query/hydration";
-import { ColorModeProvider } from "@chakra-ui/react";
 
 const colors = {
 	brand: {
