@@ -1,17 +1,12 @@
 // Layout.tsx
-import { FC, ReactNode, useEffect, useState } from "react";
+import { logout, userAsyncActions } from "@/redux/slice/authReducer";
+import { RootState } from "@/redux/store";
+import { useRouter } from "next/router";
+import { FC, ReactNode, startTransition, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AnyAction } from "redux";
 import AuthLayout from "./auth";
 import MainLayout from "./main";
-import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/redux/store";
-import { logout, userAsyncActions } from "@/redux/slice/authReducer";
-import { Box, Spinner, Center } from "@chakra-ui/react";
-import { useQuery } from "react-query";
-import { getUserById } from "@/services/api/service/getUser";
-import { adminAsyncActions, logoutAdmin } from "@/redux/slice/adminAuthReducer";
-import { AnyAction } from "redux";
-import { IUser } from "@/types/interfaces";
 
 interface IProps {
 	children: ReactNode;
@@ -25,31 +20,23 @@ const Layout: FC<IProps> = ({ children }) => {
 		(state: RootState) => state.auth.isAuthorized,
 	);
 	const loading = useSelector((state: RootState) => state.auth.loading);
-	const isAdminAuthorized = useSelector(
-		(state: RootState) => state.admin.isAdminAuthorized,
-	);
-	const admin = useSelector((state: RootState) => state.admin.adminUser);
 
 	const dispatch = useDispatch();
 
-	const authRoutes = [
-		"/users/auth/login",
-		"/admin/auth/login",
-		"/users/auth/register",
-	];
+	const authRoutes = ["/users/auth/login", "/users/auth/register"];
+
 	useEffect(() => {
 		if (isAuthorized) {
-			dispatch(userAsyncActions.userData() as unknown as AnyAction);
+			startTransition(() => {
+				dispatch(userAsyncActions.userData() as unknown as AnyAction);
+			});
 		}
-		if (isAdminAuthorized) {
-			dispatch(adminAsyncActions.adminData() as unknown as AnyAction);
-		}
-	}, [dispatch, isAuthorized, isAdminAuthorized]);
+	}, [dispatch, isAuthorized]);
 
 	useEffect(() => {
 		if (loading === "pending") {
 			setIsLoading(true);
-		} else if (!isAuthorized && !isAdminAuthorized) {
+		} else if (!isAuthorized) {
 			if (authRoutes.includes(router.pathname)) {
 				setIsLoading(false);
 			} else {
@@ -59,16 +46,14 @@ const Layout: FC<IProps> = ({ children }) => {
 		} else {
 			setIsLoading(false);
 		}
-	}, [loading, isAdminAuthorized, isAuthorized]);
+	}, [loading, isAuthorized]);
 
 	const handleLogout = () => {
 		dispatch(logout());
-		dispatch(logoutAdmin());
 		localStorage.clear();
-		window.location.reload();
 	};
 
-	if (!isAuthorized && !isAdminAuthorized && !isLoading) {
+	if (!isAuthorized && !isLoading) {
 		return (
 			<div>
 				<AuthLayout>{children}</AuthLayout>
@@ -78,10 +63,7 @@ const Layout: FC<IProps> = ({ children }) => {
 
 	return (
 		<div>
-			<MainLayout
-				userName={user ? user?.name : admin ? admin.firstName || "N/A" : "N/A"}
-				logOut={handleLogout}
-			>
+			<MainLayout userName={user?.name ?? "N/A"} logOut={handleLogout}>
 				{children}
 			</MainLayout>
 		</div>

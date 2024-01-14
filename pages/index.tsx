@@ -1,18 +1,10 @@
-import Image from "next/image";
-import BooksPage from "./users/dashboard";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import AdminDashboard from "./admin/dashboard";
+import UserDashBoard from "./UserDashBoard";
 
 export default function Home() {
+	const isAdmin = useSelector((state: RootState) => state.auth.user?.isAdmin);
 
-  const isAdmin = useSelector(
-    (state: RootState) => state.admin.adminUser?.isAdmin,
-  );
-
-  return (
-    <main>
-      {isAdmin ? <AdminDashboard /> : <BooksPage />}
-    </main>
-  );
+	return <main>{isAdmin ? <AdminDashboard /> : <UserDashBoard />}</main>;
 }
