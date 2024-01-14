@@ -1,12 +1,10 @@
 {
   "development": {
-    "url": "postgres://postgres:Samaita89.@localhost:5432/postgres?schema=library",
-    "username": "postgres",
-    "password": "Samaita89.",
-    "database": "postgres",
-    "host": "localhost",
-    "dialect": "postgres",
-    "schema": "library"
+    "username": "root",
+    "password": null,
+    "database": "database_development",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   },
   "test": {
     "username": "root",
