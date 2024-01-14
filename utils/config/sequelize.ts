@@ -10,8 +10,14 @@ const sequelize = new Sequelize({
 		timestamps: false,
 	},
 	dialectOptions: {
-		ssl: false, // Disable SSL
+		ssl: {
+			mode: "require",
+			require: true,
+			rejectUnauthorized: false,
+		},
 	},
+	ssl: true,
+	native: true, // Add this line
 });
 
 export default sequelize;
