@@ -58,8 +58,9 @@ export default async function handler(
 	}
 
 	if (req.method === "GET") {
+		// Your GET request logic here
 		try {
-			// Fetch all books from the database
+			// Fetch all users from the database
 			const data = await User.findAll();
 			return res.status(200).json({ data });
 		} catch (error) {
