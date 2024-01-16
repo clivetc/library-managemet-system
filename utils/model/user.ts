@@ -8,7 +8,7 @@ class User extends Model {
 	public firstName!: string;
 	public lastName!: string;
 	public password!: string;
-	public isAdmin!: boolean;
+	public isadmin!: boolean;
 }
 
 User.init(
@@ -38,7 +38,7 @@ User.init(
 			type: new DataTypes.STRING(128),
 			allowNull: false,
 		},
-		isAdmin: {
+		isadmin: {
 			type: DataTypes.BOOLEAN,
 			defaultValue: false,
 		},
