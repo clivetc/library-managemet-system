@@ -1,36 +1,23 @@
 {
   "development": {
-    "url": "postgres://default:ykYzOjv5mtp7@ep-winter-firefly-81478293-pooler.eu-central-1.postgres.vercel-storage.com:5432/verceldb?sslmode=require",
-    "username": "default",
-    "password": "ykYzOjv5mtp7",
-    "database": "verceldb",
-    "host": "ep-winter-firefly-81478293-pooler.eu-central-1.postgres.vercel-storage.com",
-    "dialect": "postgres",
-    "schema": "library",
-    "ssl": true,
-    "dialectOptions": {
-      "ssl": {
-        "require": true,
-        "rejectUnauthorized": false
-      }
-    }
+    "username": "root",
+    "password": null,
+    "database": "database_development",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   },
   "test": {
-    "url": "postgres://default:ykYzOjv5mtp7@ep-winter-firefly-81478293-pooler.eu-central-1.postgres.vercel-storage.com:5432/verceldb",
-    "username": "default",
-    "password": "ykYzOjv5mtp7",
-    "database": "verceldb",
-    "host": "ep-winter-firefly-81478293-pooler.eu-central-1.postgres.vercel-storage.com",
-    "dialect": "postgres",
-    "schema": "library"
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   },
   "production": {
-    "url": "postgres://default:ykYzOjv5mtp7@ep-winter-firefly-81478293-pooler.eu-central-1.postgres.vercel-storage.com:5432/verceldb",
-    "username": "default",
-    "password": "ykYzOjv5mtp7",
-    "database": "verceldb",
-    "host": "ep-winter-firefly-81478293-pooler.eu-central-1.postgres.vercel-storage.com",
-    "dialect": "postgres",
-    "schema": "library"
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }
