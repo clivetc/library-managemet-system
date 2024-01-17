@@ -4,7 +4,7 @@ import AdminDashboard from "./admin/dashboard";
 import UserDashBoard from "./UserDashBoard";
 
 export default function Home() {
-	const isAdmin = useSelector((state: RootState) => state.auth.user?.isAdmin);
+	const isadmin = useSelector((state: RootState) => state.auth.user?.isadmin);
 
-	return <main>{isAdmin ? <AdminDashboard /> : <UserDashBoard />}</main>;
+	return <main>{isadmin ? <AdminDashboard /> : <UserDashBoard />}</main>;
 }

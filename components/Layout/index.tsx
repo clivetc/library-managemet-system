@@ -14,6 +14,7 @@ interface IProps {
 
 const Layout: FC<IProps> = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(false);
+	const [isDomLoaded, setIsDomLoaded] = useState(false);
 	const router = useRouter();
 	const user = useSelector((state: RootState) => state.auth.user);
 	const isAuthorized = useSelector(
@@ -24,6 +25,10 @@ const Layout: FC<IProps> = ({ children }) => {
 	const dispatch = useDispatch();
 
 	const authRoutes = ["/users/auth/login", "/users/auth/register"];
+
+	useEffect(() => {
+		setIsDomLoaded(true);
+	}, []);
 
 	useEffect(() => {
 		if (isAuthorized) {
@@ -50,8 +55,10 @@ const Layout: FC<IProps> = ({ children }) => {
 
 	const handleLogout = () => {
 		dispatch(logout());
+		setIsLoading(true);
 		localStorage.clear();
 	};
+	if (!isDomLoaded) return <></>;
 
 	if (!isAuthorized && !isLoading) {
 		return (
@@ -63,9 +70,11 @@ const Layout: FC<IProps> = ({ children }) => {
 
 	return (
 		<div>
-			<MainLayout userName={user?.name ?? "N/A"} logOut={handleLogout}>
-				{children}
-			</MainLayout>
+			{!isLoading && (
+				<MainLayout userName={user?.name ?? "N/A"} logOut={handleLogout}>
+					{children}
+				</MainLayout>
+			)}
 		</div>
 	);
 };

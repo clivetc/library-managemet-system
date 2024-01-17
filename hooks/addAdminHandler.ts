@@ -19,7 +19,7 @@ export const useAddAdminHandler = () => {
 
 	const adminDataSource = useMemo(() => {
 		if (Array.isArray(data)) {
-			return data.find((user) => user.isAdmin === true);
+			return data.find((user) => user.isadmin === true);
 		}
 		return null;
 	}, [data]);
@@ -54,7 +54,7 @@ export const useAddAdminHandler = () => {
 			firstName: "",
 			lastName: "",
 			password: "",
-			isAdmin: true,
+			isadmin: true,
 		},
 		onSubmit: (values) => mutate(values),
 	});

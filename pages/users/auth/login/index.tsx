@@ -21,7 +21,7 @@ const UserLogin = () => {
 	const { formikHook, userLoading } = useLoginHandler();
 	const [show, setShow] = useState(false);
 	const handleClick = () => setShow(!show);
-	const isAdmin = useSelector((state: RootState) => state.auth.user?.isAdmin);
+	const isadmin = useSelector((state: RootState) => state.auth.user?.isadmin);
 
 	return (
 		<Box borderRadius={"10px"} p={3}>

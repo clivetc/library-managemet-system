@@ -40,7 +40,7 @@ export const useRegisterHandler = () => {
 			lastName: "",
 			email: "",
 			password: "",
-			isAdmin: false,
+			isadmin: false,
 		},
 		onSubmit: (values) => {
 			mutate(values);

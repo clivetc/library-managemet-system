@@ -9,7 +9,7 @@ export interface IRegister {
 	lastName: string;
 	email: string;
 	password: string;
-	isAdmin: boolean;
+	isadmin: boolean;
 }
 
 export interface ILoginAdmin {
@@ -40,7 +40,7 @@ export interface IUser {
 	name: string;
 	firstName: string;
 	lastName: string;
-	isAdmin: boolean;
+	isadmin: boolean;
 }
 
 export interface IAdmin {
@@ -48,5 +48,5 @@ export interface IAdmin {
 	name: string;
 	firstName: string;
 	lastName: string;
-	isAdmin: boolean;
+	isadmin: boolean;
 }

@@ -12,7 +12,7 @@ module.exports = {
 				firstName: Sequelize.STRING,
 				lastName: Sequelize.STRING,
 				Password: Sequelize.STRING,
-				isAdmin: Sequelize.BOOLEAN,
+				isadmin: Sequelize.BOOLEAN,
 			},
 			{
 				schema: "library",

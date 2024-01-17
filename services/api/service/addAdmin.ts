@@ -7,7 +7,7 @@ interface IValues {
 	firstName: string;
 	lastName: string;
 	password: string;
-	isAdmin: boolean;
+	isadmin: boolean;
 }
 
 export const addAdmin = async (values: IValues) => {
