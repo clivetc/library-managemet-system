@@ -56,7 +56,14 @@ export const useAddAdminHandler = () => {
 			password: "",
 			isadmin: true,
 		},
-		onSubmit: (values) => mutate(values),
+		onSubmit: (values) => {
+			const { firstName } = values;
+			const payload = {
+				...values,
+				name: firstName,
+			};
+			mutate(payload);
+		},
 	});
 
 	return {

@@ -12,7 +12,7 @@ interface IValues {
 
 export const addAdmin = async (values: IValues) => {
 	return api
-		.post("/register", { ...values })
+		.post("/user", { ...values, action: "addAdmin" })
 		.then((resp) => {
 			const response = resp.data;
 
