@@ -80,14 +80,34 @@ export default async function handler(
 
 	if (req.method === "GET") {
 		try {
-			// Fetch all books from the database
-			const books = await Book.findAll();
-			return res.status(200).json({ books });
+			const pageQueryParam = req.query.page;
+			const pageSizeQueryParam = req.query.pageSize;
+
+			const page: number = pageQueryParam
+				? parseInt(pageQueryParam as string, 10)
+				: 1;
+			const pageSize: number = pageSizeQueryParam
+				? parseInt(pageSizeQueryParam as string, 10)
+				: 10;
+
+			if (isNaN(page) || isNaN(pageSize) || page <= 0 || pageSize <= 0) {
+				return res
+					.status(400)
+					.json({ error: "Invalid page or pageSize parameters" });
+			}
+
+			const offset = (page - 1) * pageSize;
+
+			const data = await Book.findAll({ offset, limit: pageSize });
+			const count = await Book.count();
+
+			return res.status(200).json({ data, count, page, pageSize });
 		} catch (error) {
 			console.error(error);
 			return res.status(500).json({ error: "Internal Server Error" });
 		}
 	}
+
 	// Handle other HTTP methods if needed
 
 	return res.status(405).json({ error: "Method Not Allowed" });

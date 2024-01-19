@@ -18,9 +18,19 @@ export interface ILoginAdmin {
 }
 
 export interface IBooks {
+	id: string;
 	title: string;
 	author: string;
-	imageurl: any;
+	imageurl: string;
+	description: string;
+	available: boolean;
+	availabledate: string;
+}
+
+export interface IFormik {
+	title: string;
+	author: string;
+	imageurl: string;
 	description: string;
 	available: boolean;
 	availabledate: string;
@@ -49,4 +59,10 @@ export interface IAdmin {
 	firstName: string;
 	lastName: string;
 	isadmin: boolean;
+}
+
+export interface IPosts {
+	id: string;
+	post: string;
+	enabled: boolean;
 }

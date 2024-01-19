@@ -37,7 +37,7 @@ const AdminDashboard = () => {
 	const { formikHook, isModalOpen, setIsModalOpen, adminDataSource } =
 		useAddAdminHandler();
 
-	const dataSource = data?.books ?? [];
+	const dataSource = data?.data ?? [];
 
 	const handleOpen = (rowData: IUserBooks, action: TRowSelection) => {
 		setSelectedRow(rowData);

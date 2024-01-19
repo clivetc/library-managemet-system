@@ -7,7 +7,7 @@ import { IBooks } from "@/types/interfaces";
 const BooksPage = () => {
 	const { data, isFetching, isLoading } = useBooksHandler();
 
-	const books = data ?? [];
+	const books = data?.data ?? [];
 
 	return (
 		<Box>
