@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AnyAction } from "redux";
 import AuthLayout from "./auth";
 import MainLayout from "./main";
+import { replace } from "formik";
 
 interface IProps {
 	children: ReactNode;
@@ -49,6 +50,10 @@ const Layout: FC<IProps> = ({ children }) => {
 				setIsLoading(false);
 			}
 		} else {
+			setIsLoading(false);
+		}
+		if (isAuthorized) {
+			router.replace("/");
 			setIsLoading(false);
 		}
 	}, [loading, isAuthorized]);

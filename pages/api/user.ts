@@ -33,7 +33,6 @@ export default async function handler(
 					return res.status(401).json({ error: "Invalid email or password" });
 				}
 
-				// Compare the provided password with the stored hashed password
 				const passwordMatch = await bcrypt.compare(password, user.password);
 				if (!passwordMatch) {
 					return res.status(401).json({ error: "Invalid email or password" });
@@ -92,11 +91,38 @@ export default async function handler(
 	}
 
 	if (req.method === "GET") {
-		// Your GET request logic here
 		try {
-			// Fetch all users from the database
-			const data = await User.findAll();
-			return res.status(200).json({ data });
+			const pageQueryParam = req.query.page;
+			const pageSizeQueryParam = req.query.pageSize;
+			const sortBy = req.query.sortBy || "createdAt";
+			const sortOrder = req.query.sortOrder || "DESC";
+
+			const page: number = pageQueryParam
+				? parseInt(pageQueryParam as string, 10)
+				: 1;
+			const pageSize: number = pageSizeQueryParam
+				? parseInt(pageSizeQueryParam as string, 10)
+				: 10;
+
+			if (isNaN(page) || isNaN(pageSize) || page <= 0 || pageSize <= 0) {
+				return res
+					.status(400)
+					.json({ error: "Invalid page or pageSize parameters" });
+			}
+
+			const offset = (page - 1) * pageSize;
+			const data = await User.findAll({
+				offset,
+				limit: pageSize,
+				order: [[sortBy as string, sortOrder as string]],
+				attributes: {
+					exclude: ["password"],
+				},
+			});
+
+			const count = await User.count();
+
+			return res.status(200).json({ data, count, page, pageSize });
 		} catch (error) {
 			console.error(error);
 			return res.status(500).json({ error: "Internal Server Error" });

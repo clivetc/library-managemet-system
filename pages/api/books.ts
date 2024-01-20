@@ -82,6 +82,8 @@ export default async function handler(
 		try {
 			const pageQueryParam = req.query.page;
 			const pageSizeQueryParam = req.query.pageSize;
+			const sortBy = req.query.sortBy || "createdAt";
+			const sortOrder = req.query.sortOrder || "DESC";
 
 			const page: number = pageQueryParam
 				? parseInt(pageQueryParam as string, 10)
@@ -98,7 +100,11 @@ export default async function handler(
 
 			const offset = (page - 1) * pageSize;
 
-			const data = await Book.findAll({ offset, limit: pageSize });
+			const data = await Book.findAll({
+				offset,
+				limit: pageSize,
+				order: [[sortBy as string, sortOrder as string]],
+			});
 			const count = await Book.count();
 
 			return res.status(200).json({ data, count, page, pageSize });

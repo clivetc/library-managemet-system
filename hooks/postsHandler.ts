@@ -1,8 +1,14 @@
 import { RootState } from "@/redux/store";
 import { createPost, getPosts } from "@/services/api/service/posts";
 import { useDisclosure, useToast } from "@chakra-ui/react";
+import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { useSelector } from "react-redux";
+
+interface IValues {
+	post: string;
+	enabled: boolean;
+}
 
 export const usePosts = () => {
 	const toast = useToast();
@@ -19,7 +25,7 @@ export const usePosts = () => {
 		enabled: !!isAuthorized,
 	});
 
-	const { mutate, isLoading: booksLoading } = useMutation(createPost, {
+	const { mutate, isLoading: postsLoading } = useMutation(createPost, {
 		onSuccess: (res) => {
 			toast({
 				description: "Post Successfully Added",
@@ -43,5 +49,24 @@ export const usePosts = () => {
 		},
 	});
 
-	return { postsData, fetchingPosts, refetchPosts };
+	const handSubmitPost = useFormik<IValues>({
+		initialValues: {
+			post: "",
+			enabled: true,
+		},
+		onSubmit: (values) => {
+			mutate(values);
+		},
+	});
+
+	return {
+		postsData,
+		fetchingPosts,
+		refetchPosts,
+		handSubmitPost,
+		isOpen,
+		onOpen,
+		postsLoading,
+		onClose,
+	};
 };

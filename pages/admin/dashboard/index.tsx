@@ -17,6 +17,8 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import AddAdminModal from "@/components/AddAdminModal";
+import { usePosts } from "@/hooks/postsHandler";
+import NewPost from "@/components/NewPost";
 
 const AdminDashboard = () => {
 	const [visible, setVisible] = useState(false);
@@ -34,8 +36,17 @@ const AdminDashboard = () => {
 		deleteFn,
 	} = useBooksHandler();
 
-	const { formikHook, isModalOpen, setIsModalOpen, adminDataSource } =
-		useAddAdminHandler();
+	const { formikHook, isModalOpen, setIsModalOpen } = useAddAdminHandler();
+	const {
+		postsData,
+		fetchingPosts,
+		refetchPosts,
+		handSubmitPost,
+		isOpen: isPostOpen,
+		onOpen: openPost,
+		onClose: onPostCose,
+		postsLoading,
+	} = usePosts();
 
 	const dataSource = data?.data ?? [];
 
@@ -66,6 +77,9 @@ const AdminDashboard = () => {
 				<Button onClick={onOpen} colorScheme="blue" size="md">
 					Add New Book
 				</Button>
+				<Button onClick={openPost} colorScheme="blue" size="md">
+					Add New Post
+				</Button>
 			</Flex>
 			<Tabs variant="soft-rounded" colorScheme="green">
 				<TabList>
@@ -86,6 +100,11 @@ const AdminDashboard = () => {
 				formikHook={formikHook}
 				onClose={() => setIsModalOpen(false)}
 				isOpen={isModalOpen}
+			/>
+			<NewPost
+				isOpen={isPostOpen}
+				onClose={onClose}
+				formikHook={handSubmitPost}
 			/>
 		</Box>
 	);

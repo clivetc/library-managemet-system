@@ -25,6 +25,7 @@ Posts.init(
 	},
 	{
 		sequelize,
+		timestamps: true,
 		tableName: "posts",
 		// schema: "library",
 	},

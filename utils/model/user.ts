@@ -5,6 +5,8 @@ class User extends Model {
 	public id!: string;
 	public name!: string;
 	public email!: string;
+	public createdAt!: Date;
+	public updatedAt!: Date;
 	public firstName!: string;
 	public lastName!: string;
 	public password!: string;
@@ -45,6 +47,7 @@ User.init(
 	},
 	{
 		sequelize,
+		timestamps: true,
 		tableName: "users",
 		// schema: "library",
 	},

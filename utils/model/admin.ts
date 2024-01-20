@@ -12,7 +12,7 @@ class Admin extends Model {
 Admin.init(
 	{
 		id: {
-			type: DataTypes.UUID, // Use UUID data type
+			type: DataTypes.UUID,
 			defaultValue: DataTypes.UUIDV4,
 			primaryKey: true,
 		},

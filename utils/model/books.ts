@@ -6,6 +6,8 @@ class Book extends Model {
 	public title!: string;
 	public author!: string;
 	public available!: boolean;
+	public createdAt!: Date;
+	public updatedAt!: Date;
 	public availabledate!: Date;
 	public imageurl!: string;
 	public description!: string;
@@ -32,19 +34,19 @@ Book.init(
 			defaultValue: true,
 		},
 		availabledate: {
-			// Define the availabledate property
-			type: DataTypes.DATE, // Use DataTypes.DATE for date values
-			allowNull: true, // Set allowNull based on your requirements
+			type: DataTypes.DATE,
+			allowNull: true,
 		},
 		imageurl: {
-			type: new DataTypes.STRING(256), // Define the maximum length for the image URL
+			type: new DataTypes.STRING(256),
 		},
 		description: {
-			type: new DataTypes.STRING(256), // Define the maximum length for the image URL
+			type: new DataTypes.STRING(256),
 		},
 	},
 	{
 		sequelize,
+		timestamps: true,
 		tableName: "books",
 		// schema: "library",
 	},
