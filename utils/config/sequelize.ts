@@ -12,7 +12,7 @@ const sequelize = new Sequelize({
 	dialectOptions: {
 		ssl: {
 			require: true,
-			rejectUnauthorized: false, // This option allows self-signed certificates, you can adjust it based on your certificate setup
+			rejectUnauthorized: false,
 		},
 	},
 });
