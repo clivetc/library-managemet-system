@@ -11,14 +11,19 @@ import React from "react";
 import { MdCheckCircle, MdSettings } from "react-icons/md";
 import BooksPage from "./users/dashboard";
 import { usePosts } from "@/hooks/postsHandler";
+import BookAppointment from "@/components/BookAppointment";
+import { useAppointments } from "@/hooks/appointmentHandler";
 
 const UserDashBoard = () => {
 	const { postsData, postsLoading } = usePosts();
+	const { isLoading, isOpen, onClose, onOpen, formik } = useAppointments();
 
 	return (
 		<Box p="4">
 			<Flex justifyContent={"flex-end"} mt={"3"}>
-				<Button colorScheme="blue">Book Appointment</Button>
+				<Button colorScheme="blue" onClick={onOpen}>
+					Book Appointment
+				</Button>
 			</Flex>
 			<Box>
 				<Text fontSize={"2xl"} fontWeight={"bold"}>
@@ -34,6 +39,12 @@ const UserDashBoard = () => {
 				</ListItem>
 			</List>
 			<BooksPage />
+			<BookAppointment
+				isOpen={isOpen}
+				onClose={onClose}
+				formikHook={formik}
+				isLoading={isLoading}
+			/>
 		</Box>
 	);
 };
