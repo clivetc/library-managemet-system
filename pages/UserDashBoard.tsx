@@ -28,7 +28,9 @@ const UserDashBoard = () => {
 			<List spacing={3}>
 				<ListItem>
 					<ListIcon as={MdCheckCircle} color="green.500" />
-					{postsData ? postsData?.data?.[0]?.post : "No Post available"}
+					{postsData?.data?.length
+						? postsData?.data?.[0]?.post
+						: "No Post available"}
 				</ListItem>
 			</List>
 			<BooksPage />
