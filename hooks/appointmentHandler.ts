@@ -9,7 +9,7 @@ interface IValues {
 	userId: string;
 	email: string;
 	date: string;
-	Phonenumber: string;
+	phoneNumber: string;
 }
 
 export const useAppointments = () => {
@@ -45,7 +45,7 @@ export const useAppointments = () => {
 		initialValues: {
 			email: "",
 			date: "",
-			Phonenumber: "",
+			phoneNumber: "",
 			userId: userId || "",
 		},
 		onSubmit: (values) => {

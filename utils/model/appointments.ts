@@ -5,7 +5,7 @@ import User from "./user";
 class Appointment extends Model {
 	public id!: string;
 	public email!: string;
-	public Phonenumber!: string;
+	public phoneNumber!: string;
 	public date!: Date;
 }
 
@@ -20,7 +20,7 @@ Appointment.init(
 			type: new DataTypes.STRING(128),
 			allowNull: false,
 		},
-		Phonenumber: {
+		phoneNumber: {
 			type: new DataTypes.STRING(128),
 			allowNull: false,
 		},
