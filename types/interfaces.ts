@@ -66,3 +66,8 @@ export interface IPosts {
 	post: string;
 	enabled: boolean;
 }
+
+export interface PaginationOptions {
+	page: number;
+	pageSize: number;
+}

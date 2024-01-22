@@ -1,8 +1,11 @@
 import { RootState } from "@/redux/store";
-import { createAppointment } from "@/services/api/service/appointments";
+import {
+	createAppointment,
+	getAppointments,
+} from "@/services/api/service/appointments";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useSelector } from "react-redux";
 
 interface IValues {
@@ -16,6 +19,14 @@ export const useAppointments = () => {
 	const toast = useToast();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const userId = useSelector((settings: RootState) => settings.auth.user?.id);
+	const isAuthorized = useSelector(
+		(state: RootState) => state.auth.isAuthorized,
+	);
+
+	const { data } = useQuery("appointments", getAppointments, {
+		refetchOnMount: false,
+		enabled: !!isAuthorized,
+	});
 
 	const { mutate, isLoading } = useMutation(createAppointment, {
 		onSuccess: (res) => {
@@ -53,5 +64,5 @@ export const useAppointments = () => {
 		},
 	});
 
-	return { formik, isOpen, onOpen, onClose, isLoading };
+	return { formik, isOpen, onOpen, onClose, isLoading, data };
 };
