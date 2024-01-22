@@ -5,14 +5,14 @@ class AppointmentService {
 	async createAppointment(
 		email: string,
 		date: Date,
-		Phonenumber: string,
+		phoneNumber: string,
 		userId: string,
 	): Promise<Appointment> {
 		try {
 			const appointment = await Appointment.create({
 				email,
 				date,
-				Phonenumber,
+				phoneNumber,
 				userId,
 			});
 

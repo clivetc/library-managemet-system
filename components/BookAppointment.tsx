@@ -56,7 +56,7 @@ const BookAppointment = ({
 							/>
 							<Input
 								placeholder="Enter Phone Number"
-								name="Phonenumber"
+								name="phoneNumber"
 								type="phone"
 								onChange={formikHook.handleChange}
 							/>
