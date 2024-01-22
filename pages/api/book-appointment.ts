@@ -31,11 +31,10 @@ export default async function handler(
 		}
 	} else if (req.method === "GET") {
 		try {
-			const userId = "123";
-
-			const appointments = await appointmentService.getAppointmentsByUserId(
-				userId,
-			);
+			const appointments = await appointmentService.getAllAppointments({
+				page: 1,
+				pageSize: 10,
+			});
 
 			return res.status(200).json({ success: true, data: appointments });
 		} catch (error) {

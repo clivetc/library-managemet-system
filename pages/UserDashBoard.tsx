@@ -16,7 +16,8 @@ import { useAppointments } from "@/hooks/appointmentHandler";
 
 const UserDashBoard = () => {
 	const { postsData, postsLoading } = usePosts();
-	const { isLoading, isOpen, onClose, onOpen, formik } = useAppointments();
+	const { isLoading, isOpen, onClose, onOpen, formik, data } =
+		useAppointments();
 
 	return (
 		<Box p="4">

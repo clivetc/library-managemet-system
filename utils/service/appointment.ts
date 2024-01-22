@@ -1,3 +1,4 @@
+import { PaginationOptions } from "@/types/interfaces";
 import Appointment from "../model/appointments";
 import User from "../model/user";
 
@@ -31,6 +32,27 @@ class AppointmentService {
 			});
 
 			return appointments;
+		} catch (error) {
+			console.error("Error getting appointments:", error);
+			throw error;
+		}
+	}
+	async getAllAppointments(
+		options: PaginationOptions,
+	): Promise<{ data: Appointment[]; count: number }> {
+		try {
+			const { page, pageSize } = options;
+
+			const offset = (page - 1) * pageSize;
+
+			const { rows: data, count } = await Appointment.findAndCountAll({
+				offset,
+				limit: pageSize,
+				include: [User],
+				order: [["createdAt", "DESC"]],
+			});
+
+			return { data, count };
 		} catch (error) {
 			console.error("Error getting appointments:", error);
 			throw error;
