@@ -7,16 +7,16 @@ export default async function handler(
 ) {
 	if (req.method === "POST") {
 		try {
-			const { email, date, userId, phoneNumber } = req.body;
+			const { email, date, userId, Phonenumber } = req.body;
 
-			if (!phoneNumber || !email || !date) {
+			if (!Phonenumber || !email || !date) {
 				return res.status(400).json({ error: "Invalid input" });
 			}
 
 			const newAppointment = await appointmentService.createAppointment(
 				email,
 				date,
-				phoneNumber,
+				Phonenumber,
 				userId,
 			);
 
