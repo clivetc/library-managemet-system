@@ -9,7 +9,7 @@ export default async function handler(
 		try {
 			const { email, date, userId, Phonenumber } = req.body;
 
-			if (!Phonenumber || !email || !date) {
+			if (!email || !date) {
 				return res.status(400).json({ error: "Invalid input" });
 			}
 
