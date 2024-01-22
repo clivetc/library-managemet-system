@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { config } from "dotenv";
 import fs from "fs/promises";
 import path from "path";
+import { cors } from "@/utils/middleware";
 
 config();
 
@@ -17,6 +18,7 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) {
+	await cors(req, res);
 	const client = await connectToDatabase();
 	if (req.method === "POST") {
 		try {

@@ -1,4 +1,5 @@
 import { connectToDatabase } from "@/utils/db";
+import { cors } from "@/utils/middleware";
 import Posts from "@/utils/model/posts";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Op } from "sequelize";
@@ -7,6 +8,7 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) {
+	await cors(req, res);
 	const client = await connectToDatabase();
 
 	if (req.method === "POST") {
