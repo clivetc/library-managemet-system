@@ -12,14 +12,19 @@ import {
 	ModalBody,
 	Button,
 	ModalFooter,
+	ModalCloseButton,
 } from "@chakra-ui/react";
 import { FormikProps } from "formik";
 import React from "react";
 
+interface IValues {
+	post: string;
+	enabled: boolean;
+}
 interface IProps {
 	isOpen: boolean;
 	onClose: VoidFunction;
-	formikHook: FormikProps<any>;
+	formikHook: FormikProps<IValues>;
 }
 
 const NewPost = ({ isOpen, onClose, formikHook }: IProps) => {
@@ -27,6 +32,7 @@ const NewPost = ({ isOpen, onClose, formikHook }: IProps) => {
 		<Modal isOpen={isOpen} onClose={onClose} isCentered size={"md"}>
 			<ModalOverlay />
 			<ModalContent>
+				<ModalCloseButton />
 				<form onSubmit={formikHook.handleSubmit}>
 					<ModalBody>
 						<Stack spacing={4} p={3}>
@@ -47,7 +53,9 @@ const NewPost = ({ isOpen, onClose, formikHook }: IProps) => {
 								type="text"
 								onChange={formikHook.handleChange}
 							/>
-
+							{formikHook.touched.post && formikHook.errors.post ? (
+								<Box color={"red"}>{formikHook.errors.post}</Box>
+							) : null}
 							<FormControl display="flex" alignItems="center" mt={"4"}>
 								<FormLabel htmlFor="posts" mb="0">
 									Enable Post

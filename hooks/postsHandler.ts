@@ -4,6 +4,7 @@ import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { useSelector } from "react-redux";
+import * as yup from "yup";
 
 interface IValues {
 	post: string;
@@ -21,7 +22,7 @@ export const usePosts = () => {
 		isFetching: fetchingPosts,
 		refetch: refetchPosts,
 	} = useQuery("get-posts", getPosts, {
-		refetchOnMount: true,
+		refetchOnMount: false,
 		enabled: !!isAuthorized,
 	});
 
@@ -57,6 +58,9 @@ export const usePosts = () => {
 		onSubmit: (values) => {
 			mutate(values);
 		},
+		validationSchema: yup.object().shape({
+			post: yup.string().required("Email is required"),
+		}),
 	});
 
 	return {
