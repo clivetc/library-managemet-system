@@ -18,7 +18,7 @@ interface IValues {
 export const useAppointments = () => {
 	const toast = useToast();
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const userId = useSelector((settings: RootState) => settings.auth.user?.id);
+	const user = useSelector((settings: RootState) => settings.auth.user);
 	const isAuthorized = useSelector(
 		(state: RootState) => state.auth.isAuthorized,
 	);
@@ -57,10 +57,15 @@ export const useAppointments = () => {
 			email: "",
 			date: "",
 			phoneNumber: "",
-			userId: userId || "",
+			userId: "",
 		},
 		onSubmit: (values) => {
-			mutate(values);
+			const payload = {
+				...values,
+				userId: user?.id || "",
+				email: user?.email || "",
+			};
+			mutate(payload);
 		},
 	});
 

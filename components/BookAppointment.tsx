@@ -8,9 +8,6 @@ import {
 	ModalOverlay,
 	Text,
 	Stack,
-	Switch,
-	FormControl,
-	FormLabel,
 	ModalBody,
 	Button,
 	ModalFooter,
@@ -48,12 +45,6 @@ const BookAppointment = ({
 									Book Appointment
 								</Text>
 							</Box>
-							<Input
-								placeholder="Email"
-								name="email"
-								type="email"
-								onChange={formikHook.handleChange}
-							/>
 							<Input
 								placeholder="Enter Phone Number"
 								name="phoneNumber"

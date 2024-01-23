@@ -51,6 +51,7 @@ export interface IUser {
 	firstName: string;
 	lastName: string;
 	isadmin: boolean;
+	email: string;
 }
 
 export interface IAdmin {

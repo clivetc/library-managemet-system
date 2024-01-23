@@ -103,7 +103,7 @@ const AdminDashboard = () => {
 			/>
 			<NewPost
 				isOpen={isPostOpen}
-				onClose={onClose}
+				onClose={onPostCose}
 				formikHook={handSubmitPost}
 			/>
 		</Box>
