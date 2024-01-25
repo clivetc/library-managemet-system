@@ -5,6 +5,8 @@ import { config } from "dotenv";
 import fs from "fs/promises";
 import path from "path";
 import { cors } from "@/utils/middleware";
+import { put } from "@vercel/blob";
+import { createReadStream } from "fs";
 
 config();
 
@@ -61,12 +63,15 @@ export default async function handler(
 				console.error("Error writing the image file:", writeError);
 				return res.status(500).json({ error: "Internal Server Error" });
 			}
+			const fileStream = createReadStream(filePath);
 			// Create the book with the image URL
-			const imageUrl = `/uploads/${fileName}`;
+			const { url } = await put(`uploads/${fileName}`, fileStream, {
+				access: "public",
+			});
 			const book = await Book.create({
 				title,
 				author,
-				imageurl: imageUrl,
+				imageurl: url,
 				description,
 				available,
 				availabledate,
