@@ -46,7 +46,7 @@ const Topbar = ({ userName, logOut }: IProps) => {
 				<Box>
 					<Button
 						as="a"
-						href="#"
+						href="/"
 						color="white"
 						fontWeight="bold"
 						bg="transparent"
@@ -74,7 +74,7 @@ const Topbar = ({ userName, logOut }: IProps) => {
 						<ListItem>
 							<Button
 								as="a"
-								href="#"
+								href="/"
 								color="white"
 								_hover={{ textDecoration: "none" }}
 								bg="transparent"
