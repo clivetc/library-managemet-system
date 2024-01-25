@@ -7,7 +7,7 @@ export default async function handler(
 ) {
 	if (req.method === "POST") {
 		try {
-			const { email, date, userId, phoneNumber } = req.body;
+			const { email, date, userId, phoneNumber, resolved } = req.body;
 
 			if (!email || !date) {
 				return res.status(400).json({ error: "Invalid input" });
@@ -18,6 +18,7 @@ export default async function handler(
 				date,
 				phoneNumber,
 				userId,
+				resolved,
 			);
 
 			return res.status(201).json({
