@@ -1,21 +1,18 @@
 import { join } from "path";
 import { createReadStream } from "fs";
+import { cors } from "@/utils/middleware";
+import { get } from "@vercel/blob";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { path } = req.query;
+	await cors(req, res);
 
-  if (typeof path === "string") {
-    const filePath = join(
-      process.cwd(),
-      "uploads",
-      ...(Array.isArray(path) ? path : [path]),
-    );
+	const { path } = req.query;
 
-    // Stream the image file to the response
-    const readStream = createReadStream(filePath);
-    readStream.pipe(res);
-  } else {
-    res.status(400).json({ error: "Invalid image path" });
-  }
+	if (typeof path === "string") {
+		const { stream } = await get(`uploads/${path}`);
+		stream.pipe(res);
+	} else {
+		res.status(400).json({ error: "Invalid image path" });
+	}
 };
