@@ -7,6 +7,7 @@ class Appointment extends Model {
 	public email!: string;
 	public phoneNumber!: string;
 	public date!: Date;
+	public resolved!: boolean;
 }
 
 Appointment.init(
@@ -27,6 +28,10 @@ Appointment.init(
 		date: {
 			type: DataTypes.DATE,
 			allowNull: true,
+		},
+		resolved: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
 		},
 	},
 	{
