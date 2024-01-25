@@ -53,8 +53,10 @@ const Layout: FC<IProps> = ({ children }) => {
 			setIsLoading(false);
 		}
 		if (isAuthorized) {
-			router.replace("/");
-			setIsLoading(false);
+			if (authRoutes.includes(router.pathname)) {
+				router.replace("/");
+				setIsLoading(false);
+			}
 		}
 	}, [loading, isAuthorized]);
 

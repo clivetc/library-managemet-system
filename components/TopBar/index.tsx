@@ -122,9 +122,10 @@ const Topbar = ({ userName, logOut }: IProps) => {
 							</ListItem>
 							<ListItem>
 								<Button
+									w="100%"
 									as="a"
 									href="/appointments"
-									color="white"
+									color="black"
 									_hover={{ textDecoration: "none" }}
 									bg="transparent"
 								>
