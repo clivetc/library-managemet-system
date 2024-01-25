@@ -8,6 +8,7 @@ class AppointmentService {
 		date: Date,
 		phoneNumber: string,
 		userId: string,
+		resolved: boolean,
 	): Promise<Appointment> {
 		try {
 			const appointment = await Appointment.create({
@@ -15,6 +16,7 @@ class AppointmentService {
 				date,
 				phoneNumber,
 				userId,
+				resolved,
 			});
 
 			return appointment;
@@ -28,7 +30,12 @@ class AppointmentService {
 		try {
 			const appointments = await Appointment.findAll({
 				where: { userId },
-				include: [User],
+				include: [
+					{
+						model: User,
+						attributes: { exclude: ["password"] },
+					},
+				],
 			});
 
 			return appointments;
@@ -48,7 +55,12 @@ class AppointmentService {
 			const { rows: data, count } = await Appointment.findAndCountAll({
 				offset,
 				limit: pageSize,
-				include: [User],
+				include: [
+					{
+						model: User,
+						attributes: { exclude: ["password"] },
+					},
+				],
 				order: [["createdAt", "DESC"]],
 			});
 

@@ -72,3 +72,14 @@ export interface PaginationOptions {
 	page: number;
 	pageSize: number;
 }
+
+export interface IAppointMents {
+	id: string;
+	email: string;
+	phoneNumber: string;
+	date: string;
+	resolved: boolean;
+	createdAt: string;
+	updatedAt: string;
+	User: IUser;
+}
