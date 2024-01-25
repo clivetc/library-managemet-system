@@ -11,11 +11,11 @@ const localizer = momentLocalizer(moment);
 const Appointments = () => {
 	const isAdmin = useSelector((state: RootState) => state.auth.user?.isadmin);
 	const { data, dataSource } = useAppointments();
-	console.log({ dataSource });
-	const eventPropGetter = (event: boolean) => {
+
+	const eventPropGetter = (event: any) => {
 		return {
 			style: {
-				backgroundColor: event ? "lightgreen" : "lightblue",
+				backgroundColor: event.resolved ? "lightgreen" : "lightblue",
 			},
 		};
 	};
