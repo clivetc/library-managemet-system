@@ -1,3 +1,5 @@
+import Appointment from "@/utils/model/appointments";
+
 export interface ILogin {
 	email: string;
 	password: string;

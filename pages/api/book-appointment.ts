@@ -37,7 +37,7 @@ export default async function handler(
 				pageSize: 10,
 			});
 
-			return res.status(200).json({ success: true, data: appointments });
+			return res.status(200).json({ ...appointments });
 		} catch (error) {
 			console.error("Error getting appointments:", error);
 			return res.status(500).json({ error: "Internal Server Error" });
