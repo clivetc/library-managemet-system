@@ -2,6 +2,13 @@ import { PaginationOptions } from "@/types/interfaces";
 import Appointment from "../model/appointments";
 import User from "../model/user";
 
+interface AppointmentsResponse {
+	data: Appointment[];
+	page: number;
+	pageCount: number;
+	total: number;
+}
+
 class AppointmentService {
 	async createAppointment(
 		email: string,
@@ -46,7 +53,7 @@ class AppointmentService {
 	}
 	async getAllAppointments(
 		options: PaginationOptions,
-	): Promise<{ data: Appointment[]; count: number }> {
+	): Promise<AppointmentsResponse> {
 		try {
 			const { page, pageSize } = options;
 
@@ -64,7 +71,16 @@ class AppointmentService {
 				order: [["createdAt", "DESC"]],
 			});
 
-			return { data, count };
+			const pageCount = Math.ceil(count / pageSize);
+
+			const response: AppointmentsResponse = {
+				data,
+				page,
+				pageCount,
+				total: count,
+			};
+
+			return response;
 		} catch (error) {
 			console.error("Error getting appointments:", error);
 			throw error;

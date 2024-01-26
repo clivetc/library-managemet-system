@@ -25,6 +25,10 @@ export const useAppointments = () => {
 		(state: RootState) => state.auth.isAuthorized,
 	);
 
+	const handleChange = (event: any) => {
+		console.log(event);
+	};
+
 	const { data, refetch } = useQuery("appointments", getAppointments, {
 		refetchOnMount: false,
 		enabled: !!isAuthorized,
@@ -35,7 +39,7 @@ export const useAppointments = () => {
 		() => getUserAppointments(user?.id ?? ""),
 		{
 			refetchOnMount: false,
-			enabled: !!isAuthorized,
+			enabled: !!isAuthorized && !user?.isadmin,
 		},
 	);
 
@@ -81,5 +85,14 @@ export const useAppointments = () => {
 		},
 	});
 
-	return { formik, isOpen, onOpen, onClose, isLoading, data, dataSource };
+	return {
+		formik,
+		isOpen,
+		onOpen,
+		onClose,
+		isLoading,
+		data,
+		dataSource,
+		handleChange,
+	};
 };

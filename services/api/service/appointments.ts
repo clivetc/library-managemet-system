@@ -1,3 +1,4 @@
+import { IAppointMents } from "@/types/interfaces";
 import { api } from "../apiClient";
 
 interface IValues {
@@ -12,9 +13,13 @@ export async function createAppointment(values: IValues) {
 }
 
 export async function getAppointments() {
-	return await api.get("/book-appointment").then((res) => res.data);
+	return await api
+		.get<{ data: IAppointMents[] }>("/book-appointment")
+		.then((res) => res.data.data);
 }
 
 export async function getUserAppointments(userId: string) {
-	return await api.get(`/appointment/${userId}`).then((res) => res.data);
+	return await api
+		.get<{ data: IAppointMents[] }>(`/appointment/${userId}`)
+		.then((res) => res.data);
 }
