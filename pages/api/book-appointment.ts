@@ -26,8 +26,11 @@ export default async function handler(
 				message: "Appointment booked successfully",
 				data: newAppointment,
 			});
-		} catch (error) {
+		} catch (error: any) {
 			console.error("Error booking appointment:", error);
+			if (error.statusCode === 402) {
+				return res.status(400).json({ error: error.message });
+			}
 			return res.status(500).json({ error: "Internal Server Error" });
 		}
 	} else if (req.method === "GET") {

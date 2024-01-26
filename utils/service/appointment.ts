@@ -18,6 +18,21 @@ class AppointmentService {
 		resolved: boolean,
 	): Promise<Appointment> {
 		try {
+			const existingUnresolvedAppointment = await Appointment.findOne({
+				where: {
+					userId,
+					resolved: false,
+				},
+			});
+
+			if (existingUnresolvedAppointment) {
+				const error = new Error(
+					"User already has an unresolved appointment.",
+				) as any;
+				error.statusCode = 402;
+				throw error;
+			}
+
 			const appointment = await Appointment.create({
 				email,
 				date,
