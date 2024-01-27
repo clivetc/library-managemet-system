@@ -149,7 +149,7 @@ const Topbar = ({ userName, logOut }: IProps) => {
 									bg="transparent"
 									outline={"none"}
 								>
-									books
+									Books
 								</Button>
 							</ListItem>
 							<ListItem>
