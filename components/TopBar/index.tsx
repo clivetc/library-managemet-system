@@ -89,6 +89,7 @@ const Topbar = ({ userName, logOut }: IProps) => {
 								color="white"
 								_hover={{ textDecoration: "none" }}
 								bg="transparent"
+								outline={"none"}
 							>
 								Books
 							</Button>
@@ -100,6 +101,7 @@ const Topbar = ({ userName, logOut }: IProps) => {
 								color="white"
 								_hover={{ textDecoration: "none" }}
 								bg="transparent"
+								outline={"none"}
 							>
 								Appointments
 							</Button>
@@ -111,6 +113,7 @@ const Topbar = ({ userName, logOut }: IProps) => {
 								_hover={{ textDecoration: "none" }}
 								bg="transparent"
 								onClick={logOut}
+								outline={"none"}
 								leftIcon={<HiOutlineLogout />}
 							>
 								Log Out
@@ -127,7 +130,12 @@ const Topbar = ({ userName, logOut }: IProps) => {
 					<DrawerBody>
 						<List>
 							<ListItem>
-								<Button onClick={onClose} w="100%" bg="transparent">
+								<Button
+									onClick={onClose}
+									w="100%"
+									bg="transparent"
+									outline={"none"}
+								>
 									Hi, {userName}
 								</Button>
 							</ListItem>
@@ -139,6 +147,7 @@ const Topbar = ({ userName, logOut }: IProps) => {
 									color="black"
 									_hover={{ textDecoration: "none" }}
 									bg="transparent"
+									outline={"none"}
 								>
 									books
 								</Button>
@@ -151,6 +160,7 @@ const Topbar = ({ userName, logOut }: IProps) => {
 									color="black"
 									_hover={{ textDecoration: "none" }}
 									bg="transparent"
+									outline={"none"}
 								>
 									Appointments
 								</Button>
@@ -159,6 +169,7 @@ const Topbar = ({ userName, logOut }: IProps) => {
 								<Button
 									onClick={logOut}
 									w="100%"
+									outline={"none"}
 									leftIcon={<HiOutlineLogout />}
 								>
 									Log Out

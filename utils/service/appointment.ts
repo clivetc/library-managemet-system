@@ -48,6 +48,29 @@ class AppointmentService {
 		}
 	}
 
+	async updateAppointment(
+		appointmentId: string,
+		resolved: boolean,
+	): Promise<Appointment> {
+		try {
+			const appointment = await Appointment.findByPk(appointmentId);
+
+			if (!appointment) {
+				const error = new Error("Appointment not found.") as any;
+				error.statusCode = 404;
+				throw error;
+			}
+
+			appointment.resolved = resolved;
+			await appointment.save();
+
+			return appointment;
+		} catch (error) {
+			console.error("Error updating appointment:", error);
+			throw error;
+		}
+	}
+
 	async getAppointmentsByUserId(userId: string): Promise<Appointment[]> {
 		try {
 			const appointments = await Appointment.findAll({

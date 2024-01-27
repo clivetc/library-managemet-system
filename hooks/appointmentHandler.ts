@@ -3,6 +3,7 @@ import {
 	createAppointment,
 	getAppointments,
 	getUserAppointments,
+	updateAppointment,
 } from "@/services/api/service/appointments";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
@@ -24,10 +25,6 @@ export const useAppointments = () => {
 	const isAuthorized = useSelector(
 		(state: RootState) => state.auth.isAuthorized,
 	);
-
-	const handleChange = (event: any) => {
-		console.log(event);
-	};
 
 	const { data, refetch } = useQuery("appointments", getAppointments, {
 		refetchOnMount: false,
@@ -66,6 +63,31 @@ export const useAppointments = () => {
 		},
 	});
 
+	const { mutate: updateMutation } = useMutation(
+		"updateAppointment",
+		updateAppointment,
+		{
+			onSuccess: (res) => {
+				toast({
+					description: res.message,
+					status: "success",
+					duration: 5000,
+					isClosable: true,
+					position: "top-right",
+				});
+				refetch();
+			},
+			onError: (err: any) => {
+				toast({
+					description: err.response.data.error,
+					status: "error",
+					duration: 5000,
+					isClosable: true,
+					position: "top-right",
+				});
+			},
+		},
+	);
 	const formik = useFormik<IValues>({
 		initialValues: {
 			email: "",
@@ -83,6 +105,16 @@ export const useAppointments = () => {
 			mutate(payload);
 		},
 	});
+
+	const handleChange = (values: any) => {
+		const payload = {
+			id: values.id,
+			value: true,
+		};
+
+		updateMutation(payload);
+		console.log(values);
+	};
 
 	return {
 		formik,
