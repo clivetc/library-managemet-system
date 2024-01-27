@@ -85,6 +85,17 @@ const Topbar = ({ userName, logOut }: IProps) => {
 						<ListItem>
 							<Button
 								as="a"
+								href="/books"
+								color="white"
+								_hover={{ textDecoration: "none" }}
+								bg="transparent"
+							>
+								Books
+							</Button>
+						</ListItem>
+						<ListItem>
+							<Button
+								as="a"
 								href="/appointments"
 								color="white"
 								_hover={{ textDecoration: "none" }}
@@ -118,6 +129,18 @@ const Topbar = ({ userName, logOut }: IProps) => {
 							<ListItem>
 								<Button onClick={onClose} w="100%" bg="transparent">
 									Hi, {userName}
+								</Button>
+							</ListItem>
+							<ListItem>
+								<Button
+									w="100%"
+									as="a"
+									href="/books"
+									color="black"
+									_hover={{ textDecoration: "none" }}
+									bg="transparent"
+								>
+									books
 								</Button>
 							</ListItem>
 							<ListItem>

@@ -85,3 +85,13 @@ export interface IAppointMents {
 	updatedAt: string;
 	User: IUser;
 }
+
+export interface IAnnouncements {
+	id: string;
+	title: string;
+	description: string;
+	category: string;
+	date: string;
+	updatedAt: string;
+	createdAt: string;
+}

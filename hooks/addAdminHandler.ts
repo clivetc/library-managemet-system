@@ -9,12 +9,15 @@ import { useSelector } from "react-redux";
 export const useAddAdminHandler = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const toast = useToast();
-	const isAdminAuthorized = useSelector(
-		(state: RootState) => state.admin.isAdminAuthorized,
-	);
+	const user = useSelector((state: RootState) => state.auth.user);
 
-	const { data, isLoading, isFetching, refetch } = useQuery("all-admins", () =>
-		getAdmin(),
+	const { data, isLoading, isFetching, refetch } = useQuery(
+		"all-admins",
+		() => getAdmin(),
+		{
+			refetchOnMount: true,
+			enabled: !!user?.isadmin,
+		},
 	);
 
 	const adminDataSource = useMemo(() => {
@@ -70,7 +73,6 @@ export const useAddAdminHandler = () => {
 		formikHook,
 		isModalOpen,
 		setIsModalOpen,
-		isAdminAuthorized,
 		adminDataSource,
 	};
 };

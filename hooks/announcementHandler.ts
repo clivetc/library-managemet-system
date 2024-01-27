@@ -1,23 +1,22 @@
 import { RootState } from "@/redux/store";
 import {
-	createAppointment,
-	getAppointments,
-	getUserAppointments,
-} from "@/services/api/service/appointments";
+	createAnnouncement,
+	getAllAnnouncements,
+} from "@/services/api/service/announcements";
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { useSelector } from "react-redux";
+import * as yup from "yup";
 
 interface IValues {
-	userId: string;
-	email: string;
+	title: string;
+	description: string;
+	category: string;
 	date: string;
-	phoneNumber: string;
-	resolved: boolean;
 }
 
-export const useAppointments = () => {
+export const useAnnouncements = () => {
 	const toast = useToast();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const user = useSelector((settings: RootState) => settings.auth.user);
@@ -25,25 +24,16 @@ export const useAppointments = () => {
 		(state: RootState) => state.auth.isAuthorized,
 	);
 
-	const handleChange = (event: any) => {
-		console.log(event);
-	};
-
-	const { data, refetch } = useQuery("appointments", getAppointments, {
+	const {
+		data: announcementData,
+		refetch: refetchAnnouncement,
+		isFetching: isFetchingAnnouncements,
+	} = useQuery("announcements", getAllAnnouncements, {
 		refetchOnMount: false,
-		enabled: !!isAuthorized && user?.isadmin,
+		enabled: !!user && isAuthorized,
 	});
 
-	const { data: dataSource } = useQuery(
-		["user-appointments", user?.id],
-		() => getUserAppointments(user?.id ?? ""),
-		{
-			refetchOnMount: false,
-			enabled: !!isAuthorized && !user?.isadmin,
-		},
-	);
-
-	const { mutate, isLoading } = useMutation(createAppointment, {
+	const { mutate, isLoading } = useMutation(createAnnouncement, {
 		onSuccess: (res) => {
 			toast({
 				description: res.message,
@@ -53,6 +43,7 @@ export const useAppointments = () => {
 				position: "top-right",
 			});
 			onClose();
+			refetchAnnouncement();
 		},
 
 		onError: (err: any) => {
@@ -66,32 +57,29 @@ export const useAppointments = () => {
 		},
 	});
 
-	const formik = useFormik<IValues>({
+	const formikAccHook = useFormik<IValues>({
 		initialValues: {
-			email: "",
+			title: "",
+			description: "",
+			category: "",
 			date: "",
-			phoneNumber: "",
-			userId: "",
-			resolved: false,
 		},
 		onSubmit: (values) => {
-			const payload = {
-				...values,
-				userId: user?.id || "",
-				email: user?.email || "",
-			};
-			mutate(payload);
+			mutate(values);
 		},
+		validationSchema: yup.object().shape({
+			title: yup.string().required("Email is required"),
+			description: yup.string().required("Email is required"),
+			category: yup.string().required("Email is required"),
+			date: yup.string().required("Email is required"),
+		}),
 	});
-
 	return {
-		formik,
+		formikAccHook,
+		isLoading,
 		isOpen,
 		onOpen,
+		announcementData,
 		onClose,
-		isLoading,
-		data,
-		dataSource,
-		handleChange,
 	};
 };
