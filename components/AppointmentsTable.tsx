@@ -39,7 +39,7 @@ const columns: (handleOpen: handleColumns) => ColType<IAppointMents>[] = (
 		{
 			title: "Booking Confirmation",
 			key: "resolved",
-			dataKey: "resolved",
+			dataKey: undefined,
 			render: (record) => (
 				<>
 					{/* <Button
@@ -51,7 +51,11 @@ const columns: (handleOpen: handleColumns) => ColType<IAppointMents>[] = (
 					>
 						Delete
 					</Button> */}
-					<Switch id="email-alert" isChecked={record?.resolved} />
+					<Switch
+						id="email-alert"
+						isChecked={record?.resolved}
+						onChange={() => handleOpen(record, "switch")}
+					/>
 				</>
 			),
 		},

@@ -23,3 +23,15 @@ export async function getUserAppointments(userId: string) {
 		.get<{ data: IAppointMents[] }>(`/appointment/${userId}`)
 		.then((res) => res.data);
 }
+
+export async function updateAppointment({
+	id,
+	value,
+}: {
+	id: string;
+	value: boolean;
+}) {
+	return await api
+		.patch(`/appointment/${id}`, { resolved: value })
+		.then((res) => res.data);
+}
