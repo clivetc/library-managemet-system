@@ -1,29 +1,32 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/sequelize";
-import User from "./user";
 
-class Appointment extends Model {
+class Announcements extends Model {
 	public id!: string;
-	public email!: string;
-	public phoneNumber!: string;
+	public title!: string;
+	public description!: string;
+	public category!: string;
 	public date!: Date;
-	public resolved!: boolean;
 	public createdAt!: Date;
 	public updatedAt!: Date;
 }
 
-Appointment.init(
+Announcements.init(
 	{
 		id: {
 			type: DataTypes.UUID,
 			defaultValue: DataTypes.UUIDV4,
 			primaryKey: true,
 		},
-		email: {
+		title: {
 			type: new DataTypes.STRING(128),
 			allowNull: false,
 		},
-		phoneNumber: {
+		description: {
+			type: DataTypes.STRING(256),
+			allowNull: false,
+		},
+		category: {
 			type: new DataTypes.STRING(128),
 			allowNull: false,
 		},
@@ -31,20 +34,22 @@ Appointment.init(
 			type: DataTypes.DATE,
 			allowNull: true,
 		},
-		resolved: {
-			type: DataTypes.BOOLEAN,
-			defaultValue: false,
+		createdAt: {
+			type: DataTypes.DATE,
+			allowNull: true,
+			field: "createdAt",
+		},
+		updatedAt: {
+			type: DataTypes.DATE,
+			allowNull: true,
+			field: "updatedAt",
 		},
 	},
 	{
 		sequelize,
 		timestamps: true,
-		tableName: "appointments",
+		tableName: "announcements",
 	},
 );
 
-Appointment.belongsTo(User, {
-	foreignKey: "userId",
-});
-
-export default Appointment;
+export default Announcements;

@@ -13,11 +13,13 @@ import BooksPage from "./users/dashboard";
 import { usePosts } from "@/hooks/postsHandler";
 import BookAppointment from "@/components/BookAppointment";
 import { useAppointments } from "@/hooks/appointmentHandler";
+import AnnouncementsCard from "@/components/AnnouncementsCard";
+import { useAnnouncements } from "@/hooks/announcementHandler";
 
 const UserDashBoard = () => {
 	const { postsData, postsLoading } = usePosts();
-	const { isLoading, isOpen, onClose, onOpen, formik, data } =
-		useAppointments();
+	const { isLoading, isOpen, onClose, onOpen, formik } = useAppointments();
+	const { announcementData } = useAnnouncements();
 
 	return (
 		<Box p="4">
@@ -39,7 +41,7 @@ const UserDashBoard = () => {
 						: "No Post available"}
 				</ListItem>
 			</List>
-			<BooksPage />
+			<AnnouncementsCard data={announcementData?.data || []} />
 			<BookAppointment
 				isOpen={isOpen}
 				onClose={onClose}

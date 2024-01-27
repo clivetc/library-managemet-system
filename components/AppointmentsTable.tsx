@@ -5,7 +5,7 @@ import { PaginatedTable, ColType } from "chakra-paginated-table";
 import { Button, Switch, Text } from "@chakra-ui/react";
 import { BsTrash } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
-import moment from "moment";
+import { dataNow } from "@/utils/app/settings";
 
 type handleColumns = (rowData: IAppointMents, action: TRowSelection) => void;
 
@@ -13,7 +13,6 @@ interface IProps {
 	data: IAppointMents[];
 	handleOpen: handleColumns;
 }
-const dataNow = (date: Date | string) => moment(date);
 
 const columns: (handleOpen: handleColumns) => ColType<IAppointMents>[] = (
 	handleOpen,

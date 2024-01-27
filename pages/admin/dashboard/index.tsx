@@ -1,10 +1,4 @@
-import AddBooksModal from "@/components/AddBooksModal";
-import BooksTable from "@/components/BooksTable";
-import { TRowSelection } from "@/components/definitions";
-import { useBooksHandler } from "@/hooks/booksHandler";
 import { useAddAdminHandler } from "@/hooks/addAdminHandler";
-import BooksPage from "@/pages/users/dashboard";
-import { IUserBooks } from "@/types/interfaces";
 import {
 	Tabs,
 	TabList,
@@ -19,23 +13,12 @@ import React, { useState } from "react";
 import AddAdminModal from "@/components/AddAdminModal";
 import { usePosts } from "@/hooks/postsHandler";
 import NewPost from "@/components/NewPost";
+import { useAnnouncements } from "@/hooks/announcementHandler";
+import AnnouncementTable from "@/components/AnnouncementTable";
+import PostsTable from "@/components/PostsTable";
+import AnnouncementsModal from "@/components/AnnouncementsModal";
 
 const AdminDashboard = () => {
-	const [visible, setVisible] = useState(false);
-
-	const {
-		formik,
-		isFetching,
-		isLoading,
-		isOpen,
-		onClose,
-		onOpen,
-		data,
-		selectedRow,
-		setSelectedRow,
-		deleteFn,
-	} = useBooksHandler();
-
 	const { formikHook, isModalOpen, setIsModalOpen } = useAddAdminHandler();
 	const {
 		postsData,
@@ -48,20 +31,14 @@ const AdminDashboard = () => {
 		postsLoading,
 	} = usePosts();
 
-	const dataSource = data?.data ?? [];
-
-	const handleOpen = (rowData: IUserBooks, action: TRowSelection) => {
-		setSelectedRow(rowData);
-		if (action === "edit") {
-			setVisible(true);
-		} else if (action === "delete") {
-			if (selectedRow) {
-				deleteFn(selectedRow?.id);
-			} else {
-				console.error("Invalid book ID");
-			}
-		}
-	};
+	const {
+		formikAccHook,
+		isLoading: loadingAnnouncement,
+		isOpen: isAnnouncement,
+		onOpen: onOpenAnnouncement,
+		announcementData,
+		onClose: onCloseAnnouncement,
+	} = useAnnouncements();
 
 	return (
 		<Box p={4}>
@@ -70,32 +47,33 @@ const AdminDashboard = () => {
 					onClick={() => setIsModalOpen(true)}
 					colorScheme="blue"
 					variant={"outline"}
-					size="md"
+					size="sm"
 				>
 					Add New Admin
 				</Button>
-				<Button onClick={onOpen} colorScheme="blue" size="md">
-					Add New Book
-				</Button>
-				<Button onClick={openPost} colorScheme="blue" size="md">
+
+				<Button onClick={openPost} colorScheme="blue" size="sm">
 					Add New Post
+				</Button>
+				<Button onClick={onOpenAnnouncement} colorScheme="blue" size="sm">
+					Add New Announcement
 				</Button>
 			</Flex>
 			<Tabs variant="soft-rounded" colorScheme="green">
 				<TabList>
-					<Tab>Books Table</Tab>
-					<Tab>Books List</Tab>
+					<Tab>Posts</Tab>
+					<Tab>Announcements</Tab>
 				</TabList>
 				<TabPanels>
 					<TabPanel>
-						<BooksTable data={dataSource} handleOpen={handleOpen} />
+						<PostsTable data={postsData?.data ?? []} />
 					</TabPanel>
 					<TabPanel>
-						<BooksPage />
+						<AnnouncementTable data={announcementData?.data ?? []} />
 					</TabPanel>
 				</TabPanels>
 			</Tabs>
-			<AddBooksModal formikHook={formik} onClose={onClose} isOpen={isOpen} />
+
 			<AddAdminModal
 				formikHook={formikHook}
 				onClose={() => setIsModalOpen(false)}
@@ -105,6 +83,12 @@ const AdminDashboard = () => {
 				isOpen={isPostOpen}
 				onClose={onPostCose}
 				formikHook={handSubmitPost}
+			/>
+			<AnnouncementsModal
+				isOpen={isAnnouncement}
+				onClose={onCloseAnnouncement}
+				formikHook={formikAccHook}
+				isLoading={loadingAnnouncement}
 			/>
 		</Box>
 	);

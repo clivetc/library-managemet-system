@@ -67,7 +67,7 @@ const BookAppointment = ({
 						>
 							Reset
 						</Button>
-						<Button type="submit" colorScheme="blue">
+						<Button type="submit" colorScheme="blue" isLoading={isLoading}>
 							Submit
 						</Button>
 					</ModalFooter>
