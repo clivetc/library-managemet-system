@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AnyAction } from "redux";
 import AuthLayout from "./auth";
 import MainLayout from "./main";
-import { replace } from "formik";
+import { Analytics } from "@vercel/analytics/react";
 
 interface IProps {
 	children: ReactNode;
@@ -78,9 +78,12 @@ const Layout: FC<IProps> = ({ children }) => {
 	return (
 		<div>
 			{!isLoading && (
-				<MainLayout userName={user?.name ?? "N/A"} logOut={handleLogout}>
-					{children}
-				</MainLayout>
+				<>
+					<Analytics mode={"production"} />
+					<MainLayout userName={user?.name ?? "N/A"} logOut={handleLogout}>
+						{children}
+					</MainLayout>
+				</>
 			)}
 		</div>
 	);
