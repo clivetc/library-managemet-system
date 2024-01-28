@@ -59,6 +59,7 @@ export const useBooksHandler = () => {
 				position: "top-right",
 			});
 			refetch();
+			formik.resetForm();
 		},
 
 		onError: (err: any) => {
@@ -80,6 +81,7 @@ export const useBooksHandler = () => {
 			author: "",
 			available: true,
 			availabledate: "",
+			quantity: 0,
 		},
 		onSubmit: (values) => {
 			mutate(values);
