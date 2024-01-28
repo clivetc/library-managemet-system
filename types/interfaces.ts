@@ -36,6 +36,7 @@ export interface IFormik {
 	description: string;
 	available: boolean;
 	availabledate: string;
+	quantity: number;
 }
 
 export interface IUserBooks {
@@ -46,6 +47,7 @@ export interface IUserBooks {
 	description: string;
 	available: boolean;
 	availabledate: string;
+	quantity: number;
 }
 export interface IUser {
 	id: string;

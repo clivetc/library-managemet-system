@@ -24,7 +24,7 @@ import Link from "next/link";
 import { IUserBooks, IBooks } from "@/types/interfaces";
 
 interface IProps {
-	data: IBooks[];
+	data: IUserBooks[];
 }
 
 const BookList = ({ data }: IProps) => {
@@ -40,7 +40,7 @@ const BookList = ({ data }: IProps) => {
 
 	return (
 		<Flex flexWrap="wrap" justifyContent="center" alignContent="center">
-			{data?.map((book: IBooks) => (
+			{data?.map((book: IUserBooks) => (
 				<Box display="flex" gap={3} mt={2} p={2} key={book.id}>
 					<Card maxW="sm" key={book.title} mr="2">
 						<CardBody>

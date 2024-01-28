@@ -1,4 +1,4 @@
-import { IBooks, IFormik } from "@/types/interfaces";
+import { IBooks, IFormik, IUserBooks } from "@/types/interfaces";
 import { api } from "../apiClient";
 import { AxiosError } from "axios";
 
@@ -12,7 +12,7 @@ export const addBooks = async (values: IFormik) => {
 };
 
 export const getBooks = async () => {
-	return api.get<{ data: IBooks[] }>("/books").then((res) => res.data);
+	return api.get<{ data: IUserBooks[] }>("/books").then((res) => res.data);
 };
 
 export const deleteBook = async (id: string) => {

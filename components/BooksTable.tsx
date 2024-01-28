@@ -9,72 +9,77 @@ import { AiFillEdit } from "react-icons/ai";
 type handleColumns = (rowData: IUserBooks, action: TRowSelection) => void;
 
 interface IProps {
-    data: IUserBooks[];
-    handleOpen: handleColumns;
+	data: IUserBooks[];
+	handleOpen: handleColumns;
 }
 
 const columns: (handleOpen: handleColumns) => ColType<IUserBooks>[] = (
-    handleOpen,
+	handleOpen,
 ) => {
-    return [
-        {
-            title: "Book Name",
-            key: "title",
-            dataKey: "title",
-        },
-        {
-            title: "Description",
-            key: "description",
-            dataKey: "description",
-        },
-        {
-            title: "Action",
-            key: "action",
-            dataKey: undefined,
-            render: (record) => (
-                <>
-                    <Button
-                        colorScheme="red"
-                        leftIcon={<BsTrash />}
-                        size="sm"
-                        onClick={() => handleOpen(record, "delete")}
-                        mr={2}
-                    >
-                        Delete
-                    </Button>
-                    <Button
-                        colorScheme="blue"
-                        leftIcon={<AiFillEdit />}
-                        size="sm"
-                        onClick={() => handleOpen(record, "edit")}
-                    >
-                        Edit
-                    </Button>
-                </>
-            ),
-        },
-    ];
+	return [
+		{
+			title: "Book Name",
+			key: "title",
+			dataKey: "title",
+		},
+		{
+			title: "Description",
+			key: "description",
+			dataKey: "description",
+		},
+		{
+			title: "Quantity",
+			key: "quantity",
+			dataKey: "quantity",
+		},
+		{
+			title: "Action",
+			key: "action",
+			dataKey: undefined,
+			render: (record) => (
+				<>
+					<Button
+						colorScheme="red"
+						leftIcon={<BsTrash />}
+						size="sm"
+						onClick={() => handleOpen(record, "delete")}
+						mr={2}
+					>
+						Delete
+					</Button>
+					<Button
+						colorScheme="blue"
+						leftIcon={<AiFillEdit />}
+						size="sm"
+						onClick={() => handleOpen(record, "edit")}
+					>
+						Edit
+					</Button>
+				</>
+			),
+		},
+	];
 };
 
 const BooksTable = (props: IProps) => {
-    const { handleOpen } = props;
-    const [pageNum, setPageNum] = useState(1);
+	const { handleOpen } = props;
+	const [pageNum, setPageNum] = useState(1);
 
-    return (
-        <PaginatedTable<IUserBooks>
-            dataSource={props?.data}
-            columns={columns(handleOpen)}
-            rowKey={(record) => record?.id}
-            pagination={{
-                page: pageNum,
-                pageSize: 10,
-                total: props?.data?.length,
-                onchange(newPage) {
-                    setPageNum(newPage);
-                },
-            }}
-        />
-    );
+	return (
+		<PaginatedTable<IUserBooks>
+			dataSource={props?.data}
+			columns={columns(handleOpen)}
+			rowKey={(record) => record?.id}
+			pagination={{
+				page: pageNum,
+				pageSize: 10,
+				total: props?.data?.length,
+				onchange(newPage) {
+					setPageNum(newPage);
+				},
+			}}
+		/>
+	);
 };
 
 export default BooksTable;

@@ -26,21 +26,30 @@ export default async function handler(
 		try {
 			// jsonParser(req, res, async () => {
 
-			const { title, author, imageurl, description, available, availabledate } =
-				req.body;
+			const {
+				title,
+				author,
+				imageurl,
+				description,
+				available,
+				availabledate,
+				quantity,
+			} = req.body;
 			// Validate if the required fields are provided
 			if (!title || !author) {
 				return res.status(400).json({ error: "Title and author are required" });
 			}
+			const fileExtension = imageurl.split(";base64,")[0].split("/")[1];
 
-			// Use Vercel Blob to upload the file
 			const { url } = await put(
 				`uploads/${Date.now()}-${title.replace(/\s+/g, "-").toLowerCase()}`,
 				Buffer.from(imageurl.split(";base64,").pop(), "base64"),
 				{
 					access: "public",
+					contentType: `image/${fileExtension}`,
 				},
 			);
+
 			const book = await Book.create({
 				title,
 				author,
@@ -48,6 +57,7 @@ export default async function handler(
 				description,
 				available,
 				availabledate,
+				quantity,
 			});
 
 			return res.status(201).json({ book });

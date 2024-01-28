@@ -11,6 +11,7 @@ class Book extends Model {
 	public availabledate!: Date;
 	public imageurl!: string;
 	public description!: string;
+	public quantity!: number;
 }
 
 Book.init(
@@ -42,6 +43,10 @@ Book.init(
 		},
 		description: {
 			type: new DataTypes.STRING(256),
+		},
+		quantity: {
+			type: DataTypes.INTEGER,
+			defaultValue: 1,
 		},
 	},
 	{
