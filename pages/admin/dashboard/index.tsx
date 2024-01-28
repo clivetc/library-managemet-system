@@ -48,6 +48,7 @@ const AdminDashboard = () => {
 					colorScheme="blue"
 					variant={"outline"}
 					size="sm"
+					fontSize={"xs"}
 				>
 					Add New Admin
 				</Button>
@@ -55,7 +56,12 @@ const AdminDashboard = () => {
 				<Button onClick={openPost} colorScheme="blue" size="sm">
 					Add New Post
 				</Button>
-				<Button onClick={onOpenAnnouncement} colorScheme="blue" size="sm">
+				<Button
+					onClick={onOpenAnnouncement}
+					colorScheme="blue"
+					size="sm"
+					fontSize={"xs"}
+				>
 					Add New Announcement
 				</Button>
 			</Flex>
