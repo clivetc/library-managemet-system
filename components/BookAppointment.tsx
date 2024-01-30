@@ -1,18 +1,17 @@
-import { FormikProps } from "formik";
-import React from "react";
 import {
 	Box,
+	Button,
 	Input,
 	Modal,
-	ModalContent,
-	ModalOverlay,
-	Text,
-	Stack,
 	ModalBody,
-	Button,
-	ModalFooter,
 	ModalCloseButton,
+	ModalContent,
+	ModalFooter,
+	ModalOverlay,
+	Stack,
+	Text,
 } from "@chakra-ui/react";
+import { FormikProps } from "formik";
 
 interface IProps {
 	isOpen: boolean;
@@ -52,10 +51,12 @@ const BookAppointment = ({
 								onChange={formikHook.handleChange}
 							/>
 							<Input
-								placeholder="Enter Date of Appointment"
+								placeholder="Enter Date of  Appointment"
 								name="date"
 								type="date"
-								onChange={formikHook.handleChange}
+								onChange={(e) =>
+									formikHook.setFieldValue("date", e.target.value)
+								}
 							/>
 						</Stack>
 					</ModalBody>

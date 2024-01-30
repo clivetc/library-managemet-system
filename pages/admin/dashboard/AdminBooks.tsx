@@ -29,6 +29,8 @@ const AdminBooks = () => {
 		selectedRow,
 		setSelectedRow,
 		deleteFn,
+		selectedImage,
+		setSelectedImage,
 	} = useBooksHandler();
 
 	const dataSource = data?.data ?? [];
@@ -67,7 +69,13 @@ const AdminBooks = () => {
 					</TabPanel>
 				</TabPanels>
 			</Tabs>
-			<AddBooksModal formikHook={formik} onClose={onClose} isOpen={isOpen} />
+			<AddBooksModal
+				formikHook={formik}
+				onClose={onClose}
+				isOpen={isOpen}
+				setSelectedImage={setSelectedImage}
+				selectedImage={selectedImage}
+			/>
 		</Box>
 	);
 };

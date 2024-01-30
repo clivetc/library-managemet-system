@@ -11,6 +11,7 @@ export const useBooksHandler = () => {
 	const toast = useToast();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [selectedRow, setSelectedRow] = useState<IUserBooks>();
+	const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
 	const isAuthorized = useSelector(
 		(state: RootState) => state.auth.isAuthorized,
@@ -36,6 +37,8 @@ export const useBooksHandler = () => {
 			});
 			onClose();
 			refetch();
+			formik.resetForm();
+			setSelectedImage(null);
 		},
 
 		onError: (err: any) => {
@@ -60,6 +63,7 @@ export const useBooksHandler = () => {
 			});
 			refetch();
 			formik.resetForm();
+			setSelectedImage(null);
 		},
 
 		onError: (err: any) => {
@@ -100,5 +104,7 @@ export const useBooksHandler = () => {
 		selectedRow,
 		setSelectedRow,
 		deleteFn,
+		selectedImage,
+		setSelectedImage,
 	};
 };

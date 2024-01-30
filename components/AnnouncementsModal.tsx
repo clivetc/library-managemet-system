@@ -1,18 +1,17 @@
 import {
+	Box,
+	Button,
+	Input,
 	Modal,
 	ModalBody,
 	ModalCloseButton,
 	ModalContent,
+	ModalFooter,
 	ModalOverlay,
 	Stack,
-	Box,
 	Text,
-	Input,
-	ModalFooter,
-	Button,
 } from "@chakra-ui/react";
 import { FormikProps } from "formik";
-import React from "react";
 
 interface IValues {
 	title: string;
@@ -85,7 +84,9 @@ const AnnouncementsModal = ({
 								placeholder="Enter Date of Announcement"
 								name="date"
 								type="date"
-								onChange={formikHook.handleChange}
+								onChange={(e) =>
+									formikHook.setFieldValue("date", e.target.value)
+								}
 							/>
 							{formikHook.touched.date && formikHook.errors.date ? (
 								<Box color={"red"}>{formikHook.errors.date}</Box>
