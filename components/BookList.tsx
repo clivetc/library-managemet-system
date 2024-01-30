@@ -19,6 +19,7 @@ import {
 	Stack,
 	Heading,
 	Box,
+	Center,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { IUserBooks, IBooks } from "@/types/interfaces";
@@ -44,13 +45,16 @@ const BookList = ({ data }: IProps) => {
 				<Box display="flex" gap={3} mt={2} p={2} key={book.id}>
 					<Card maxW="sm" key={book.title} mr="2">
 						<CardBody>
-							<Image
-								src={book.imageurl}
-								alt={book.title}
-								borderRadius="lg"
-								h="200px"
-								w="200px"
-							/>
+							<Center>
+								<Image
+									src={book.imageurl}
+									alt={book.title}
+									borderRadius="lg"
+									h="300px"
+									w="300px"
+								/>
+							</Center>
+
 							<Stack mt="6" spacing="3">
 								<Heading size="md">{book.author}</Heading>
 								<Text>{book.description}</Text>

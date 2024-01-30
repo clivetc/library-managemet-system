@@ -1,32 +1,39 @@
-import React, { useState } from "react";
 import {
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	Image,
-	ModalCloseButton,
-	ModalBody,
-	ModalFooter,
-	Button,
-	Stack,
-	Input,
-	FormControl,
-	Switch,
-	FormLabel,
-	Text,
 	Box,
+	Button,
+	FormControl,
+	FormLabel,
+	Image,
+	Input,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalFooter,
+	ModalOverlay,
+	Stack,
+	Switch,
+	Text,
 } from "@chakra-ui/react";
-import { FormikProps } from "formik";
 import imageCompression from "browser-image-compression";
+import { FormikProps } from "formik";
+import React, { SetStateAction } from "react";
+
 interface IProps {
 	formikHook: FormikProps<any>;
 	onClose: () => void;
 	isOpen: boolean;
+	selectedImage: string | null;
+	setSelectedImage: React.Dispatch<SetStateAction<string | null>>;
 }
 
-const AddBooksModal = ({ formikHook, onClose, isOpen }: IProps) => {
-	const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
+const AddBooksModal = ({
+	formikHook,
+	onClose,
+	isOpen,
+	selectedImage,
+	setSelectedImage,
+}: IProps) => {
 	const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
@@ -92,7 +99,9 @@ const AddBooksModal = ({ formikHook, onClose, isOpen }: IProps) => {
 								placeholder="Enter Date When Book is available"
 								name="availabledate"
 								type="date"
-								onChange={formikHook.handleChange}
+								onChange={(e) =>
+									formikHook.setFieldValue("availabledate", e.target.value)
+								}
 							/>
 
 							<FormControl display="flex" alignItems="center">
