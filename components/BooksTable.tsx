@@ -70,6 +70,14 @@ const BooksTable = (props: IProps) => {
 			dataSource={props?.data}
 			columns={columns(handleOpen)}
 			rowKey={(record) => record?.id}
+			ThProps={{ color: "white" }}
+			THeadProps={{
+				bgColor: "purple.300",
+			}}
+			containerProps={{
+				maxHeight: { md: "calc(100vh - 300px)", base: "calc(100vh - 200px)" },
+				overflowY: "auto",
+			}}
 			pagination={{
 				page: pageNum,
 				pageSize: 10,
@@ -77,6 +85,11 @@ const BooksTable = (props: IProps) => {
 				onchange(newPage) {
 					setPageNum(newPage);
 				},
+				containerProps: {
+					mt: 2,
+				},
+				position: "bottomRight",
+				__selectedBtnProps: { bgColor: "purple.200" },
 			}}
 		/>
 	);

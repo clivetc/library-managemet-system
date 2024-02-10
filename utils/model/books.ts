@@ -8,7 +8,7 @@ class Book extends Model {
 	public available!: boolean;
 	public createdAt!: Date;
 	public updatedAt!: Date;
-	public availabledate!: Date;
+	public availabledate!: Date | null;
 	public imageurl!: string;
 	public description!: string;
 	public quantity!: number;

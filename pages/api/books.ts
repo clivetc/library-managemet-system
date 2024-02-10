@@ -75,29 +75,40 @@ export default async function handler(
 			const sortBy = req.query.sortBy || "createdAt";
 			const sortOrder = req.query.sortOrder || "DESC";
 
-			const page: number = pageQueryParam
-				? parseInt(pageQueryParam as string, 10)
-				: 1;
-			const pageSize: number = pageSizeQueryParam
-				? parseInt(pageSizeQueryParam as string, 10)
-				: 10;
+			let offset = 0;
+			let limit = null;
 
-			if (isNaN(page) || isNaN(pageSize) || page <= 0 || pageSize <= 0) {
-				return res
-					.status(400)
-					.json({ error: "Invalid page or pageSize parameters" });
+			if (pageQueryParam && pageSizeQueryParam) {
+				const page: number = parseInt(pageQueryParam as string, 10);
+				const pageSize: number = parseInt(pageSizeQueryParam as string, 10);
+
+				if (isNaN(page) || isNaN(pageSize) || page <= 0 || pageSize <= 0) {
+					return res
+						.status(400)
+						.json({ error: "Invalid page or pageSize parameters" });
+				}
+
+				offset = (page - 1) * pageSize;
+				limit = pageSize;
 			}
 
-			const offset = (page - 1) * pageSize;
+			// Calculate the minimum limit to ensure at least 100 items per page
+			limit = Math.max(limit || 0, 100);
 
-			const data = await Book.findAll({
+			const books = await Book.findAndCountAll({
 				offset,
-				limit: pageSize,
+				limit,
 				order: [[sortBy as string, sortOrder as string]],
 			});
-			const count = await Book.count();
 
-			return res.status(200).json({ data, count, page, pageSize });
+			return res.status(200).json({
+				data: books.rows,
+				count: books.count,
+				page: pageQueryParam ? parseInt(pageQueryParam as string, 10) : null,
+				pageSize: pageSizeQueryParam
+					? parseInt(pageSizeQueryParam as string, 10)
+					: null,
+			});
 		} catch (error) {
 			console.error(error);
 			return res.status(500).json({ error: "Internal Server Error" });
