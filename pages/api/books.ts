@@ -32,7 +32,7 @@ export default async function handler(
 				imageurl,
 				description,
 				available,
-				availabledate,
+
 				quantity,
 			} = req.body;
 			// Validate if the required fields are provided
@@ -56,7 +56,7 @@ export default async function handler(
 				imageurl: url,
 				description,
 				available,
-				availabledate,
+
 				quantity,
 			});
 

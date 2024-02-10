@@ -95,14 +95,14 @@ const AddBooksModal = ({
 								type="number"
 								onChange={formikHook.handleChange}
 							/>
-							<Input
+							{/* <Input
 								placeholder="Enter Date When Book is available"
 								name="availabledate"
 								type="date"
 								onChange={(e) =>
 									formikHook.setFieldValue("availabledate", e.target.value)
 								}
-							/>
+							/> */}
 
 							<FormControl display="flex" alignItems="center">
 								<FormLabel htmlFor="email-alerts" mb="0">
