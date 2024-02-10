@@ -104,10 +104,10 @@ export default async function handler(
 			return res.status(200).json({
 				data: books.rows,
 				count: books.count,
-				page: pageQueryParam ? parseInt(pageQueryParam as string, 10) : null,
+				page: pageQueryParam ? parseInt(pageQueryParam as string, 10) : 1,
 				pageSize: pageSizeQueryParam
 					? parseInt(pageSizeQueryParam as string, 10)
-					: null,
+					: 100,
 			});
 		} catch (error) {
 			console.error(error);
