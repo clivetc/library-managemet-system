@@ -49,7 +49,11 @@ const Appointments = () => {
 					.map((a, i) => <Skeleton key={i} h={"100px"} />)
 			) : !user?.isadmin ? (
 				<Box>
-					<Text fontSize="x-large" fontWeight="bold" mb={3}>
+					<Text
+						fontSize={{ base: "x-large", md: "md" }}
+						fontWeight="bold"
+						mb={3}
+					>
 						Please check if your appointment has been approved
 					</Text>
 					<Box
