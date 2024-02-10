@@ -51,7 +51,8 @@ const BookList = ({ data }: IProps) => {
 									alt={book.title}
 									borderRadius="lg"
 									h="300px"
-									w="300px"
+									w="auto"
+									objectFit="cover"
 								/>
 							</Center>
 
