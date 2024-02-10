@@ -43,14 +43,14 @@ const BookList = ({ data }: IProps) => {
 		<Flex flexWrap="wrap" justifyContent="center" alignContent="center">
 			{data?.map((book: IUserBooks) => (
 				<Box display="flex" gap={3} mt={2} p={2} key={book.id}>
-					<Card maxW="sm" key={book.title} mr="2">
+					<Card maxW="sm" key={book.title} mr="2" w={"300px"}>
 						<CardBody>
 							<Center>
 								<Image
 									src={book.imageurl}
 									alt={book.title}
 									borderRadius="lg"
-									h="300px"
+									h="400px"
 									w="auto"
 									objectFit="cover"
 								/>
