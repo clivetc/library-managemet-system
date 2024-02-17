@@ -11,6 +11,7 @@ class User extends Model {
 	public lastName!: string;
 	public password!: string;
 	public isadmin!: boolean;
+	public passwordResetToken!: string | null;
 }
 
 User.init(
@@ -43,6 +44,10 @@ User.init(
 		isadmin: {
 			type: DataTypes.BOOLEAN,
 			defaultValue: false,
+		},
+		passwordResetToken: {
+			type: DataTypes.STRING, // Define passwordResetToken property
+			allowNull: true, // Allow null as it might not exist initially
 		},
 	},
 	{

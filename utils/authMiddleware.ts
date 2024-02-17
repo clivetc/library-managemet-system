@@ -13,7 +13,7 @@ declare module "next" {
 export const authenticate = (
 	req: NextApiRequest,
 	res: NextApiResponse,
-	next: () => void,
+	// next: () => void,
 ) => {
 	const accessToken = req.headers.authorization;
 	console.log({ accessToken });
@@ -34,7 +34,7 @@ export const authenticate = (
 
 			req.user = { userId: decoded.userId, email: decoded.email };
 			console.log(req.user);
-			next();
+			// next();
 		},
 	);
 };

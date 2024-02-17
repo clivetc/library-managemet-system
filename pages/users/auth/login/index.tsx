@@ -14,14 +14,11 @@ import React, { useState } from "react";
 import { MdAlternateEmail, MdPassword } from "react-icons/md";
 import Image from "next/image";
 import { useLoginHandler } from "@/hooks/loginHandler";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 
 const UserLogin = () => {
 	const { formikHook, userLoading } = useLoginHandler();
 	const [show, setShow] = useState(false);
 	const handleClick = () => setShow(!show);
-	const isadmin = useSelector((state: RootState) => state.auth.user?.isadmin);
 
 	return (
 		<Box borderRadius={"10px"} p={3}>
@@ -76,6 +73,9 @@ const UserLogin = () => {
 
 						<Box textAlign={"center"}>
 							<Link href="/users/auth/register">Do not have an Account</Link>
+						</Box>
+						<Box textAlign={"center"}>
+							<Link href="/users/auth/forgot-password">Forgot Password</Link>
 						</Box>
 					</Stack>
 				</form>

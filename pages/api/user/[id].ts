@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import User from "@/utils/model/user";
 import { cors } from "@/utils/middleware";
+import { authenticate } from "@/utils/authMiddleware";
 
 export default async function handler(
 	req: NextApiRequest,
@@ -10,6 +11,7 @@ export default async function handler(
 	await cors(req, res);
 	if (req.method === "GET") {
 		try {
+			// await authenticate(req, res);
 			const { id } = req.query;
 			// Fetch the user by ID
 			const user = await User.findOne({
