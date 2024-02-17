@@ -57,3 +57,7 @@ export const adminLogin = async (values: ILoginAdmin) => {
 			throw err;
 		});
 };
+
+export function forgotPass(email: { email: string }) {
+	return api.post("/forgot-password", email).then((res) => res.data);
+}
