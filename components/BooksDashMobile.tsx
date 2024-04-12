@@ -57,11 +57,19 @@ const BooksDashMobile = ({ data, handleOpen, deleteFn }: IProps) => {
 						textAlign={"right"}
 						alignContent={"flex-start"}
 					>
-						<Image src={item.imageurl} height={"50px"} w="50px" />
+						<Image
+							src={item.imageurl}
+							height={"50px"}
+							width={"50px"}
+							objectFit="contain"
+							mr={2}
+						/>
 						<Tooltip label={item.description} placement="top-start">
-							<Text fontSize={"sm"} noOfLines={1} isTruncated>
-								{item.description}
-							</Text>
+							<Box maxWidth="200px">
+								<Text noOfLines={[1, 2, 3]} isTruncated textAlign="start">
+									{item.description}
+								</Text>
+							</Box>
 						</Tooltip>
 						<Flex justifyContent={"flex-end"} gap={"5px"}>
 							<IconButton
