@@ -148,6 +148,12 @@ export const useBooksHandler = () => {
 		}
 	}, [selectedRow]);
 
+	useEffect(() => {
+		if (!isOpen) {
+			formik.resetForm();
+		}
+	}, [isOpen]);
+
 	return {
 		formik,
 		data,
