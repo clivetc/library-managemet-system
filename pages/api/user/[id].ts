@@ -17,7 +17,7 @@ export default async function handler(
 			const user = await User.findOne({
 				where: { id },
 				attributes: {
-					exclude: ["password"],
+					exclude: ["password", "passwordResetToken"],
 				},
 			});
 			if (!user) {

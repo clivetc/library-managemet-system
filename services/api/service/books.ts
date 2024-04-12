@@ -18,3 +18,7 @@ export const getBooks = async () => {
 export const deleteBook = async (id: string) => {
 	return api.delete(`/books/${id}`).then((res) => res.data);
 };
+
+export const updateBook = (id: string, data: Partial<IUserBooks>) => {
+	return api.patch(`/books/${id}`, data).then((res) => res.data);
+};

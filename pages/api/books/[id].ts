@@ -11,25 +11,13 @@ export default async function handler(
 ) {
 	const client = await connectToDatabase();
 
-	if (req.method === "PUT") {
+	if (req.method === "PATCH") {
 		// Handle the edit/update operation
-		const {
-			id,
-			title,
-			author,
-			imageurl,
-			description,
-			available,
-			availabledate,
-		} = req.body;
+		const { id } = req.query;
+		const { title, author, imageurl, description, available, availabledate } =
+			req.body;
 
 		try {
-			// Validate if the required fields are provided
-			if (!title || !author) {
-				return res.status(400).json({ error: "Title and author are required" });
-			}
-
-			// Update the book
 			const updatedBook = await Book.update(
 				{
 					title,

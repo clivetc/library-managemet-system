@@ -2,7 +2,8 @@ import { connectToDatabase } from "@/utils/db";
 import { cors } from "@/utils/middleware";
 import Posts from "@/utils/model/posts";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Op } from "sequelize";
+import { Op, literal } from "sequelize";
+import moment from "moment";
 
 export default async function handler(
 	req: NextApiRequest,
@@ -47,13 +48,26 @@ export default async function handler(
 
 			const offset = (page - 1) * pageSize;
 
+			const oneMonthAgo = moment().subtract(1, "months").toDate();
+
 			const data = await Posts.findAll({
+				where: {
+					createdAt: {
+						[Op.gte]: oneMonthAgo,
+					},
+				},
 				offset,
 				limit: pageSize,
 				order: [[sortBy as string, sortOrder as string]],
 			});
 
-			const count = await Posts.count();
+			const count = await Posts.count({
+				where: {
+					createdAt: {
+						[Op.gte]: oneMonthAgo,
+					},
+				},
+			});
 
 			return res.status(200).json({ data, count, page, pageSize });
 		} catch (error) {

@@ -75,24 +75,28 @@ const AddBooksModal = ({
 								placeholder="Enter Title"
 								name="title"
 								type="text"
+								value={formikHook.values.title}
 								onChange={formikHook.handleChange}
 							/>
 							<Input
 								placeholder="Enter Author"
 								name="author"
 								type="text"
+								value={formikHook.values.author}
 								onChange={formikHook.handleChange}
 							/>
 							<Input
 								placeholder="Enter Description"
 								name="description"
 								type="text"
+								value={formikHook.values.description}
 								onChange={formikHook.handleChange}
 							/>
 							<Input
 								placeholder="Enter Quantity"
 								name="quantity"
 								type="number"
+								value={formikHook.values.quantity}
 								onChange={formikHook.handleChange}
 							/>
 							{/* <Input
@@ -111,6 +115,7 @@ const AddBooksModal = ({
 								<Switch
 									id="email-alerts"
 									name="available"
+									value={formikHook.values.available}
 									onChange={formikHook.handleChange}
 								/>
 							</FormControl>

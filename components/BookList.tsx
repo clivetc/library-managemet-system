@@ -20,6 +20,7 @@ import {
 	Heading,
 	Box,
 	Center,
+	useMediaQuery,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { IUserBooks, IBooks } from "@/types/interfaces";
@@ -30,6 +31,8 @@ interface IProps {
 
 const BookList = ({ data }: IProps) => {
 	const [selectedBook, setSelectedBook] = useState<IUserBooks | null>(null);
+	const [isSmaller] = useMediaQuery("max-width:1550px");
+	const modalSize = isSmaller ? "xs" : "md";
 
 	const openModal = (book: IUserBooks) => {
 		setSelectedBook(book);
@@ -77,7 +80,7 @@ const BookList = ({ data }: IProps) => {
 				</Box>
 			))}
 			{selectedBook && (
-				<Modal isOpen={true} onClose={closeModal} size="md" isCentered>
+				<Modal isOpen={true} onClose={closeModal} size={modalSize} isCentered>
 					<ModalOverlay />
 					<ModalContent>
 						<ModalHeader>{selectedBook.title}</ModalHeader>
@@ -90,14 +93,15 @@ const BookList = ({ data }: IProps) => {
 							>
 								<Image
 									objectFit="cover"
-									maxW={{ base: "100%", sm: "200px" }}
+									w={{ base: "100%", sm: "100px" }}
+									h={{ base: "100%", sm: "100px" }}
 									src={selectedBook.imageurl}
 									alt={selectedBook.title}
 								/>
 
 								<Stack>
 									<CardBody>
-										<Heading size="md">{selectedBook.author}</Heading>
+										<Heading size={modalSize}>{selectedBook.author}</Heading>
 
 										<Text py="2">{selectedBook.description}</Text>
 									</CardBody>
