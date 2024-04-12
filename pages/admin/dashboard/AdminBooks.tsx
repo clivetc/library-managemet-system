@@ -1,4 +1,5 @@
 import AddBooksModal from "@/components/AddBooksModal";
+import BooksDashMobile from "@/components/BooksDashMobile";
 import BooksTable from "@/components/BooksTable";
 import { TRowSelection } from "@/components/definitions";
 import { useBooksHandler } from "@/hooks/booksHandler";
@@ -13,15 +14,20 @@ import {
 	Tab,
 	TabPanels,
 	TabPanel,
+	useMediaQuery,
+	useBreakpointValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
 const AdminBooks = () => {
 	const [visible, setVisible] = useState(false);
+	const [isSmaller] = useMediaQuery("max-width:1550px");
+	const buttonSize = isSmaller ? "xs" : "sm";
+	const isMobile = useBreakpointValue({ base: true, md: false });
+
 	const {
 		formik,
-		isFetching,
-		isLoading,
+		setUpdate,
 		isOpen,
 		onClose,
 		onOpen,
@@ -38,7 +44,8 @@ const AdminBooks = () => {
 	const handleOpen = (rowData: IUserBooks, action: TRowSelection) => {
 		setSelectedRow(rowData);
 		if (action === "edit") {
-			setVisible(true);
+			setUpdate(true);
+			onOpen();
 		} else if (action === "delete") {
 			if (selectedRow) {
 				deleteFn(selectedRow?.id);
@@ -47,22 +54,35 @@ const AdminBooks = () => {
 			}
 		}
 	};
+	const handleOpenModal = (rowData: IUserBooks) => {
+		setSelectedRow(rowData);
+		setUpdate(true);
+		onOpen();
+	};
 
 	return (
 		<Box p={4}>
 			<Flex justifyContent={"flex-end"} mb={5} gap={3}>
-				<Button onClick={onOpen} colorScheme="blue" size="sm">
+				<Button onClick={onOpen} colorScheme="blue" size={buttonSize}>
 					Add New Book
 				</Button>
 			</Flex>
-			<Tabs variant="soft-rounded" colorScheme="green">
+			<Tabs variant="soft-rounded" colorScheme="green" size={buttonSize}>
 				<TabList>
 					<Tab>Books Table</Tab>
 					<Tab>Books List</Tab>
 				</TabList>
 				<TabPanels>
 					<TabPanel>
-						<BooksTable data={dataSource} handleOpen={handleOpen} />
+						{isMobile ? (
+							<BooksDashMobile
+								data={dataSource}
+								handleOpen={handleOpenModal}
+								deleteFn={deleteFn}
+							/>
+						) : (
+							<BooksTable data={dataSource} handleOpen={handleOpen} />
+						)}
 					</TabPanel>
 					<TabPanel>
 						<BooksPage />

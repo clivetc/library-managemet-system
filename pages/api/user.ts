@@ -116,7 +116,7 @@ export default async function handler(
 				limit: pageSize,
 				order: [[sortBy as string, sortOrder as string]],
 				attributes: {
-					exclude: ["password"],
+					exclude: ["password", "passwordResetToken"],
 				},
 			});
 

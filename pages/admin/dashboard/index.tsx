@@ -8,6 +8,7 @@ import {
 	Button,
 	Box,
 	Flex,
+	useMediaQuery,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import AddAdminModal from "@/components/AddAdminModal";
@@ -19,6 +20,9 @@ import PostsTable from "@/components/PostsTable";
 import AnnouncementsModal from "@/components/AnnouncementsModal";
 
 const AdminDashboard = () => {
+	const [isSmaller] = useMediaQuery("max-width:1550px");
+	const buttonSize = isSmaller ? "xs" : "sm";
+
 	const { formikHook, isModalOpen, setIsModalOpen } = useAddAdminHandler();
 	const {
 		postsData,
@@ -28,7 +32,6 @@ const AdminDashboard = () => {
 		isOpen: isPostOpen,
 		onOpen: openPost,
 		onClose: onPostCose,
-		postsLoading,
 	} = usePosts();
 
 	const {
@@ -47,25 +50,25 @@ const AdminDashboard = () => {
 					onClick={() => setIsModalOpen(true)}
 					colorScheme="blue"
 					variant={"outline"}
-					size="sm"
+					size={buttonSize}
 					fontSize={"xs"}
 				>
 					Add New Admin
 				</Button>
 
-				<Button onClick={openPost} colorScheme="blue" size="sm">
+				<Button onClick={openPost} colorScheme="blue" size={buttonSize}>
 					Add New Post
 				</Button>
 				<Button
 					onClick={onOpenAnnouncement}
 					colorScheme="blue"
-					size="sm"
+					size={buttonSize}
 					fontSize={"xs"}
 				>
 					Add New Announcement
 				</Button>
 			</Flex>
-			<Tabs variant="soft-rounded" colorScheme="green">
+			<Tabs variant="soft-rounded" colorScheme="green" size={buttonSize}>
 				<TabList>
 					<Tab>Posts</Tab>
 					<Tab>Announcements</Tab>
