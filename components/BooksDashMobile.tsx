@@ -103,7 +103,7 @@ const BooksDashMobile = ({ data, handleOpen, deleteFn }: IProps) => {
 							colorScheme={
 								currentPage === pageNumber ? "purple.500" : "purple.100"
 							}
-							size={"sx"}
+							size={"xs"}
 							borderRadius={"50%"}
 						>
 							{pageNumber}
