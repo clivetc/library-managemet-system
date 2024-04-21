@@ -50,28 +50,24 @@ const BooksDashMobile = ({ data, handleOpen, deleteFn }: IProps) => {
 		<Box>
 			<Box mt={4}>
 				{pagedData.map((item) => (
-					<Flex
-						justifyContent={"space-between"}
-						key={item.id}
-						mt={2}
-						textAlign={"right"}
-						alignContent={"flex-start"}
-					>
-						<Image
-							src={item.imageurl}
-							height={"50px"}
-							width={"50px"}
-							objectFit="contain"
-							mr={2}
-						/>
-						<Tooltip label={item.description} placement="top-start">
-							<Box maxWidth="200px">
-								<Text noOfLines={[1, 2, 3]} isTruncated textAlign="start">
-									{item.description}
-								</Text>
-							</Box>
-						</Tooltip>
-						<Flex justifyContent={"flex-end"} gap={"5px"}>
+					<Flex justifyContent={"space-between"} key={item.id} mt={2}>
+						<Flex gap={"5px"}>
+							<Image
+								src={item.imageurl}
+								height={"50px"}
+								width={"50px"}
+								objectFit="contain"
+								mr={2}
+							/>
+							<Tooltip label={item.description} placement="top-start">
+								<Box maxWidth="200px">
+									<Text noOfLines={[1, 2, 3]} isTruncated textAlign="start">
+										{item.description}
+									</Text>
+								</Box>
+							</Tooltip>
+						</Flex>
+						<Flex justifyContent={"flex-end"} gap={"2px"}>
 							<IconButton
 								aria-label=""
 								icon={<CiEdit />}
